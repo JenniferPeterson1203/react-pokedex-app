@@ -5,8 +5,15 @@ function App() {
   const [pokemons, setPokemons] = useState([]);
   // Stores clicked Pokémon details
   const [selectedPokemon, setSelectedPokemon] = useState(null);
+  // Search State
+  const [searchTerm, setSearchTerm] = useState("");
   // 🌙 Tracks dark mode
   const [darkMode, setDarkMode] = useState(false);
+  //  Current page the user is on
+const [currentPage, setCurrentPage] = useState(1);
+
+// How many Pokémon per page
+const itemsPerPage = 12;
 
 
   // Runs once when the component loads
@@ -18,7 +25,7 @@ function App() {
 
         // fecth call to the API for only 151 pokemons (there seems to be a count of 1350 pokemons)
         const response = await fetch(
-          "https://pokeapi.co/api/v2/pokemon?limit=10"
+          "https://pokeapi.co/api/v2/pokemon?limit=151"
         );
 
         // if request fails (like 404/500)
@@ -26,42 +33,84 @@ function App() {
           throw new Error("Failed to fetch Pokémon");
         }
 
-        // convert the response to JSON and save it to a variable called data
-        const data = await response.json();
+const data = await response.json();
 
-        // save Pokémon list into state
-        setPokemons(data.results);       
-      }
-    ;
+/*
+  🧠 data.results contains:
+  [
+    { name, url },
+    { name, url }
+  ]
+*/
+
+/*
+  ⚡ Promise.all lets us fetch MANY Pokémon
+  at the same time instead of one-by-one
+*/
+const detailedPokemon = await Promise.all(
+  data.results.map(async (pokemon) => {
+
+    // 🌐 fetch EACH Pokémon's details
+    const response = await fetch(pokemon.url);
+
+    // 📦 convert response to JSON
+    const pokemonData = await response.json();
+
+    // 💾 return full Pokémon object
+    return pokemonData;
+  })
+);
+
+/*
+  💾 Save FULL Pokémon data into state
+*/
+setPokemons(detailedPokemon)       
+      };
 
     fetchPokemon();
   }, []); // empty array => this dependency makes it where it run only once on page load
 
 
 
+/*
+  Pagination math:
 
-  // Fetch call for details of ONE Pokémon
-const fetchPokemonDetails = async (url) => {
-  try {
-    // fetch specific Pokémon data
-    const response = await fetch(url);
+  We calculate which Pokémon to show
+  based on the current page.
+*/
 
-    // convert to JSON
-    const data = await response.json();
+// index of last Pokémon on page
+const lastIndex = currentPage * itemsPerPage;
 
-    // save detailed Pokémon data
-    setSelectedPokemon(data);
+// index of first Pokémon on page
+const firstIndex = lastIndex - itemsPerPage;
 
-    console.log(data); // this is helpful for learning/debugging
-  } catch (error) {
-    console.log("Error fetching Pokémon details:", error);
-  }
-};
+// slice out only Pokémon for current page
+const currentPokemon = pokemons
+  .filter((pokemon) => {
+    // 🔎 keep your search filter working
+    if (searchTerm === "") return true;
 
+    return (
+      pokemon.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      pokemon.id.toString().includes(searchTerm)
+    );
+  })
+  .slice(firstIndex, lastIndex);
+
+// RENDER to the PAGE
   return (
   <div className={darkMode ? "app dark" : "app"}>
 <div className="header">
   <h1>NYC Pokédex</h1>
+
+  <input
+  className="search-bar"
+  type="text"
+  placeholder="Search Pokémon by name or number..."
+  value={searchTerm}
+  onChange={(e) => setSearchTerm(e.target.value)}
+/>
 
   <button
     className="theme-btn"
@@ -116,13 +165,26 @@ const fetchPokemonDetails = async (url) => {
     <div className="pokedex-shell">
       <div className="pokedex-screen">
         <div className="pokedex-grid">
-      {/* USE MAP TO LIST THE POKEMONS from the array we are storing the pokemons in */}
-      {pokemons.map((pokemon, index) => (
-        <div className="pokemon-card" key={index}
-        // here is where react is saying "Take THIS Pokémon's url and pass it into the fetchPokemonDetails function"
-        //this is where we are doing the actual function call and passing the url argument
-        onClick={() => fetchPokemonDetails(pokemon.url)} //"give me the url property from this Pokémon object"
+
+{/* Rendering ONLY the Pokémon for the current page */}
+{currentPokemon.map((pokemon, index) => (
+ // Each Pokémon card
+<div className="pokemon-card" key={index}
+        // When clicked, store this Pokémon in state
+    // so the modal can display its details
+        onClick={() => setSelectedPokemon(pokemon)} //"give me the url property from this Pokémon object"
         >
+           {/* 🖼 Pokémon image from API data */}
+          <img
+  className="pokemon-image"
+  src={pokemon.sprites.front_default}
+  alt={pokemon.name}
+  />
+      {/* 🔢 Pokédex number */}
+  <p className="pokemon-number">
+  #{pokemon.id}
+</p>
+  {/* 📛 Pokémon name */}
           <p className="pokemon-name">{pokemon.name}</p>
         </div>
       ))}
