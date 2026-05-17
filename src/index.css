@@ -12,10 +12,189 @@ body {
   min-height: 100vh;
   color: #2d1b3d;
 }
+/* 🧠 header container */
+.header {
+  position: relative;
+  padding: 2rem;
+}
 
+/* 🌙 theme button positioning */
+.theme-btn {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+
+  padding: 0.7rem 1rem;
+
+  border: none;
+  border-radius: 10px;
+
+  cursor: pointer;
+  font-weight: bold;
+
+  background: white;
+  color: #7e22ce;
+
+  transition: 0.2s ease;
+}
 /* Main heading */
 h1 {
   text-align: center;
   padding: 2rem;
   font-size: 3rem;
+}
+
+/*  App container */
+.app {
+  text-align: center;
+}
+
+/*  Grid layout for Pokémon */
+.pokedex-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  padding: 2rem;
+}
+
+/*  Pokémon card */
+.pokemon-card {
+  background: linear-gradient(135deg, #ff9ff3, #a29bfe);
+  border-radius: 15px;
+  padding: 1rem;
+  color: white;
+  text-transform: capitalize;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+/*  hover effect */
+.pokemon-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+}
+
+/*  name styling */
+.pokemon-name {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+/*  dark overlay background */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*  modal box */
+.pokemon-modal {
+  background: linear-gradient(135deg, #ff9ff3, #a29bfe);
+  padding: 2rem;
+  border-radius: 20px;
+  text-align: center;
+  color: white;
+  width: 300px;
+  position: relative;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+/*  Pokémon image */
+.pokemon-modal img {
+  width: 150px;
+}
+
+/*  close button */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  border: none;
+  background: white;
+  color: #a855f7;
+
+  padding: 0.5rem 0.8rem;
+  border-radius: 50%;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* 🌙 dark mode app background */
+.dark {
+  background: linear-gradient(to bottom, #1e1b4b, #312e81);
+  min-height: 100vh;
+  color: white;
+}
+
+/* 🌙 dark mode card styling */
+.dark .pokemon-card {
+  background: linear-gradient(135deg, #6d28d9, #4338ca);
+}
+
+/* 🌙 dark mode modal */
+.dark .pokemon-modal {
+  background: linear-gradient(135deg, #4c1d95, #312e81);
+}
+
+/* ☀️🌙 theme toggle button */
+.theme-btn {
+  margin-bottom: 1rem;
+  padding: 0.7rem 1rem;
+
+  border: none;
+  border-radius: 10px;
+
+  cursor: pointer;
+  font-weight: bold;
+
+  background: white;
+  color: #7e22ce;
+
+  transition: 0.2s ease;
+}
+
+.theme-btn:hover {
+  transform: scale(1.05);
+}
+
+/* 🕹 Main Pokédex shell */
+.pokedex-shell {
+  width: 90%;
+  max-width: 1200px;
+
+  margin: 0 auto;
+  padding: 2rem;
+
+  border-radius: 30px;
+
+  background: linear-gradient(145deg, #d946ef, #7e22ce);
+
+  box-shadow:
+    0 0 20px rgba(255, 0, 255, 0.3),
+    0 0 40px rgba(168, 85, 247, 0.2);
+
+  border: 4px solid rgba(255,255,255,0.2);
+}
+
+/* 💻 Inner Pokédex screen */
+.pokedex-screen {
+  background: rgba(255,255,255,0.15);
+
+  border-radius: 20px;
+
+  padding: 2rem;
+
+  backdrop-filter: blur(10px);
+
+  border: 2px solid rgba(255,255,255,0.2);
 }
