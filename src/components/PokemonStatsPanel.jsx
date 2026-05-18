@@ -1,4 +1,4 @@
-function PokemonStatsPanel({ selectedPokemon }) {
+function PokemonStatsPanel({ selectedPokemon, isScanning }) {
   if (!selectedPokemon) {
     return (
       <div className="pokemon-stats-panel">
@@ -8,7 +8,7 @@ function PokemonStatsPanel({ selectedPokemon }) {
   }
 
   return (
-    <div className="pokemon-stats-panel">
+    <div className={isScanning ? "pokemon-stats-panel scanning" : "pokemon-stats-panel"}>
 {/* 🖼️ Main Pokémon image */}
 <img
   className="stats-image"

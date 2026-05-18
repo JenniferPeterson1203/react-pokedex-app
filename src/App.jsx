@@ -9,12 +9,15 @@ import usePokemon from "./hooks/usePokemon";
 
 function App() {
   
-  // Stores clicked Pokémon details
-  const [selectedPokemon, setSelectedPokemon] = useState(null);
+// Stores clicked Pokémon details
+const [selectedPokemon, setSelectedPokemon] = useState(null);
 
-  // 🌙 Tracks dark mode
-  const [darkMode, setDarkMode] = useState(false);
-  //  Current page the user is on
+// 🌙 Tracks dark mode
+const [darkMode, setDarkMode] = useState(false);
+
+
+// ✨ Controls scan animation when a Pokémon is selected
+const [isScanning, setIsScanning] = useState(false);
 
  const {
   pokemons,
@@ -29,6 +32,21 @@ function App() {
 
 // FAVORITES
 const { favoriteIds, toggleFavorite } = useFavorites();
+
+/*
+  ✨ Handles selecting a Pokémon
+
+  This updates the selected Pokémon and briefly
+  turns on the scan animation.
+*/
+const handleSelectPokemon = (pokemon) => {
+  setSelectedPokemon(pokemon);
+  setIsScanning(true);
+
+  setTimeout(() => {
+    setIsScanning(false);
+  }, 600);
+};
 
 
 // RENDER to the PAGE
@@ -86,7 +104,7 @@ return (
             updates main stats screen
           */
           onClick={() =>
-            setSelectedPokemon(pokemon)
+            handleSelectPokemon(pokemon)
           }
         >
 
@@ -127,11 +145,6 @@ return (
   </div>
 </div>
 
-<EvolutionChain
-  selectedPokemon={selectedPokemon}
-  setSelectedPokemon={setSelectedPokemon}
-  pokemons={pokemons}
-/>
   </aside>
 
   {/* RIGHT MAIN AREA */}
@@ -167,7 +180,10 @@ return (
 <div className="dashboard-layout">
 
   {/* 🖥️ MAIN POKÉDEX DISPLAY */}
-<PokemonStatsPanel selectedPokemon={selectedPokemon} />
+<PokemonStatsPanel
+  selectedPokemon={selectedPokemon}
+  isScanning={isScanning}
+/>
 
 
 
@@ -179,7 +195,7 @@ return (
    <PokemonCard
   key={pokemon.id}
   pokemon={pokemon}
-  setSelectedPokemon={setSelectedPokemon}
+  setSelectedPokemon={handleSelectPokemon}
   favoriteIds={favoriteIds}
   toggleFavorite={toggleFavorite}
   selectedPokemon={selectedPokemon}
@@ -218,7 +234,7 @@ return (
 
       <EvolutionChain
         selectedPokemon={selectedPokemon}
-        setSelectedPokemon={setSelectedPokemon}
+        setSelectedPokemon={handleSelectPokemon}
         pokemons={pokemons}
       />
 
