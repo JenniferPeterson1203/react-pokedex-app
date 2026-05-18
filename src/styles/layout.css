@@ -242,11 +242,16 @@ h1 {
     padding: 1rem;
   }
 
-  /* stack top bar */
-  .pokedex-top {
-    flex-direction: column;
-    gap: 1rem;
-  }
+/* 📱 Mobile top bar */
+.pokedex-top {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 1rem;
+}
 
   /* smaller device padding */
   .pokedex-device {
