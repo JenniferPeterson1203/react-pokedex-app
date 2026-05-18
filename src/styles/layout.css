@@ -206,3 +206,101 @@ h1 {
     0 0 25px rgba(0, 229, 255, 0.15),
     inset 0 0 10px rgba(255, 43, 214, 0.05);
 }
+
+/* 📱 TABLET LAYOUT */
+@media (max-width: 1100px) {
+
+  .app-layout {
+    grid-template-columns: 1fr;
+
+    gap: 1rem;
+  }
+
+  .sidebar,
+  .right-sidebar {
+    border: none;
+
+    border-bottom:
+      2px solid var(--neon-pink);
+  }
+
+  .main-content {
+    padding: 1rem;
+  }
+
+  .pokedex-device {
+    max-width: 100%;
+  }
+}
+
+/* 📱 MOBILE LAYOUT */
+@media (max-width: 700px) {
+
+  /* smaller title */
+  h1 {
+    font-size: 2rem;
+    padding: 1rem;
+  }
+
+  /* stack top bar */
+  .pokedex-top {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* smaller device padding */
+  .pokedex-device {
+    padding: 1rem;
+    border-radius: 24px;
+  }
+
+  /* smaller screen */
+  .pokedex-shell {
+    padding: 0.8rem;
+  }
+
+  /* tighter screen padding */
+  .pokedex-screen {
+    padding: 0.7rem;
+  }
+
+  /* smaller grid cards */
+  .pokedex-grid {
+    grid-template-columns:
+      repeat(auto-fit, minmax(90px, 1fr));
+
+    padding: 0.5rem;
+  }
+
+  /* smaller Pokémon images */
+  .pokemon-image {
+    width: 60px;
+    height: 60px;
+  }
+
+  /* smaller stats image */
+  .stats-image {
+    width: 90px;
+  }
+
+  /* search bar full width */
+  .search-bar {
+    width: 100%;
+  }
+
+  /* stack pagination */
+  .pagination {
+    flex-direction: column;
+  }
+
+  /* evolution items smaller */
+  .evolution-item img {
+    width: 55px;
+  }
+
+  /* sidebar padding */
+  .sidebar,
+  .right-sidebar {
+    padding: 1rem;
+  }
+}
