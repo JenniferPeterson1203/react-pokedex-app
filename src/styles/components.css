@@ -959,9 +959,11 @@ input:focus-visible {
 /* compare grid */
 .compare-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr auto 1fr;
 
   gap: 2rem;
+
+  align-items: start;
 }
 
 /* compare card */
@@ -1120,4 +1122,59 @@ input:focus-visible {
   transform:
     translateY(-50%)
     scale(1.15);
+}
+
+/* ⚔️ VS badge between compare cards */
+.vs-badge {
+  align-self: center;
+  justify-self: center;
+
+  width: 80px;
+  height: 80px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid var(--neon-cyan);
+  border-radius: 50%;
+
+  color: var(--neon-cyan);
+
+  font-size: 1.5rem;
+  font-weight: bold;
+
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.8);
+
+  box-shadow:
+    0 0 20px rgba(0, 229, 255, 0.45),
+    inset 0 0 15px rgba(255, 43, 214, 0.25);
+
+  animation: vsPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes vsPulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* winning stat highlight */
+.winning-stat {
+  color: var(--neon-cyan);
+
+  text-shadow:
+    0 0 8px rgba(0, 229, 255, 0.7);
+}
+
+.winning-stat strong {
+  color: var(--neon-cyan);
 }

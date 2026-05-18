@@ -71,15 +71,21 @@ function ComparePage() {
         {/* comparison cards */}
         <div className="compare-grid">
 
-          <PokemonCompareCard
-            pokemon={selectedPokemonOne}
-          />
+  <PokemonCompareCard
+    pokemon={selectedPokemonOne}
+    opponent={selectedPokemonTwo}
+  />
 
-          <PokemonCompareCard
-            pokemon={selectedPokemonTwo}
-          />
+  <div className="vs-badge">
+    VS
+  </div>
 
-        </div>
+  <PokemonCompareCard
+    pokemon={selectedPokemonTwo}
+    opponent={selectedPokemonOne}
+  />
+
+</div>
 
       </div>
 

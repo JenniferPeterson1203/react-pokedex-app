@@ -4,7 +4,7 @@
   Displays one Pokémon inside the compare view.
 */
 
-function PokemonCompareCard({ pokemon }) {
+function PokemonCompareCard({ pokemon, opponent }) {
 
   if (!pokemon) {
     return (
@@ -45,27 +45,29 @@ function PokemonCompareCard({ pokemon }) {
 
       {/* stats */}
       <div className="compare-stats">
+  {pokemon.stats.map((stat) => {
+    const opponentStat = opponent?.stats.find(
+      (item) => item.stat.name === stat.stat.name
+    );
 
-        {pokemon.stats.map((stat) => (
+    const isWinner =
+      opponentStat && stat.base_stat > opponentStat.base_stat;
 
-          <div
-            className="compare-stat-row"
-            key={stat.stat.name}
-          >
-
-            <span>
-              {stat.stat.name}
-            </span>
-
-            <strong>
-              {stat.base_stat}
-            </strong>
-
-          </div>
-
-        ))}
-
+    return (
+      <div
+        className={
+          isWinner
+            ? "compare-stat-row winning-stat"
+            : "compare-stat-row"
+        }
+        key={stat.stat.name}
+      >
+        <span>{stat.stat.name}</span>
+        <strong>{stat.base_stat}</strong>
       </div>
+    );
+  })}
+</div>
 
     </div>
   );
