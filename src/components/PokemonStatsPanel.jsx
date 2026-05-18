@@ -9,12 +9,30 @@ function PokemonStatsPanel({ selectedPokemon }) {
 
   return (
     <div className="pokemon-stats-panel">
-      {/* Pokémon image */}
-      <img
-        className="stats-image"
-        src={selectedPokemon.sprites.front_default}
-        alt={selectedPokemon.name}
-      />
+{/* 🖼️ Main Pokémon image */}
+<img
+  className="stats-image"
+  src={selectedPokemon.sprites.front_default}
+  alt={selectedPokemon.name}
+/>
+
+{/* ✨ Extra sprite previews */}
+<div className="sprite-gallery">
+  <img
+    src={selectedPokemon.sprites.front_default}
+    alt={`${selectedPokemon.name} front`}
+  />
+
+  <img
+    src={selectedPokemon.sprites.front_shiny}
+    alt={`${selectedPokemon.name} shiny`}
+  />
+
+  <img
+    src={selectedPokemon.sprites.back_default}
+    alt={`${selectedPokemon.name} back`}
+  />
+</div>
 
       {/* Pokémon name */}
       <h2>{selectedPokemon.name}</h2>
