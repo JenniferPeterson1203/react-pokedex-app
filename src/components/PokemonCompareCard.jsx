@@ -14,12 +14,19 @@ function PokemonCompareCard({ pokemon, opponent }) {
     );
   }
 
+  /*
+  🎨 Uses the Pokémon's first type
+  to theme the compare card.
+*/
+const primaryType =
+  pokemon.types[0].type.name;
+
   return (
   <div
   className={
     pokemon
-    ? "compare-card compare-card-active"
-    : "compare-card"
+    ? `compare-card compare-card-active type-${primaryType}`
+    : `compare-card`
     }
     >
 
@@ -59,6 +66,7 @@ function PokemonCompareCard({ pokemon, opponent }) {
     const isWinner =
       opponentStat && stat.base_stat > opponentStat.base_stat;
 
+    
     return (
       <div
         className={
