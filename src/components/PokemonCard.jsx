@@ -4,10 +4,11 @@
   Props are data passed from App.jsx
 */
 
-function PokemonCard({  pokemon,
+function PokemonCard({   pokemon,
   setSelectedPokemon,
   favoriteIds,
-  toggleFavorite, setSelectedPokemon,}) { //data (props) coming in from App.jsx
+  toggleFavorite,
+  selectedPokemon,}) { //data (props) coming in from App.jsx
 
 // ❤️ Check if this Pokémon is already favorited
 const isFavorite = favoriteIds.includes(pokemon.id);

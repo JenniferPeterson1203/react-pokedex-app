@@ -1,0 +1,193 @@
+.app {
+  text-align: center;
+}
+
+.app-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  height: 100vh;
+  background: #0a0a0f;
+  color: white;
+}
+
+.sidebar {
+  background: var(--panel);
+  border-right: 2px solid var(--neon-pink);
+  padding: 2rem;
+  box-shadow:
+    0 0 25px rgba(255, 43, 214, 0.25),
+    inset 0 0 10px rgba(0, 229, 255, 0.05);
+}
+
+.sidebar h2 {
+  color: var(--neon-pink);
+  text-shadow:
+    0 0 10px rgba(255, 43, 214, 0.8),
+    0 0 20px rgba(255, 43, 214, 0.4);
+}
+
+.sidebar-subtext {
+  color: var(--neon-cyan);
+  font-size: 0.9rem;
+}
+
+.main-content {
+  padding: 2rem;
+  background: radial-gradient(circle at top, #12121a, #07070b);
+}
+
+.header {
+  position: relative;
+  padding: 2rem;
+}
+
+h1 {
+  text-align: center;
+  padding: 2rem;
+  font-size: 3rem;
+}
+
+.pokedex-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.lights {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255,255,255,0.4);
+}
+
+.red {
+  background: #ff4d4d;
+}
+
+.yellow {
+  background: #ffd93d;
+}
+
+.green {
+  background: #4ade80;
+}
+
+.device-title {
+  color: white;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.pokedex-device {
+  width: 95%;
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 40px;
+  background: linear-gradient(145deg, #ffb3f5, #d8b4fe);
+  border: 2px solid var(--neon-pink);
+  box-shadow:
+    0 0 25px rgba(255, 43, 214, 0.25),
+    0 0 40px rgba(0, 229, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.dark .pokedex-device {
+  background: #0b0b10;
+  box-shadow:
+    0 0 30px rgba(255, 43, 214, 0.25),
+    0 0 60px rgba(0, 229, 255, 0.08);
+}
+
+.pokedex-device::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    120deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 60%
+  );
+  transform: rotate(10deg);
+  pointer-events: none;
+}
+
+.pokedex-shell {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 30px;
+  background: linear-gradient(145deg, #d946ef, #7e22ce);
+  border: 4px solid rgba(255, 255, 255, 0.2);
+}
+
+.pokedex-screen {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid var(--neon-pink);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow:
+    inset 0 0 15px rgba(255, 255, 255, 0.2),
+    0 0 20px rgba(255, 43, 214, 0.15);
+}
+
+.dark .pokedex-screen {
+  background: #0a0a0f;
+  box-shadow:
+    inset 0 0 20px rgba(0, 0, 0, 0.8),
+    0 0 20px rgba(0, 229, 255, 0.15);
+}
+
+.dashboard-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.pokedex-screen-frame {
+  position: relative;
+  border-radius: 20px;
+}
+
+.pokedex-screen-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 0, 255, 0.08),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.pokedex-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.pokedex-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 2px solid rgba(255, 255, 255, 0.2);
+}
