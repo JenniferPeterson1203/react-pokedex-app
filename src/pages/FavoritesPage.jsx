@@ -4,7 +4,7 @@ import PokemonCard from "../components/PokemonCard";
 import PokemonStatsPanel from "../components/PokemonStatsPanel";
 import EvolutionChain from "../components/EvolutionChain";
 import PokemonLore from "../components/PokemonLore";
-
+import AppLayout from "../components/AppLayout";
 import usePokemon from "../hooks/usePokemon";
 import useFavorites from "../hooks/useFavorites";
 
@@ -16,7 +16,7 @@ import useFavorites from "../hooks/useFavorites";
 function FavoritesPage() {
   const [selectedPokemon, setSelectedPokemon] = useState(null);
   const [isScanning, setIsScanning] = useState(false);
-
+  const [darkMode, setDarkMode] = useState(false);
   const { pokemons } = usePokemon();
   const { favoriteIds, toggleFavorite } = useFavorites();
 
@@ -39,49 +39,66 @@ function FavoritesPage() {
     }, 600);
   };
 
-  return (
-    <div className="app">
-      <div className="favorites-page">
-        <h1>Favorite Pokémon</h1>
+return (
+  <AppLayout
+    darkMode={darkMode}
+    setDarkMode={setDarkMode}
+    rightSidebar={
+      <>
+        <EvolutionChain
+          selectedPokemon={selectedPokemon}
+          setSelectedPokemon={handleSelectPokemon}
+          pokemons={pokemons}
+        />
 
-        {favoritePokemon.length === 0 ? (
-          <p className="empty-favorites">
-            No favorites saved yet. Go back and tap a heart to add some.
-          </p>
-        ) : (
-          <>
-            <PokemonStatsPanel
-              selectedPokemon={selectedPokemon}
-              isScanning={isScanning}
-            />
+        <PokemonLore
+          selectedPokemon={selectedPokemon}
+        />
+      </>
+    }
+  >
+    <div className="favorites-page">
 
-            <div className="pokedex-grid">
-              {favoritePokemon.map((pokemon) => (
-                <PokemonCard
-                  key={pokemon.id}
-                  pokemon={pokemon}
-                  setSelectedPokemon={handleSelectPokemon}
-                  favoriteIds={favoriteIds}
-                  toggleFavorite={toggleFavorite}
-                  selectedPokemon={selectedPokemon}
-                />
-              ))}
-            </div>
+      <h1>Favorite Pokémon</h1>
 
-            <aside className="right-sidebar">
-              <EvolutionChain
-                selectedPokemon={selectedPokemon}
+      {favoritePokemon.length === 0 ? (
+
+        <p className="empty-favorites">
+          No favorites saved yet.
+          Go back and tap a heart to add some.
+        </p>
+
+      ) : (
+
+        <>
+          <PokemonStatsPanel
+            selectedPokemon={selectedPokemon}
+            isScanning={isScanning}
+          />
+
+          <div className="pokedex-grid">
+
+            {favoritePokemon.map((pokemon) => (
+
+              <PokemonCard
+                key={pokemon.id}
+                pokemon={pokemon}
                 setSelectedPokemon={handleSelectPokemon}
-                pokemons={pokemons}
+                favoriteIds={favoriteIds}
+                toggleFavorite={toggleFavorite}
+                selectedPokemon={selectedPokemon}
               />
 
-              <PokemonLore selectedPokemon={selectedPokemon} />
-            </aside>
-          </>
-        )}
-      </div>
+            ))}
+
+          </div>
+        </>
+
+      )}
+
     </div>
-  );
+  </AppLayout>
+);
 }
 
 export default FavoritesPage;

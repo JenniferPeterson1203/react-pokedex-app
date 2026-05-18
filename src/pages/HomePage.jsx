@@ -1,259 +1,105 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
 import PokemonCard from "../components/PokemonCard";
 import SearchBar from "../components/SearchBar";
 import Pagination from "../components/Pagination";
 import PokemonStatsPanel from "../components/PokemonStatsPanel";
 import EvolutionChain from "../components/EvolutionChain";
 import PokemonLore from "../components/PokemonLore";
-import TypingTitle from "../components/TypingTitle";
+import AppLayout from "../components/AppLayout";
 
 import useFavorites from "../hooks/useFavorites";
 import usePokemon from "../hooks/usePokemon";
 
-import pokeball from "../assets/pokeball.png";
-
 function HomePage() {
-  
-// Stores clicked Pokémon details
-const [selectedPokemon, setSelectedPokemon] = useState(null);
+  const [selectedPokemon, setSelectedPokemon] = useState(null);
+  const [darkMode, setDarkMode] = useState(false);
+  const [isScanning, setIsScanning] = useState(false);
 
-// 🌙 Tracks dark mode
-const [darkMode, setDarkMode] = useState(false);
+  const {
+    pokemons,
+    searchTerm,
+    setSearchTerm,
+    currentPage,
+    setCurrentPage,
+    itemsPerPage,
+    filteredPokemon,
+    currentPokemon,
+  } = usePokemon();
 
+  const { favoriteIds, toggleFavorite } = useFavorites();
 
-// ✨ Controls scan animation when a Pokémon is selected
-const [isScanning, setIsScanning] = useState(false);
+  const handleSelectPokemon = (pokemon) => {
+    setSelectedPokemon(pokemon);
+    setIsScanning(true);
 
- const {
-  pokemons,
-  searchTerm,
-  setSearchTerm,
-  currentPage,
-  setCurrentPage,
-  itemsPerPage,
-  filteredPokemon,
-  currentPokemon,
-} = usePokemon(); 
+    setTimeout(() => {
+      setIsScanning(false);
+    }, 600);
+  };
 
-// FAVORITES
-const { favoriteIds, toggleFavorite } = useFavorites();
-
-/*
-  ✨ Handles selecting a Pokémon
-
-  This updates the selected Pokémon and briefly
-  turns on the scan animation.
-*/
-const handleSelectPokemon = (pokemon) => {
-  setSelectedPokemon(pokemon);
-  setIsScanning(true);
-
-  setTimeout(() => {
-    setIsScanning(false);
-  }, 600);
-};
-
-
-// RENDER to the PAGE
-return (
-  <div className={darkMode ? "app dark" : "app"}>
-
-    
-  {/* 🔴🟡🟢 Pokédex indicator lights
-  These mimic a real handheld device */}
-
-<div className="pokedex-top">
-  <div className="lights">
-    <span className="light red"></span>
-    <span className="light yellow"></span>
-    <span className="light green"></span>
-  </div>
-
-<img
-  src={pokeball}
-  alt="Pokéball"
-  className="pokeball-logo"
-/>  
-</div>
-
-
-<div className="app-layout">
-  
-  {/* LEFT SIDEBAR */}
-  <aside className="sidebar">
-   <TypingTitle />
-
-
-    {/* optional future nav items */}
-{/* ❤️ Favorite Pokémon section */}
-<div className="favorites-sidebar">
-
-  <h3>Favorite Pokémon</h3>
-
-  {favoriteIds.length === 0 ? (
-
-    <p className="empty-favorites">
-      No favorites yet
-    </p>
-
-  ) : (
-
-    filteredPokemon
-      .filter((pokemon) =>
-        favoriteIds.includes(pokemon.id)
-      )
-      .map((pokemon) => (
-
-        <div
-          key={pokemon.id}
-          className="favorite-sidebar-card"
-
-          /*
-            🧠 Clicking sidebar Pokémon
-            updates main stats screen
-          */
-          onClick={() =>
-            handleSelectPokemon(pokemon)
-          }
-        >
-
-          <img
-            src={pokemon.sprites.front_default}
-            alt={pokemon.name}
+  return (
+    <AppLayout
+      darkMode={darkMode}
+      setDarkMode={setDarkMode}
+      rightSidebar={
+        <>
+          <EvolutionChain
+            selectedPokemon={selectedPokemon}
+            setSelectedPokemon={handleSelectPokemon}
+            pokemons={pokemons}
           />
 
-          <span>{pokemon.name}</span>
-
+          <PokemonLore selectedPokemon={selectedPokemon} />
+        </>
+      }
+    >
+      <div className="pokedex-device">
+        <div className="header">
+          <h1>Jennifer's Pokédex</h1>
         </div>
 
-      ))
+        <div className="pokedex-shell">
+          <div className="pokedex-screen">
+            <div className="dashboard-layout">
+              <PokemonStatsPanel
+                selectedPokemon={selectedPokemon}
+                isScanning={isScanning}
+              />
 
-  )}
+              <div className="pokedex-screen-frame">
+                <div className="pokedex-grid">
+                  {currentPokemon.map((pokemon) => (
+                    <PokemonCard
+                      key={pokemon.id}
+                      pokemon={pokemon}
+                      setSelectedPokemon={handleSelectPokemon}
+                      favoriteIds={favoriteIds}
+                      toggleFavorite={toggleFavorite}
+                      selectedPokemon={selectedPokemon}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
 
-</div>
+            <div className="pokedex-controls">
+              <SearchBar
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+              />
 
-{/* 📊 Dashboard quick stats */}
-<div className="dashboard-widgets">
-  <h3>Dashboard</h3>
-
-  <div className="widget-card">
-    <span>Total Pokémon</span>
-    <strong>{filteredPokemon.length}</strong>
-  </div>
-
-  <div className="widget-card">
-    <span>Favorites</span>
-    <strong>{favoriteIds.length}</strong>
-  </div>
-
-  <div className="widget-card">
-    <span>Selected</span>
-    <strong>
-      {selectedPokemon ? selectedPokemon.name : "None"}
-    </strong>
-  </div>
-</div>
-
-  </aside>
-
-  {/* RIGHT MAIN AREA */}
-  <main className="main-content">
-
-
-{/* 🕹️ Pokédex device shell */}
-<div className="pokedex-device">
-<div className="header">
-  <h1>Jennifer's Pokédex</h1>
-
-{/* DARK & LIGHT MODE BUTTON */}
-  <button
-    className="theme-btn"
-    onClick={() => setDarkMode(!darkMode)}
-    >
-    {darkMode ? "☀️" : "🌙"}
-  </button>
-</div>
-
-
-
-    {/* Pokédex grid container */}
-    <div className="pokedex-shell">
-      
-  {/* 🖥️ Pokédex SCREEN
-  This simulates the display area of a handheld device */}
-  <div className="pokedex-screen">
-     {/*  Main dashboard layout
-   Left = Pokémon grid
-   Right = Pokémon details panel */}
-
-<div className="dashboard-layout">
-
-  {/* 🖥️ MAIN POKÉDEX DISPLAY */}
-<PokemonStatsPanel
-  selectedPokemon={selectedPokemon}
-  isScanning={isScanning}
-/>
-
-
-
-  {/* 🎴 Pokémon Grid */}
-  <div className="pokedex-screen-frame">
-
-    <div className="pokedex-grid">
-      {currentPokemon.map((pokemon) => (
-   <PokemonCard
-  key={pokemon.id}
-  pokemon={pokemon}
-  setSelectedPokemon={handleSelectPokemon}
-  favoriteIds={favoriteIds}
-  toggleFavorite={toggleFavorite}
-  selectedPokemon={selectedPokemon}
-/>
-      ))}
-    </div>
-
-  </div>
-
-</div>
-
-
-
-{/* 🎮 Pokédex Controls Panel */}
-<div className="pokedex-controls">
-  <SearchBar
-    searchTerm={searchTerm}
-    setSearchTerm={setSearchTerm}
-    />
-{/* Pagination controls component */}
-  <Pagination
-    currentPage={currentPage}
-    setCurrentPage={setCurrentPage}
-    pokemons={filteredPokemon}
-    itemsPerPage={itemsPerPage}
-    />
-
-</div>
-
-  </div>
-    </div>
-    </div>
-    </main>
-        {/* RIGHT SIDEBAR */}
-    <aside className="right-sidebar">
-
-      <EvolutionChain
-        selectedPokemon={selectedPokemon}
-        setSelectedPokemon={handleSelectPokemon}
-        pokemons={pokemons}
-      />
-
-      <PokemonLore
-      selectedPokemon={selectedPokemon}
-      />
-
-    </aside>
-    </div>
-  </div>
+              <Pagination
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                pokemons={filteredPokemon}
+                itemsPerPage={itemsPerPage}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </AppLayout>
   );
 }
 
