@@ -7,7 +7,7 @@ import EvolutionChain from "./components/EvolutionChain";
 import useFavorites from "./hooks/useFavorites";
 import usePokemon from "./hooks/usePokemon";
 import PokemonLore from "./components/PokemonLore";
-
+import TypingTitle from "./components/TypingTitle";
 function App() {
   
 // Stores clicked Pokémon details
@@ -65,7 +65,8 @@ return (
     <span className="light green"></span>
   </div>
 
-  <h2 className="device-title">Jennifer's Pokédex</h2>
+  {/* <h2 className="device-title">Jennifer's Pokédex</h2> */}
+  
 </div>
 
 
@@ -73,7 +74,7 @@ return (
   
   {/* LEFT SIDEBAR */}
   <aside className="sidebar">
-    <h2>Jennifer's Pokédex</h2>
+   <TypingTitle />
 
 
     {/* optional future nav items */}
@@ -238,7 +239,7 @@ return (
         setSelectedPokemon={handleSelectPokemon}
         pokemons={pokemons}
       />
-      
+
       <PokemonLore
       selectedPokemon={selectedPokemon}
       />
