@@ -5,137 +5,29 @@ import Pagination from "./components/Pagination";
 import PokemonStatsPanel from "./components/PokemonStatsPanel";
 import EvolutionChain from "./components/EvolutionChain";
 import useFavorites from "./hooks/useFavorites";
+import usePokemon from "./hooks/usePokemon";
 
 function App() {
-  // Stores Pokémon list
-  const [pokemons, setPokemons] = useState([]);
+  
   // Stores clicked Pokémon details
   const [selectedPokemon, setSelectedPokemon] = useState(null);
-  // Search State
-  const [searchTerm, setSearchTerm] = useState("");
+
   // 🌙 Tracks dark mode
   const [darkMode, setDarkMode] = useState(false);
   //  Current page the user is on
-const [currentPage, setCurrentPage] = useState(1);
+
+ const {
+  searchTerm,
+  setSearchTerm,
+  currentPage,
+  setCurrentPage,
+  itemsPerPage,
+  filteredPokemon,
+  currentPokemon,
+} = usePokemon(); 
+
 // FAVORITES
 const { favoriteIds, toggleFavorite } = useFavorites();
-
-// How many Pokémon per page
-const itemsPerPage = 15;
-
-
-  // Runs once when the component loads
-  useEffect(() => {
-    // async function inside useEffect (this is best practice)
-    const fetchPokemon = async () => {
-     
-       
-
-        // fecth call to the API for only 151 pokemons (there seems to be a count of 1350 pokemons)
-        const response = await fetch(
-          "https://pokeapi.co/api/v2/pokemon?limit=151"
-        );
-
-        // if request fails (like 404/500)
-        if (!response.ok) {
-          throw new Error("Failed to fetch Pokémon");
-        }
-
-const data = await response.json();
-
-/*
-  🧠 data.results contains:
-  [
-    { name, url },
-    { name, url }
-  ]
-*/
-
-/*
-  ⚡ Promise.all lets us fetch MANY Pokémon
-  at the same time instead of one-by-one
-*/
-const detailedPokemon = await Promise.all(
-  data.results.map(async (pokemon) => {
-
-    // 🌐 fetch EACH Pokémon's details
-    const response = await fetch(pokemon.url);
-
-    // 📦 convert response to JSON
-    const pokemonData = await response.json();
-
-    // 💾 return full Pokémon object
-    return pokemonData;
-  })
-);
-
-/*
-  Save FULL Pokémon data into state
-*/
-setPokemons(detailedPokemon)       
-      };
-
-    fetchPokemon();
-  }, []); // empty array => this dependency makes it where it run only once on page load
-
-
-/*
-  🧠 Reset pagination when search changes
-
-  Example:
-  User searches "pikachu"
-
-  We automatically move them back
-  to page 1 of filtered results.
-*/
-useEffect(() => {
-  setCurrentPage(1);
-}, [searchTerm]);
-
-
-
-/*
-  Pagination math:
-
-  We calculate which Pokémon to show
-  based on the current page.
-*/
-
-// index of last Pokémon on page
-const lastIndex = currentPage * itemsPerPage;
-
-// index of first Pokémon on page
-const firstIndex = lastIndex - itemsPerPage;
-
-/*
-  🔎 Filter Pokémon based on search input
-*/
-const filteredPokemon = pokemons.filter((pokemon) => {
-
-  // show all Pokémon if search is empty
-  if (searchTerm === "") return true;
-
-  return (
-    pokemon.name
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase()) ||
-
-    pokemon.id
-      .toString()
-      .includes(searchTerm)
-  );
-});
-
-
-/*
-  🧠 Only show Pokémon for current page
-*/
-const currentPokemon = filteredPokemon.slice(
-  firstIndex,
-  lastIndex
-);
-
-
 
 
 // RENDER to the PAGE
