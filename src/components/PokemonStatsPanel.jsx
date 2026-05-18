@@ -1,4 +1,6 @@
+import { Link } from "react-router-dom";
 import TypeEffectiveness from "./TypeEffectiveness";
+
 
 function PokemonStatsPanel({ selectedPokemon, isScanning }) {
   if (!selectedPokemon) {
@@ -12,11 +14,18 @@ function PokemonStatsPanel({ selectedPokemon, isScanning }) {
   return (
     <div className={isScanning ? "pokemon-stats-panel scanning" : "pokemon-stats-panel"}>
 {/* 🖼️ Main Pokémon image */}
+
+<Link
+  to={`/pokemon/${selectedPokemon.name}`}
+  aria-label={`View details for ${selectedPokemon.name}`}
+>
 <img
   className="stats-image"
   src={selectedPokemon.sprites.front_default}
   alt={selectedPokemon.name}
 />
+
+</Link>
 
 {/* ✨ Extra sprite previews */}
 <div className="sprite-gallery">

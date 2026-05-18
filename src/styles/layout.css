@@ -318,3 +318,12 @@ h1 {
   background: radial-gradient(circle at top, #12121a, #07070b);
   color: white;
 }
+
+/* 🔍 Dedicated Pokémon details page */
+.pokemon-page {
+  min-height: 100vh;
+  padding: 2rem;
+
+  background: radial-gradient(circle at top, #12121a, #07070b);
+  color: white;
+}
