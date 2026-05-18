@@ -45,6 +45,10 @@ npm run dev
 
 ---
 
+## 🌐 Live Demo
+
+[View Jennifer's Pokédex](https://react-pokedex-app-sooty.vercel.app/)
+
 ## 📸 Screenshots
 
 ### Desktop View
