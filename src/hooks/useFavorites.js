@@ -4,27 +4,24 @@ import { useEffect, useState } from "react";
   ❤️ Custom hook for favorite Pokémon
 
   This keeps favorite logic out of App.jsx.
-  App.jsx can use the hook instead of managing
-  localStorage directly.
+  It also saves favorites to localStorage so they
+  stay after refreshing the page.
 */
 function useFavorites() {
-  // Stores favorite Pokémon IDs
-  const [favoriteIds, setFavoriteIds] = useState([]);
-
   /*
-    Load saved favorites from localStorage
-    when the app first opens.
+    🧠 Load saved favorites immediately when state is created.
+
+    This prevents the app from starting with []
+    and accidentally overwriting localStorage.
   */
-  useEffect(() => {
+  const [favoriteIds, setFavoriteIds] = useState(() => {
     const savedFavorites = localStorage.getItem("favoritePokemonIds");
 
-    if (savedFavorites) {
-      setFavoriteIds(JSON.parse(savedFavorites));
-    }
-  }, []);
+    return savedFavorites ? JSON.parse(savedFavorites) : [];
+  });
 
   /*
-    Save favorites whenever favoriteIds changes.
+    💾 Save favorites whenever favoriteIds changes.
   */
   useEffect(() => {
     localStorage.setItem(
@@ -34,7 +31,7 @@ function useFavorites() {
   }, [favoriteIds]);
 
   /*
-    Add or remove a Pokémon from favorites.
+    ❤️ Add or remove a Pokémon from favorites.
   */
   const toggleFavorite = (pokemonId) => {
     setFavoriteIds((prevFavorites) => {
