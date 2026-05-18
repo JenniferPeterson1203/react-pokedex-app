@@ -376,3 +376,122 @@
     opacity: 0;
   }
 }
+
+/*  Type effectiveness section */
+.type-effectiveness {
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+/* section spacing */
+.effectiveness-section {
+  margin-bottom: 1rem;
+}
+
+/* section titles */
+.effectiveness-section h3 {
+  color: var(--neon-cyan);
+
+  margin-bottom: 0.5rem;
+
+  text-shadow:
+    0 0 8px rgba(0,229,255,0.6);
+}
+
+/* badges container */
+.effectiveness-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* weakness badge */
+.weakness-badge {
+  border: 1px solid #ff4d6d;
+  color: #ff4d6d;
+
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+
+  text-transform: uppercase;
+  font-size: 0.75rem;
+
+  box-shadow:
+    0 0 10px rgba(255,77,109,0.3);
+}
+
+/* resistance badge */
+.resistance-badge {
+  border: 1px solid #4ade80;
+  color: #4ade80;
+
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+
+  text-transform: uppercase;
+  font-size: 0.75rem;
+
+  box-shadow:
+    0 0 10px rgba(74,222,128,0.3);
+}
+
+/* 📄 Pagination container */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  margin-top: 1rem;
+}
+
+/* 🔘 Pagination buttons */
+.pagination-btn {
+  background: rgba(255, 255, 255, 0.08);
+
+  border: 1px solid var(--neon-pink);
+
+  color: var(--neon-pink);
+
+  padding: 0.6rem 1rem;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  font-weight: bold;
+
+  transition: 0.2s ease;
+
+  box-shadow:
+    0 0 12px rgba(255, 43, 214, 0.2);
+}
+
+/* hover effect */
+.pagination-btn:hover {
+  transform: translateY(-2px);
+
+  border-color: var(--neon-cyan);
+
+  color: var(--neon-cyan);
+
+  box-shadow:
+    0 0 18px rgba(0, 229, 255, 0.35);
+}
+
+/* page text */
+.pagination-text {
+  color: white;
+
+  font-weight: bold;
+
+  letter-spacing: 1px;
+
+  text-shadow:
+    0 0 8px rgba(255, 43, 214, 0.4);
+}
+
+/* 🌙 dark mode buttons */
+.dark .pagination-btn {
+  background: rgba(0, 0, 0, 0.35);
+}

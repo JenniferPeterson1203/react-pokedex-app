@@ -1,3 +1,5 @@
+import TypeEffectiveness from "./TypeEffectiveness";
+
 function PokemonStatsPanel({ selectedPokemon, isScanning }) {
   if (!selectedPokemon) {
     return (
@@ -86,7 +88,11 @@ function PokemonStatsPanel({ selectedPokemon, isScanning }) {
           </div>
         ))}
       </div>
+      <TypeEffectiveness
+  selectedPokemon={selectedPokemon}
+/>
     </div>
+    
   );
 }
 

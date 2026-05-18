@@ -25,31 +25,34 @@ function Pagination({
     <div className="pagination">
 
       {/* ⬅ Previous page button */}
-      <button
-        onClick={() =>
-          setCurrentPage((prev) =>
-            Math.max(prev - 1, 1)
-          )
-        }
-      >
-        ⬅ Prev
-      </button>
+{/* ⬅ Previous page button */}
+<button
+  className="pagination-btn"
+  onClick={() =>
+    setCurrentPage((prev) =>
+      Math.max(prev - 1, 1)
+    )
+  }
+>
+  ⬅ Prev
+</button>
 
-      {/* 📊 Current page display */}
-      <span>
-        Page {currentPage} of {totalPages}
-      </span>
+{/* 📊 Current page display */}
+<span className="pagination-text">
+  Page {currentPage} of {totalPages}
+</span>
 
-      {/* ➡ Next page button */}
-      <button
-        onClick={() =>
-          setCurrentPage((prev) =>
-            Math.min(prev + 1, totalPages)
-          )
-        }
-      >
-        Next ➡
-      </button>
+{/* ➡ Next page button */}
+<button
+  className="pagination-btn"
+  onClick={() =>
+    setCurrentPage((prev) =>
+      Math.min(prev + 1, totalPages)
+    )
+  }
+>
+  Next ➡
+</button>
 
     </div>
   );
