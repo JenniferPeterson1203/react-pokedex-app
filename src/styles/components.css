@@ -1333,3 +1333,34 @@ input:focus-visible {
   box-shadow:
     0 0 30px rgba(90,0,255,0.35);
 }
+
+/* 🧠 Move insights rows */
+.move-insight-row {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 0.7rem 0;
+
+  border-bottom:
+    1px solid rgba(255,255,255,0.08);
+}
+
+/* move name */
+.move-name {
+  text-transform: capitalize;
+
+  color: white;
+}
+
+/* level badge */
+.move-level {
+  color: var(--neon-cyan);
+
+  font-weight: bold;
+
+  text-shadow:
+    0 0 8px rgba(0,229,255,0.45);
+}

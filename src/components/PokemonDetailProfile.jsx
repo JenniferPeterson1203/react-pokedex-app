@@ -1,4 +1,5 @@
 import TypeEffectiveness from "./TypeEffectiveness";
+import MoveInsights from "../components/MoveInsights";
 
 /*
   🔍 PokemonDetailProfile
@@ -94,6 +95,7 @@ function PokemonDetailProfile({ pokemon }) {
           <TypeEffectiveness selectedPokemon={pokemon} />
         </div>
       </div>
+          <MoveInsights pokemon={pokemon} />
     </div>
   );
 }
