@@ -743,3 +743,53 @@ h1 {
 .favorite-sidebar-card span {
   text-transform: capitalize;
 }
+
+/* 📊 Dashboard widgets section */
+.dashboard-widgets {
+  margin-top: 2rem;
+}
+
+.dashboard-widgets h3 {
+  color: var(--neon-cyan);
+  margin-bottom: 1rem;
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.6);
+}
+
+/* small dashboard cards */
+.widget-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0.8rem;
+  margin-bottom: 0.8rem;
+
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  border-radius: 12px;
+
+  background: rgba(0, 0, 0, 0.2);
+
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.12);
+}
+
+.widget-card span {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+.widget-card strong {
+  color: var(--neon-pink);
+  text-transform: capitalize;
+  text-shadow: 0 0 8px rgba(255, 43, 214, 0.6);
+}
+
+/* ✨ Active selected Pokémon card */
+.selected-card {
+  border-color: var(--neon-cyan);
+
+  box-shadow:
+    0 0 18px rgba(0, 229, 255, 0.65),
+    0 0 30px rgba(255, 43, 214, 0.35);
+
+  transform: translateY(-4px);
+}

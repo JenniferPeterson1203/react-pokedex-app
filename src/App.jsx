@@ -103,6 +103,28 @@ return (
   )}
 
 </div>
+
+{/* 📊 Dashboard quick stats */}
+<div className="dashboard-widgets">
+  <h3>Dashboard</h3>
+
+  <div className="widget-card">
+    <span>Total Pokémon</span>
+    <strong>{filteredPokemon.length}</strong>
+  </div>
+
+  <div className="widget-card">
+    <span>Favorites</span>
+    <strong>{favoriteIds.length}</strong>
+  </div>
+
+  <div className="widget-card">
+    <span>Selected</span>
+    <strong>
+      {selectedPokemon ? selectedPokemon.name : "None"}
+    </strong>
+  </div>
+</div>
   </aside>
 
   {/* RIGHT MAIN AREA */}
@@ -155,6 +177,7 @@ return (
   setSelectedPokemon={setSelectedPokemon}
   favoriteIds={favoriteIds}
   toggleFavorite={toggleFavorite}
+  selectedPokemon={selectedPokemon}
 />
       ))}
     </div>

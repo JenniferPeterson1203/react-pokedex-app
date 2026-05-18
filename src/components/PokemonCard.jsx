@@ -7,16 +7,18 @@
 function PokemonCard({  pokemon,
   setSelectedPokemon,
   favoriteIds,
-  toggleFavorite,}) { //data (props) coming in from App.jsx
+  toggleFavorite, setSelectedPokemon,}) { //data (props) coming in from App.jsx
 
 // ❤️ Check if this Pokémon is already favorited
 const isFavorite = favoriteIds.includes(pokemon.id);
+// ✨ Checks if this card is the selected Pokémon
+const isSelected = selectedPokemon?.id === pokemon.id;
 
   return (
 
     // 🎴 Individual Pokémon card
     <div
-      className="pokemon-card"
+      className={isSelected ? "pokemon-card selected-card" : "pokemon-card"}
 
       // 🖱️ Open modal when card is clicked
       onClick={() => setSelectedPokemon(pokemon)}
