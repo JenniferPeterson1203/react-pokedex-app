@@ -8,6 +8,8 @@ import useFavorites from "./hooks/useFavorites";
 import usePokemon from "./hooks/usePokemon";
 import PokemonLore from "./components/PokemonLore";
 import TypingTitle from "./components/TypingTitle";
+import pokeball from "./assets/pokeball.png"
+
 function App() {
   
 // Stores clicked Pokémon details
@@ -65,8 +67,11 @@ return (
     <span className="light green"></span>
   </div>
 
-  {/* <h2 className="device-title">Jennifer's Pokédex</h2> */}
-  
+<img
+  src={pokeball}
+  alt="Pokéball"
+  className="pokeball-logo"
+/>  
 </div>
 
 
