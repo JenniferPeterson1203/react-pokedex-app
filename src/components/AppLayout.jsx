@@ -85,7 +85,12 @@ function AppLayout({
 )}
 
       </div>
+      <footer className="app-footer">
+  © 2026 Jennifer Peterson • Built with React & PokéAPI ⚡
+</footer>
     </div>
+
+    
   );
 }
 

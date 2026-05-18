@@ -97,3 +97,7 @@ Through this project I strengthened my understanding of:
 - Building polished user experiences
 
 ---
+
+---
+
+© 2026 Jennifer Peterson • Built with React, PokéAPI, and futuristic Pokédex vibes ⚡

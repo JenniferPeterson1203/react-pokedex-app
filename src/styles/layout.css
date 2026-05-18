@@ -5,7 +5,7 @@
 .app-layout {
   display: grid;
   grid-template-columns: 260px 1fr 260px;
-  height: 100vh;
+  min-height: 100vh;
   background: #0a0a0f;
   color: white;
 }
@@ -331,4 +331,33 @@ h1 {
 /* When there is no right sidebar, let main content breathe */
 .app-layout:has(.compare-page) {
   grid-template-columns: 260px 1fr;
+}
+
+/* 🌙 App footer */
+.app-footer {
+  text-align: center;
+
+  padding: 1rem;
+
+  font-size: 0.85rem;
+
+  color: rgba(255,255,255,0.65);
+
+  border-top:
+    1px solid rgba(255,255,255,0.08);
+
+  background:
+    rgba(0,0,0,0.18);
+
+  backdrop-filter: blur(8px);
+}
+
+/* neon hover vibe */
+.app-footer:hover {
+  color: var(--neon-cyan);
+
+  text-shadow:
+    0 0 8px rgba(0,229,255,0.45);
+
+  transition: 0.2s ease;
 }
