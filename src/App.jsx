@@ -4,6 +4,7 @@ import SearchBar from "./components/SearchBar";
 import Pagination from "./components/Pagination";
 import PokemonStatsPanel from "./components/PokemonStatsPanel";
 import EvolutionChain from "./components/EvolutionChain";
+import useFavorites from "./hooks/useFavorites";
 
 function App() {
   // Stores Pokémon list
@@ -16,9 +17,8 @@ function App() {
   const [darkMode, setDarkMode] = useState(false);
   //  Current page the user is on
 const [currentPage, setCurrentPage] = useState(1);
-// ❤️ Stores favorite Pokémon IDs
-// We use IDs instead of full Pokémon objects because IDs are smaller and easier to compare
-const [favoriteIds, setFavoriteIds] = useState([]);
+// FAVORITES
+const { favoriteIds, toggleFavorite } = useFavorites();
 
 // How many Pokémon per page
 const itemsPerPage = 15;
@@ -92,28 +92,7 @@ useEffect(() => {
   setCurrentPage(1);
 }, [searchTerm]);
 
-/*
-  💾 Load favorites from localStorage when the app first opens
 
-  localStorage keeps data even after refreshing the page.
-*/
-useEffect(() => {
-  const savedFavorites = localStorage.getItem("favoritePokemonIds");
-
-  if (savedFavorites) {
-    setFavoriteIds(JSON.parse(savedFavorites));
-  }
-}, []);
-
-/*
-  💾 Save favorites whenever favoriteIds changes
-*/
-useEffect(() => {
-  localStorage.setItem(
-    "favoritePokemonIds",
-    JSON.stringify(favoriteIds)
-  );
-}, [favoriteIds]);
 
 /*
   Pagination math:
@@ -156,18 +135,8 @@ const currentPokemon = filteredPokemon.slice(
   lastIndex
 );
 
-/*
-  ❤️ Add or remove a Pokémon from favorites
-*/
-const toggleFavorite = (pokemonId) => {
-  setFavoriteIds((prevFavorites) => {
-    if (prevFavorites.includes(pokemonId)) {
-      return prevFavorites.filter((id) => id !== pokemonId);
-    }
 
-    return [...prevFavorites, pokemonId];
-  });
-};
+
 
 // RENDER to the PAGE
 return (
