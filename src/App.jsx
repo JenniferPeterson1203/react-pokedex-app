@@ -6,6 +6,7 @@ import PokemonStatsPanel from "./components/PokemonStatsPanel";
 import EvolutionChain from "./components/EvolutionChain";
 import useFavorites from "./hooks/useFavorites";
 import usePokemon from "./hooks/usePokemon";
+import PokemonLore from "./components/PokemonLore";
 
 function App() {
   
@@ -236,6 +237,10 @@ return (
         selectedPokemon={selectedPokemon}
         setSelectedPokemon={handleSelectPokemon}
         pokemons={pokemons}
+      />
+      
+      <PokemonLore
+      selectedPokemon={selectedPokemon}
       />
 
     </aside>

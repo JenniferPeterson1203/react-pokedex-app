@@ -495,3 +495,65 @@
 .dark .pagination-btn {
   background: rgba(0, 0, 0, 0.35);
 }
+
+/* 🌍 Lore panel */
+.pokemon-lore {
+  margin-top: 2rem;
+
+  padding-top: 1.5rem;
+
+  border-top:
+    1px solid rgba(255,255,255,0.1);
+}
+
+/* lore title */
+.pokemon-lore h3 {
+  color: var(--neon-cyan);
+
+  margin-bottom: 1rem;
+
+  text-shadow:
+    0 0 8px rgba(0,229,255,0.6);
+}
+
+/* lore info rows */
+.lore-item {
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 0.7rem;
+
+  font-size: 0.9rem;
+}
+
+/* labels */
+.lore-label {
+  color: var(--neon-pink);
+}
+
+/* values */
+.lore-value {
+  text-transform: capitalize;
+}
+
+/* flavor text box */
+.flavor-text {
+  margin-top: 1rem;
+
+  padding: 1rem;
+
+  border:
+    1px solid rgba(0,229,255,0.2);
+
+  border-radius: 14px;
+
+  background:
+    rgba(255,255,255,0.04);
+
+  font-style: italic;
+
+  line-height: 1.5;
+
+  box-shadow:
+    inset 0 0 10px rgba(0,229,255,0.05);
+}
