@@ -17,20 +17,27 @@ const isSelected = selectedPokemon?.id === pokemon.id;
 
   return (
 
-    // 🎴 Individual Pokémon card
-    <div
-      className={isSelected ? "pokemon-card selected-card" : "pokemon-card"}
-
-      // 🖱️ Open modal when card is clicked
-      onClick={() => setSelectedPokemon(pokemon)}
-    >
-        <button
+<div
+  className={isSelected ? "pokemon-card selected-card" : "pokemon-card"}
+  tabIndex="0"
+  role="button"
+  aria-label={`Select ${pokemon.name}`}
+  onClick={() => setSelectedPokemon(pokemon)}
+  onKeyDown={(e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      setSelectedPokemon(pokemon);
+    }
+  }}
+>
+<button
   className={isFavorite ? "favorite-btn active" : "favorite-btn"}
+  aria-label={
+    isFavorite
+      ? `Remove ${pokemon.name} from favorites`
+      : `Add ${pokemon.name} to favorites`
+  }
   onClick={(e) => {
-    // 🛑 Stops the card click from also opening/selecting the Pokémon
     e.stopPropagation();
-
-    // ❤️ Add or remove this Pokémon from favorites
     toggleFavorite(pokemon.id);
   }}
 >

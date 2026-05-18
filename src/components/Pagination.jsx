@@ -28,6 +28,8 @@ function Pagination({
 {/* ⬅ Previous page button */}
 <button
   className="pagination-btn"
+  disabled={currentPage === 1}
+  aria-label="Go to previous page"
   onClick={() =>
     setCurrentPage((prev) =>
       Math.max(prev - 1, 1)
@@ -45,6 +47,8 @@ function Pagination({
 {/* ➡ Next page button */}
 <button
   className="pagination-btn"
+  disabled={currentPage === totalPages}
+  aria-label="Go to next page"
   onClick={() =>
     setCurrentPage((prev) =>
       Math.min(prev + 1, totalPages)

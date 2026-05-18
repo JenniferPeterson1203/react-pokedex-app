@@ -480,6 +480,13 @@
   background: rgba(0, 0, 0, 0.35);
 }
 
+.pagination-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
 /* 🌍 Lore panel */
 .pokemon-lore {
   margin-top: 2rem;
@@ -782,7 +789,18 @@
   text-align: center;
 }
 
-/* 🎮 Sprite detail card */
+/* Sprite detail card */
 .sprite-detail-card {
   text-align: center;
+}
+
+/* Clear keyboard focus styles */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 4px;
+
+  box-shadow:
+    0 0 12px rgba(0, 229, 255, 0.7);
 }
