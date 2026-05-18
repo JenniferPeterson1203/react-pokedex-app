@@ -17,6 +17,7 @@ function App() {
   //  Current page the user is on
 
  const {
+  pokemons,
   searchTerm,
   setSearchTerm,
   currentPage,
@@ -164,6 +165,9 @@ return (
 
 <EvolutionChain
   selectedPokemon={selectedPokemon}
+  setSelectedPokemon={setSelectedPokemon}
+  pokemons={pokemons}
+
 />
 
   {/* 🎴 Pokémon Grid */}

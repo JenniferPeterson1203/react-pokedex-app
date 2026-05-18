@@ -1,113 +1,88 @@
 import { useEffect, useState } from "react";
 
-/*
-  🧠 EvolutionChain component
-
-  Fetches and displays
-  Pokémon evolution data.
-*/
-
-function EvolutionChain({ selectedPokemon }) {
-
-  // 🌱 Stores evolution chain data
+function EvolutionChain({ selectedPokemon, setSelectedPokemon, pokemons }) {
   const [evolutions, setEvolutions] = useState([]);
 
   useEffect(() => {
+    if (!selectedPokemon) {
+      setEvolutions([]);
+      return;
+    }
 
-    // stop if no Pokémon selected
-    if (!selectedPokemon) return;
-
-    /*
-      🧠 Fetch evolution chain
-      from multiple API endpoints
-    */
     const fetchEvolutionChain = async () => {
-
       try {
+        const speciesResponse = await fetch(selectedPokemon.species.url);
+        const speciesData = await speciesResponse.json();
 
-        // 1️⃣ fetch species data
-        const speciesResponse = await fetch(
-          selectedPokemon.species.url
-        );
-
-        const speciesData =
-          await speciesResponse.json();
-
-        // 2️⃣ fetch evolution chain data
-        const evolutionResponse = await fetch(
-          speciesData.evolution_chain.url
-        );
-
-        const evolutionData =
-          await evolutionResponse.json();
-
-        /*
-          🧠 Evolution chain structure
-          is deeply nested.
-
-          We manually walk through it.
-        */
+        const evolutionResponse = await fetch(speciesData.evolution_chain.url);
+        const evolutionData = await evolutionResponse.json();
 
         const chain = [];
-
-        let current =
-          evolutionData.chain;
+        let current = evolutionData.chain;
 
         while (current) {
-
-          chain.push(
-            current.species.name
-          );
-
-          current =
-            current.evolves_to[0];
+          chain.push(current.species.name);
+          current = current.evolves_to[0];
         }
 
-        // Save evolution names
         setEvolutions(chain);
-
       } catch (error) {
-
-        console.log(
-          "Evolution fetch failed",
-          error
-        );
+        console.log("Evolution fetch failed:", error);
       }
     };
 
     fetchEvolutionChain();
-
   }, [selectedPokemon]);
 
+  if (!selectedPokemon) {
+    return (
+      <div className="evolution-section">
+        <h3>Evolution Chain</h3>
+        <p>Select a Pokémon to view evolutions</p>
+      </div>
+    );
+  }
+
   return (
-
     <div className="evolution-section">
-
       <h3>Evolution Chain</h3>
 
       <div className="evolution-chain">
+        {evolutions.map((name) => {
+          const evolutionPokemon = pokemons.find(
+            (pokemon) => pokemon.name === name
+          );
 
-        {evolutions.map((name) => (
+          const isCurrentPokemon = selectedPokemon.name === name;
 
-          <div
-            className="evolution-item"
-            key={name}
-          >
+          return (
+            <button
+              key={name}
+              className={
+                isCurrentPokemon
+                  ? "evolution-item active-evolution"
+                  : "evolution-item"
+              }
+              onClick={() => {
+                if (evolutionPokemon) {
+                  setSelectedPokemon(evolutionPokemon);
+                }
+              }}
+            >
+              <img
+                src={
+                  evolutionPokemon
+                    ? evolutionPokemon.sprites.front_default
+                    : `https://img.pokemondb.net/sprites/home/normal/${name}.png`
+                }
+                alt={name}
+              />
 
-            {/* evolution image */}
-            <img
-              src={`https://img.pokemondb.net/sprites/home/normal/${name}.png`}
-              alt={name}
-            />
-
-            <p>{name}</p>
-
-          </div>
-
-        ))}
-
+              <p>{name}</p>
+            </button>
+          );
+        })}
       </div>
-
     </div>
   );
 }

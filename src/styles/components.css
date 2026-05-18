@@ -284,3 +284,30 @@
   text-transform: capitalize;
   text-shadow: 0 0 8px rgba(255, 43, 214, 0.6);
 }
+
+/* clickable evolution item */
+.evolution-item {
+  text-align: center;
+  background: transparent;
+  border: 1px solid rgba(255, 43, 214, 0.35);
+  border-radius: 14px;
+  padding: 0.5rem;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+/* hover effect for evolution */
+.evolution-item:hover {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 14px rgba(0, 229, 255, 0.35);
+  transform: translateY(-3px);
+}
+
+/* current selected evolution */
+.active-evolution {
+  border-color: var(--neon-cyan);
+  box-shadow:
+    0 0 16px rgba(0, 229, 255, 0.55),
+    0 0 24px rgba(255, 43, 214, 0.25);
+}
