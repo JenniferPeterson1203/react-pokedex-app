@@ -15,7 +15,13 @@ function PokemonCompareCard({ pokemon, opponent }) {
   }
 
   return (
-    <div className="compare-card">
+  <div
+  className={
+    pokemon
+    ? "compare-card compare-card-active"
+    : "compare-card"
+    }
+    >
 
       {/* Pokémon image */}
       <img
