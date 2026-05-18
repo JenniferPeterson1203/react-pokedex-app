@@ -3,6 +3,7 @@ import { useState } from "react";
 import AppLayout from "../components/AppLayout";
 import PokemonCompareCard from "../components/PokemonCompareCard";
 import PokemonSearchSelect from "../components/PokemonSearchSelect";
+import getBattlePrediction from "../utils/battlePrediction";
 import usePokemon from "../hooks/usePokemon";
 
 /*
@@ -36,61 +37,61 @@ function ComparePage() {
         pokemon.name === pokemonTwo
     );
 
-  return (
-    <AppLayout
-      darkMode={darkMode}
-      setDarkMode={setDarkMode}
-      rightSidebar={null}
-    >
+return (
+  <AppLayout
+    darkMode={darkMode}
+    setDarkMode={setDarkMode}
+    rightSidebar={null}
+  >
+    <div className="compare-page">
+      <h1>Compare Pokémon</h1>
 
-      <div className="compare-page">
+      {/* selectors */}
+      <div className="compare-selectors">
+        <PokemonSearchSelect
+          label="Choose Pokémon 1"
+          pokemons={pokemons}
+          selectedName={pokemonOne}
+          setSelectedName={setPokemonOne}
+        />
 
-        <h1>Compare Pokémon</h1>
-
-        {/* selectors */}
-        <div className="compare-selectors">
-
-{/* Pokémon 1 */}
-<PokemonSearchSelect
-  label="Choose Pokémon 1"
-  pokemons={pokemons}
-  selectedName={pokemonOne}
-  setSelectedName={setPokemonOne}
-/>
-
-{/* Pokémon 2 */}
-<PokemonSearchSelect
-  label="Choose Pokémon 2"
-  pokemons={pokemons}
-  selectedName={pokemonTwo}
-  setSelectedName={setPokemonTwo}
-/>
-
-        </div>
-
-        {/* comparison cards */}
-        <div className="compare-grid">
-
-  <PokemonCompareCard
-    pokemon={selectedPokemonOne}
-    opponent={selectedPokemonTwo}
-  />
-
-  <div className="vs-badge">
-    VS
-  </div>
-
-  <PokemonCompareCard
-    pokemon={selectedPokemonTwo}
-    opponent={selectedPokemonOne}
-  />
-
-</div>
-
+        <PokemonSearchSelect
+          label="Choose Pokémon 2"
+          pokemons={pokemons}
+          selectedName={pokemonTwo}
+          setSelectedName={setPokemonTwo}
+        />
       </div>
 
-    </AppLayout>
-  );
+      {/* battle prediction */}
+      <div className="battle-readout">
+        <h2>Battle Readout</h2>
+
+        <p>
+          {getBattlePrediction(
+            selectedPokemonOne,
+            selectedPokemonTwo
+          )}
+        </p>
+      </div>
+
+      {/* comparison cards */}
+      <div className="compare-grid">
+        <PokemonCompareCard
+          pokemon={selectedPokemonOne}
+          opponent={selectedPokemonTwo}
+        />
+
+        <div className="vs-badge">VS</div>
+
+        <PokemonCompareCard
+          pokemon={selectedPokemonTwo}
+          opponent={selectedPokemonOne}
+        />
+      </div>
+    </div>
+  </AppLayout>
+);
 }
 
 export default ComparePage;

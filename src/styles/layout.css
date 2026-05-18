@@ -327,3 +327,8 @@ h1 {
   background: radial-gradient(circle at top, #12121a, #07070b);
   color: white;
 }
+
+/* When there is no right sidebar, let main content breathe */
+.app-layout:has(.compare-page) {
+  grid-template-columns: 260px 1fr;
+}

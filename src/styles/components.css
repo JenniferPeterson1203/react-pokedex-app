@@ -959,11 +959,10 @@ input:focus-visible {
 /* compare grid */
 .compare-grid {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
-
+  grid-template-columns: minmax(280px, 1fr) auto minmax(280px, 1fr);
   gap: 2rem;
-
-  align-items: start;
+  align-items: stretch;
+  width: 100%;
 }
 
 /* compare card */
@@ -1177,4 +1176,51 @@ input:focus-visible {
 
 .winning-stat strong {
   color: var(--neon-cyan);
+}
+
+/* ⚔️ Battle prediction panel */
+.battle-readout {
+  margin: 2rem auto;
+
+  max-width: 700px;
+
+  padding: 1.5rem;
+
+  border:
+    1px solid rgba(0,229,255,0.35);
+
+  border-radius: 20px;
+
+  background:
+    rgba(0,0,0,0.35);
+
+  text-align: center;
+
+  box-shadow:
+    0 0 20px rgba(0,229,255,0.15);
+}
+
+/* title */
+.battle-readout h2 {
+  color: var(--neon-cyan);
+
+  margin-bottom: 0.8rem;
+
+  text-shadow:
+    0 0 8px rgba(0,229,255,0.6);
+}
+
+/* prediction text */
+.battle-readout p {
+  line-height: 1.6;
+
+  color: white;
+
+  text-transform: capitalize;
+}
+
+.compare-page {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
 }
