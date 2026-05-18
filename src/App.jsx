@@ -3,6 +3,7 @@ import PokemonCard from "./components/PokemonCard";
 import SearchBar from "./components/SearchBar";
 import Pagination from "./components/Pagination";
 import PokemonStatsPanel from "./components/PokemonStatsPanel";
+import EvolutionChain from "./components/EvolutionChain";
 
 function App() {
   // Stores Pokémon list
@@ -199,6 +200,10 @@ return (
 
   {/* 🖥️ MAIN POKÉDEX DISPLAY */}
 <PokemonStatsPanel selectedPokemon={selectedPokemon} />
+
+<EvolutionChain
+  selectedPokemon={selectedPokemon}
+/>
 
   {/* 🎴 Pokémon Grid */}
   <div className="pokedex-screen-frame">

@@ -605,3 +605,51 @@ h1 {
 
   box-shadow: 0 0 10px rgba(0, 229, 255, 0.25);
 }
+
+/* 🌱 Evolution section */
+.evolution-section {
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+/* evolution title */
+.evolution-section h3 {
+  color: var(--neon-cyan);
+
+  margin-bottom: 0.7rem;
+
+  text-shadow:
+    0 0 8px rgba(0,229,255,0.6);
+}
+
+/* evolution chain row */
+.evolution-chain {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  flex-wrap: wrap;
+}
+
+/* individual evolution */
+.evolution-item {
+  text-align: center;
+}
+
+/* evolution image */
+.evolution-item img {
+  width: 80px;
+  image-rendering: pixelated;
+
+  filter:
+    drop-shadow(
+      0 0 8px rgba(255,43,214,0.5)
+    );
+}
+
+/* evolution name */
+.evolution-item p {
+  font-size: 0.8rem;
+  text-transform: capitalize;
+}
