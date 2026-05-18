@@ -684,3 +684,62 @@ h1 {
   transform: scale(1.1);
   border-color: var(--neon-cyan);
 }
+
+/* ❤️ Favorites section */
+.favorites-sidebar {
+  margin-top: 2rem;
+}
+
+/* favorites title */
+.favorites-sidebar h3 {
+  color: var(--neon-cyan);
+
+  margin-bottom: 1rem;
+
+  text-shadow:
+    0 0 8px rgba(0,229,255,0.6);
+}
+
+/* empty favorites text */
+.empty-favorites {
+  opacity: 0.7;
+  font-size: 0.9rem;
+}
+
+/* individual favorite card */
+.favorite-sidebar-card {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+
+  padding: 0.6rem;
+  margin-bottom: 0.7rem;
+
+  border: 1px solid rgba(255,43,214,0.3);
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+/* hover effect */
+.favorite-sidebar-card:hover {
+  border-color: var(--neon-cyan);
+
+  box-shadow:
+    0 0 12px rgba(0,229,255,0.25);
+
+  transform: translateX(4px);
+}
+
+/* favorite sprite */
+.favorite-sidebar-card img {
+  width: 45px;
+  image-rendering: pixelated;
+}
+
+/* favorite name */
+.favorite-sidebar-card span {
+  text-transform: capitalize;
+}

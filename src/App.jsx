@@ -55,15 +55,54 @@ return (
   <aside className="sidebar">
     <h2>Jennifer's Pokédex</h2>
 
-    <p className="sidebar-subtext">
-      NYC Neon Interface
-    </p>
 
     {/* optional future nav items */}
-    <div className="sidebar-links">
-      <p>All Pokémon</p>
-      <p>Favorites</p>
-    </div>
+{/* ❤️ Favorite Pokémon section */}
+<div className="favorites-sidebar">
+
+  <h3>Favorite Pokémon</h3>
+
+  {favoriteIds.length === 0 ? (
+
+    <p className="empty-favorites">
+      No favorites yet
+    </p>
+
+  ) : (
+
+    filteredPokemon
+      .filter((pokemon) =>
+        favoriteIds.includes(pokemon.id)
+      )
+      .map((pokemon) => (
+
+        <div
+          key={pokemon.id}
+          className="favorite-sidebar-card"
+
+          /*
+            🧠 Clicking sidebar Pokémon
+            updates main stats screen
+          */
+          onClick={() =>
+            setSelectedPokemon(pokemon)
+          }
+        >
+
+          <img
+            src={pokemon.sprites.front_default}
+            alt={pokemon.name}
+          />
+
+          <span>{pokemon.name}</span>
+
+        </div>
+
+      ))
+
+  )}
+
+</div>
   </aside>
 
   {/* RIGHT MAIN AREA */}
