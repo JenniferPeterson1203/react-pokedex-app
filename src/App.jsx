@@ -126,6 +126,12 @@ return (
     </strong>
   </div>
 </div>
+
+<EvolutionChain
+  selectedPokemon={selectedPokemon}
+  setSelectedPokemon={setSelectedPokemon}
+  pokemons={pokemons}
+/>
   </aside>
 
   {/* RIGHT MAIN AREA */}
@@ -163,12 +169,7 @@ return (
   {/* 🖥️ MAIN POKÉDEX DISPLAY */}
 <PokemonStatsPanel selectedPokemon={selectedPokemon} />
 
-<EvolutionChain
-  selectedPokemon={selectedPokemon}
-  setSelectedPokemon={setSelectedPokemon}
-  pokemons={pokemons}
 
-/>
 
   {/* 🎴 Pokémon Grid */}
   <div className="pokedex-screen-frame">
@@ -212,6 +213,16 @@ return (
     </div>
     </div>
     </main>
+        {/* RIGHT SIDEBAR */}
+    <aside className="right-sidebar">
+
+      <EvolutionChain
+        selectedPokemon={selectedPokemon}
+        setSelectedPokemon={setSelectedPokemon}
+        pokemons={pokemons}
+      />
+
+    </aside>
     </div>
   </div>
   );
