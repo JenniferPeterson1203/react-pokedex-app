@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { useTheme } from "../context/ThemeContext";
 import PokemonCard from "../components/PokemonCard";
 import PokemonStatsPanel from "../components/PokemonStatsPanel";
 import EvolutionChain from "../components/EvolutionChain";
@@ -16,7 +16,8 @@ import useFavorites from "../hooks/useFavorites";
 function FavoritesPage() {
   const [selectedPokemon, setSelectedPokemon] = useState(null);
   const [isScanning, setIsScanning] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const { darkMode, setDarkMode } =
+  useTheme();
   const { pokemons } = usePokemon();
   const { favoriteIds, toggleFavorite } = useFavorites();
 

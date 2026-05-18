@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTheme } from "../context/ThemeContext";
 import { useParams } from "react-router-dom";
 import PokemonDetailProfile from "../components/PokemonDetailProfile";
 import LoadingScreen from "../components/LoadingScreen";
@@ -16,7 +17,8 @@ import usePokemon from "../hooks/usePokemon";
   based on the name in the URL.
 */
 function PokemonPage() {
-  const [darkMode, setDarkMode] = useState(false);
+  const { darkMode, setDarkMode } =
+  useTheme();
   const [isScanning, setIsScanning] = useState(false);
 
   // 🧠 Gets the Pokémon name from the URL

@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { useTheme } from "../context/ThemeContext";
 import AppLayout from "../components/AppLayout";
 import PokemonCompareCard from "../components/PokemonCompareCard";
 import PokemonSearchSelect from "../components/PokemonSearchSelect";
@@ -14,7 +14,8 @@ import usePokemon from "../hooks/usePokemon";
 
 function ComparePage() {
 
-  const [darkMode, setDarkMode] = useState(false);
+  const { darkMode, setDarkMode } =
+  useTheme();
 
   const [pokemonOne, setPokemonOne] =
     useState("");

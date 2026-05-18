@@ -1,5 +1,5 @@
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import { useTheme } from "../context/ThemeContext";
 import PokemonCard from "../components/PokemonCard";
 import SearchBar from "../components/SearchBar";
 import Pagination from "../components/Pagination";
@@ -13,7 +13,8 @@ import usePokemon from "../hooks/usePokemon";
 
 function HomePage() {
   const [selectedPokemon, setSelectedPokemon] = useState(null);
-  const [darkMode, setDarkMode] = useState(false);
+  const { darkMode, setDarkMode } =
+  useTheme();
   const [isScanning, setIsScanning] = useState(false);
 
   const {
