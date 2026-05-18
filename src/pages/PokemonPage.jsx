@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import PokemonDetailProfile from "../components/PokemonDetailProfile";
-
+import LoadingScreen from "../components/LoadingScreen";
 import AppLayout from "../components/AppLayout";
 // import PokemonStatsPanel from "../components/PokemonStatsPanel";
 import EvolutionChain from "../components/EvolutionChain";
@@ -81,9 +81,7 @@ function PokemonPage() {
         {selectedPokemon ? (
       <PokemonDetailProfile pokemon={selectedPokemon} />
         ) : (
-          <p className="empty-favorites">
-            Loading Pokémon details...
-          </p>
+            <LoadingScreen message="Scanning Pokémon Details..." />
         )}
       </div>
     </AppLayout>
