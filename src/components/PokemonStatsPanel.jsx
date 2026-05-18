@@ -9,60 +9,67 @@ function PokemonStatsPanel({ selectedPokemon }) {
 
   return (
     <div className="pokemon-stats-panel">
-        <div className="stats-container">
+      {/* Pokémon image */}
+      <img
+        className="stats-image"
+        src={selectedPokemon.sprites.front_default}
+        alt={selectedPokemon.name}
+      />
 
-  {selectedPokemon.stats.map((stat) => (
+      {/* Pokémon name */}
+      <h2>{selectedPokemon.name}</h2>
 
-    <div
-      className="stat-row"
-      key={stat.stat.name}
-    >
+      {/* Pokédex number */}
+      <p>#{selectedPokemon.id}</p>
 
-      {/* 📛 Stat name */}
-      <div className="stat-header">
-
-        <span className="stat-name">
-          {stat.stat.name}
-        </span>
-
-        {/* 🔢 Base stat value */}
-        <span className="stat-value">
-          {stat.base_stat}
-        </span>
-
+      {/* Pokémon type badges */}
+      <div className="type-badges">
+        {selectedPokemon.types.map((type) => (
+          <span className="type-badge" key={type.type.name}>
+            {type.type.name}
+          </span>
+        ))}
       </div>
 
-      {/* 📈 Neon progress bar */}
-      <div className="stat-bar-bg">
+      <p>Height: {selectedPokemon.height}</p>
+      <p>Weight: {selectedPokemon.weight}</p>
 
-        <div
-          className="stat-bar-fill"
+      {/* Pokémon abilities */}
+      <div className="ability-section">
+        <h3>Abilities</h3>
 
-          /*
-            🧠 Dynamic width based on stat value
-
-            Example:
-            HP = 80
-            width becomes 80%
-          */
-          style={{
-            width: `${stat.base_stat}%`,
-          }}
-        ></div>
-
+        <div className="ability-badges">
+          {selectedPokemon.abilities.map((ability) => (
+            <span
+              className="ability-badge"
+              key={ability.ability.name}
+            >
+              {ability.ability.name}
+            </span>
+          ))}
+        </div>
       </div>
 
-    </div>
+      {/* Pokémon base stats */}
+      <div className="stats-container">
+        {selectedPokemon.stats.map((stat) => (
+          <div className="stat-row" key={stat.stat.name}>
+            <div className="stat-header">
+              <span className="stat-name">{stat.stat.name}</span>
+              <span className="stat-value">{stat.base_stat}</span>
+            </div>
 
-  ))}
-
-</div>
-        
+            <div className="stat-bar-bg">
+              <div
+                className="stat-bar-fill"
+                style={{ width: `${stat.base_stat}%` }}
+              ></div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
 
 export default PokemonStatsPanel;
-
-
-

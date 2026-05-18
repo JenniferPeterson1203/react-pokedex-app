@@ -1,4 +1,8 @@
 import { useEffect, useState } from "react";
+import PokemonCard from "./components/PokemonCard";
+import SearchBar from "./components/SearchBar";
+import Pagination from "./components/Pagination";
+import PokemonStatsPanel from "./components/PokemonStatsPanel";
 
 function App() {
   // Stores Pokémon list
@@ -13,7 +17,7 @@ function App() {
 const [currentPage, setCurrentPage] = useState(1);
 
 // How many Pokémon per page
-const itemsPerPage = 12;
+const itemsPerPage = 15;
 
 
   // Runs once when the component loads
@@ -62,7 +66,7 @@ const detailedPokemon = await Promise.all(
 );
 
 /*
-  💾 Save FULL Pokémon data into state
+  Save FULL Pokémon data into state
 */
 setPokemons(detailedPokemon)       
       };
@@ -71,6 +75,18 @@ setPokemons(detailedPokemon)
   }, []); // empty array => this dependency makes it where it run only once on page load
 
 
+/*
+  🧠 Reset pagination when search changes
+
+  Example:
+  User searches "pikachu"
+
+  We automatically move them back
+  to page 1 of filtered results.
+*/
+useEffect(() => {
+  setCurrentPage(1);
+}, [searchTerm]);
 
 /*
   Pagination math:
@@ -85,112 +101,144 @@ const lastIndex = currentPage * itemsPerPage;
 // index of first Pokémon on page
 const firstIndex = lastIndex - itemsPerPage;
 
-// slice out only Pokémon for current page
-const currentPokemon = pokemons
-  .filter((pokemon) => {
-    // 🔎 keep your search filter working
-    if (searchTerm === "") return true;
+/*
+  🔎 Filter Pokémon based on search input
+*/
+const filteredPokemon = pokemons.filter((pokemon) => {
 
-    return (
-      pokemon.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      pokemon.id.toString().includes(searchTerm)
-    );
-  })
-  .slice(firstIndex, lastIndex);
+  // show all Pokémon if search is empty
+  if (searchTerm === "") return true;
+
+  return (
+    pokemon.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase()) ||
+
+    pokemon.id
+      .toString()
+      .includes(searchTerm)
+  );
+});
+
+
+/*
+  🧠 Only show Pokémon for current page
+*/
+const currentPokemon = filteredPokemon.slice(
+  firstIndex,
+  lastIndex
+);
 
 // RENDER to the PAGE
-  return (
+return (
   <div className={darkMode ? "app dark" : "app"}>
+
+    
+  {/* 🔴🟡🟢 Pokédex indicator lights
+  These mimic a real handheld device */}
+
+<div className="pokedex-top">
+  <div className="lights">
+    <span className="light red"></span>
+    <span className="light yellow"></span>
+    <span className="light green"></span>
+  </div>
+
+  <h2 className="device-title">Jennifer's Pokédex</h2>
+</div>
+
+
+<div className="app-layout">
+  
+  {/* LEFT SIDEBAR */}
+  <aside className="sidebar">
+    <h2>Jennifer's Pokédex</h2>
+
+    <p className="sidebar-subtext">
+      NYC Neon Interface
+    </p>
+
+    {/* optional future nav items */}
+    <div className="sidebar-links">
+      <p>All Pokémon</p>
+      <p>Favorites</p>
+    </div>
+  </aside>
+
+  {/* RIGHT MAIN AREA */}
+  <main className="main-content">
+
+
+{/* 🕹️ Pokédex device shell */}
+<div className="pokedex-device">
 <div className="header">
-  <h1>NYC Pokédex</h1>
+  <h1>Jennifer's Pokédex</h1>
 
-  <input
-  className="search-bar"
-  type="text"
-  placeholder="Search Pokémon by name or number..."
-  value={searchTerm}
-  onChange={(e) => setSearchTerm(e.target.value)}
-/>
-
+{/* DARK & LIGHT MODE BUTTON */}
   <button
     className="theme-btn"
     onClick={() => setDarkMode(!darkMode)}
-  >
+    >
     {darkMode ? "☀️" : "🌙"}
   </button>
 </div>
 
-    {/* Pokemon detail modal */} 
-    {/* here we are using && to say only show the modal if a pokemon was selected */}
-    {selectedPokemon && (
-      <div className="modal-overlay">
-        <div className="pokemon-modal">
 
-          {/* CLOSE BUTTON */}
-          <button className="close-btn"
-            onClick={()=> setSelectedPokemon(null)}
-            >
-            X
-
-          </button>
-          {/*  POKEMON IMAGE*/}
-          <img
-          src={selectedPokemon.sprites.front_default}
-          alt={selectedPokemon.name}
-          />
-          {/* POKEMON NAME */}
-          <h2>
-            {selectedPokemon.name}
-          </h2>
-          {/* PoKemon height */}
-          <p>
-            <strong>Height: </strong>
-              {selectedPokemon.height}
-          </p>
-          {/* Pokemon Weight */}
-            <p>
-            <strong>Weight: </strong>
-              {selectedPokemon.weight}
-          </p>
-          {/* POKEMON TYPEs*/}
-          <p>
-            <strong>Type: </strong>
-            {selectedPokemon.types.map((type)=> type.type.name).join(", ")}
-          </p>
-        </div>
-      </div>
-    )}
 
     {/* Pokédex grid container */}
     <div className="pokedex-shell">
-      <div className="pokedex-screen">
-        <div className="pokedex-grid">
+      
+  {/* 🖥️ Pokédex SCREEN
+  This simulates the display area of a handheld device */}
+  <div className="pokedex-screen">
+     {/*  Main dashboard layout
+   Left = Pokémon grid
+   Right = Pokémon details panel */}
 
-{/* Rendering ONLY the Pokémon for the current page */}
-{currentPokemon.map((pokemon, index) => (
- // Each Pokémon card
-<div className="pokemon-card" key={index}
-        // When clicked, store this Pokémon in state
-    // so the modal can display its details
-        onClick={() => setSelectedPokemon(pokemon)} //"give me the url property from this Pokémon object"
-        >
-           {/* 🖼 Pokémon image from API data */}
-          <img
-  className="pokemon-image"
-  src={pokemon.sprites.front_default}
-  alt={pokemon.name}
-  />
-      {/* 🔢 Pokédex number */}
-  <p className="pokemon-number">
-  #{pokemon.id}
-</p>
-  {/* 📛 Pokémon name */}
-          <p className="pokemon-name">{pokemon.name}</p>
-        </div>
+<div className="dashboard-layout">
+
+  {/* 🖥️ MAIN POKÉDEX DISPLAY */}
+<PokemonStatsPanel selectedPokemon={selectedPokemon} />
+
+  {/* 🎴 Pokémon Grid */}
+  <div className="pokedex-screen-frame">
+
+    <div className="pokedex-grid">
+      {currentPokemon.map((pokemon) => (
+        <PokemonCard
+          key={pokemon.id}
+          pokemon={pokemon}
+          setSelectedPokemon={setSelectedPokemon}
+        />
       ))}
-      </div>
-
     </div>
+
+  </div>
+
+</div>
+
+
+
+{/* 🎮 Pokédex Controls Panel */}
+<div className="pokedex-controls">
+  <SearchBar
+    searchTerm={searchTerm}
+    setSearchTerm={setSearchTerm}
+    />
+{/* Pagination controls component */}
+  <Pagination
+    currentPage={currentPage}
+    setCurrentPage={setCurrentPage}
+    pokemons={filteredPokemon}
+    itemsPerPage={itemsPerPage}
+    />
+
+</div>
+
+  </div>
+    </div>
+    </div>
+    </main>
     </div>
   </div>
   );
