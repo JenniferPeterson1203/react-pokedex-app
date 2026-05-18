@@ -65,6 +65,10 @@ function AppLayout({
             <NavLink to="/favorites" className="sidebar-nav-link">
               Favorites
             </NavLink>
+
+            <NavLink to="/compare" className="sidebar-nav-link">
+            Compare
+            </NavLink>
           </nav>  
         </aside>
 

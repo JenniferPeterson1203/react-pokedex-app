@@ -923,3 +923,201 @@ input:focus-visible {
     opacity: 0.5;
   }
 }
+
+/* ⚔️ Compare page */
+.compare-page {
+  padding: 2rem;
+  color: white;
+}
+
+/* selectors row */
+.compare-selectors {
+  display: flex;
+  gap: 1rem;
+
+  justify-content: center;
+
+  margin: 2rem 0;
+}
+
+/* dropdowns */
+.compare-selectors select {
+  padding: 0.8rem 1rem;
+
+  border-radius: 12px;
+
+  border: 1px solid var(--neon-pink);
+
+  background: rgba(0,0,0,0.35);
+
+  color: white;
+
+  box-shadow:
+    0 0 12px rgba(255,43,214,0.2);
+}
+
+/* compare grid */
+.compare-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 2rem;
+}
+
+/* compare card */
+.compare-card {
+  border: 2px solid var(--neon-pink);
+
+  border-radius: 20px;
+
+  padding: 1.5rem;
+
+  background: rgba(0,0,0,0.35);
+
+  box-shadow:
+    0 0 25px rgba(255,43,214,0.25);
+}
+
+/* empty compare state */
+.empty-compare {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 400px;
+
+  opacity: 0.7;
+}
+
+/* compare image */
+.compare-image {
+  width: 140px;
+
+  display: block;
+
+  margin: 0 auto;
+
+  image-rendering: pixelated;
+
+  filter:
+    drop-shadow(0 0 12px rgba(0,229,255,0.5));
+}
+
+/* compare stats */
+.compare-stats {
+  margin-top: 1.5rem;
+}
+
+/* stat row */
+.compare-stat-row {
+  display: flex;
+  justify-content: space-between;
+
+  padding: 0.5rem 0;
+
+  border-bottom:
+    1px solid rgba(255,255,255,0.08);
+}
+
+/* 🔎 Searchable compare selector */
+.pokemon-search-select {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+}
+
+.pokemon-search-select label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--neon-cyan);
+  font-weight: bold;
+  text-shadow: 0 0 8px rgba(0,229,255,0.6);
+}
+
+.pokemon-search-select input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--neon-pink);
+  background: rgba(0,0,0,0.35);
+  color: white;
+  outline: none;
+  box-shadow: 0 0 12px rgba(255,43,214,0.2);
+}
+
+.search-suggestions {
+  position: absolute;
+  width: 100%;
+  z-index: 20;
+  margin-top: 0.4rem;
+  border: 1px solid var(--neon-cyan);
+  border-radius: 12px;
+  background: #0f0f14;
+  box-shadow: 0 0 18px rgba(0,229,255,0.25);
+  overflow: hidden;
+}
+
+.search-suggestions button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.6rem;
+  border: none;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.search-suggestions button:hover {
+  background: rgba(0,229,255,0.12);
+}
+
+.search-suggestions img {
+  width: 38px;
+  image-rendering: pixelated;
+}
+
+.selected-search-name {
+  margin-top: 0.5rem;
+  color: var(--neon-pink);
+  text-transform: capitalize;
+  font-size: 0.85rem;
+}
+
+/* 🔎 search input wrapper */
+.search-input-wrapper {
+  position: relative;
+}
+
+/* ❌ clear button */
+.clear-search-btn {
+  position: absolute;
+
+  right: 12px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  border: none;
+
+  background: transparent;
+
+  color: var(--neon-pink);
+
+  cursor: pointer;
+
+  font-size: 1rem;
+
+  transition: 0.2s ease;
+}
+
+/* hover */
+.clear-search-btn:hover {
+  color: var(--neon-cyan);
+
+  transform:
+    translateY(-50%)
+    scale(1.15);
+}
