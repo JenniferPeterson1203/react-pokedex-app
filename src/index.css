@@ -653,3 +653,34 @@ h1 {
   font-size: 0.8rem;
   text-transform: capitalize;
 }
+
+/* ❤️ Favorite button */
+.favorite-btn {
+  border: 1px solid var(--neon-pink);
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--neon-pink);
+
+  border-radius: 999px;
+  padding: 0.35rem 0.55rem;
+
+  cursor: pointer;
+  font-size: 1rem;
+
+  box-shadow: 0 0 10px rgba(255, 43, 214, 0.25);
+  transition: 0.2s ease;
+}
+
+/* ❤️ Favorited state */
+.favorite-btn.active {
+  background: var(--neon-pink);
+  color: black;
+
+  box-shadow:
+    0 0 12px rgba(255, 43, 214, 0.8),
+    0 0 22px rgba(255, 43, 214, 0.4);
+}
+
+.favorite-btn:hover {
+  transform: scale(1.1);
+  border-color: var(--neon-cyan);
+}

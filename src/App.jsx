@@ -16,6 +16,9 @@ function App() {
   const [darkMode, setDarkMode] = useState(false);
   //  Current page the user is on
 const [currentPage, setCurrentPage] = useState(1);
+// ❤️ Stores favorite Pokémon IDs
+// We use IDs instead of full Pokémon objects because IDs are smaller and easier to compare
+const [favoriteIds, setFavoriteIds] = useState([]);
 
 // How many Pokémon per page
 const itemsPerPage = 15;
@@ -90,6 +93,29 @@ useEffect(() => {
 }, [searchTerm]);
 
 /*
+  💾 Load favorites from localStorage when the app first opens
+
+  localStorage keeps data even after refreshing the page.
+*/
+useEffect(() => {
+  const savedFavorites = localStorage.getItem("favoritePokemonIds");
+
+  if (savedFavorites) {
+    setFavoriteIds(JSON.parse(savedFavorites));
+  }
+}, []);
+
+/*
+  💾 Save favorites whenever favoriteIds changes
+*/
+useEffect(() => {
+  localStorage.setItem(
+    "favoritePokemonIds",
+    JSON.stringify(favoriteIds)
+  );
+}, [favoriteIds]);
+
+/*
   Pagination math:
 
   We calculate which Pokémon to show
@@ -129,6 +155,19 @@ const currentPokemon = filteredPokemon.slice(
   firstIndex,
   lastIndex
 );
+
+/*
+  ❤️ Add or remove a Pokémon from favorites
+*/
+const toggleFavorite = (pokemonId) => {
+  setFavoriteIds((prevFavorites) => {
+    if (prevFavorites.includes(pokemonId)) {
+      return prevFavorites.filter((id) => id !== pokemonId);
+    }
+
+    return [...prevFavorites, pokemonId];
+  });
+};
 
 // RENDER to the PAGE
 return (
@@ -210,11 +249,13 @@ return (
 
     <div className="pokedex-grid">
       {currentPokemon.map((pokemon) => (
-        <PokemonCard
-          key={pokemon.id}
-          pokemon={pokemon}
-          setSelectedPokemon={setSelectedPokemon}
-        />
+   <PokemonCard
+  key={pokemon.id}
+  pokemon={pokemon}
+  setSelectedPokemon={setSelectedPokemon}
+  favoriteIds={favoriteIds}
+  toggleFavorite={toggleFavorite}
+/>
       ))}
     </div>
 

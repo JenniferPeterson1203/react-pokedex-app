@@ -4,7 +4,14 @@
   Props are data passed from App.jsx
 */
 
-function PokemonCard({ pokemon, setSelectedPokemon }) { //data (props) coming in from App.jsx
+function PokemonCard({  pokemon,
+  setSelectedPokemon,
+  favoriteIds,
+  toggleFavorite,}) { //data (props) coming in from App.jsx
+
+// ❤️ Check if this Pokémon is already favorited
+const isFavorite = favoriteIds.includes(pokemon.id);
+
   return (
 
     // 🎴 Individual Pokémon card
@@ -14,6 +21,18 @@ function PokemonCard({ pokemon, setSelectedPokemon }) { //data (props) coming in
       // 🖱️ Open modal when card is clicked
       onClick={() => setSelectedPokemon(pokemon)}
     >
+        <button
+  className={isFavorite ? "favorite-btn active" : "favorite-btn"}
+  onClick={(e) => {
+    // 🛑 Stops the card click from also opening/selecting the Pokémon
+    e.stopPropagation();
+
+    // ❤️ Add or remove this Pokémon from favorites
+    toggleFavorite(pokemon.id);
+  }}
+>
+  {isFavorite ? "❤️" : "♡"}
+</button>
 
       {/* 🖼 Pokémon image */}
       <img
