@@ -11,7 +11,8 @@ import AppLayout from "../components/AppLayout";
 import useFavorites from "../hooks/useFavorites";
 import usePokemon from "../hooks/usePokemon";
 import getBattleStyle from "../utils/getBattleStyle";
-
+import getTrainingProfile from "../utils/getTrainingProfile";
+import getThreatAnalysis from "../utils/getThreatAnalysis";
 
 function HomePage() {
   const [selectedPokemon, setSelectedPokemon] = useState(null);
@@ -41,6 +42,9 @@ function HomePage() {
     }, 600);
   };
 
+  const threatAnalysis =
+  getThreatAnalysis(selectedPokemon);
+
   return (
     <AppLayout
       darkMode={darkMode}
@@ -60,8 +64,55 @@ function HomePage() {
 <div className="pokedex-device open-pokedex-device">
 
 
+{/* POKEDEX LEFT PANEL */}
   <div className="open-pokedex-shell">
+    
     <section className="pokedex-left-panel">
+      <div className="featured-scan-display">
+  {selectedPokemon ? (
+    <>
+      <p className="scan-label">
+        Target Locked
+      </p>
+
+      <img
+        className="featured-scan-image"
+        src={selectedPokemon.sprites.front_default}
+        alt={selectedPokemon.name}
+      />
+
+      <h2>
+        #{selectedPokemon.id} {selectedPokemon.name}
+      </h2>
+
+      <div className="featured-type-row">
+        {selectedPokemon.types.map((type) => (
+          <span
+  className={`type-badge type-${type.type.name}`}
+  key={type.type.name}
+>
+  {type.type.name}
+</span>
+        ))}
+      </div>
+    </>
+  ) : (
+    <>
+      <p className="scan-label">
+        Awaiting Target
+      </p>
+
+      <div className="empty-scan-circle">
+        ?
+      </div>
+
+      <h2>
+        Select a Pokémon
+      </h2>
+    </>
+  )}
+</div>
+      
       <div className="pokedex-screen">
         <div className="dashboard-layout">
           <PokemonStatsPanel
@@ -88,9 +139,25 @@ function HomePage() {
       </div>
     </section>
 
+    {/* POKEDEX RIGHT PANEL */}
+
+{/* SCAN STATUS */}
     <section className="pokedex-right-panel">
 <div className="right-panel-screen">
   <h2>Pokédex Analyzer</h2>
+
+  <div className="scan-status">
+  <span className="scan-dot"></span>
+  <p>
+    {selectedPokemon
+      ? `Scanning ${selectedPokemon.name}`
+      : "Awaiting Pokémon scan"}
+  </p>
+</div>
+
+<p className="analyzer-section-label">
+  Core Scan
+</p>
 
 {/* SELECTED POKEMON */}
   <div className="mini-data-card">
@@ -108,6 +175,15 @@ function HomePage() {
   </strong>
 </div>
 
+{/* TRAINING PROFILE */}
+<div className="mini-data-card">
+  <span>Training Profile</span>
+
+  <strong>
+    {getTrainingProfile(selectedPokemon)}
+  </strong>
+</div>
+
 {/* PRIMARY TYPE */}
   <div className="mini-data-card">
     <span>Primary Type</span>
@@ -117,6 +193,28 @@ function HomePage() {
         : "Waiting"}
     </strong>
   </div>
+
+
+<p className="analyzer-section-label">
+  Threat Scanner
+</p>
+
+{/* THREAT ANALYZERS */}
+  <div className="mini-data-card">
+  <span>Weak Against</span>
+
+  <strong>
+    {threatAnalysis.weakAgainst}
+  </strong>
+</div>
+
+<div className="mini-data-card">
+  <span>Resistant To</span>
+
+  <strong>
+    {threatAnalysis.resistantTo}
+  </strong>
+</div>
 
 {/* BASE XP */}
   <div className="mini-data-card">
@@ -128,6 +226,9 @@ function HomePage() {
     </strong>
   </div>
 
+<p className="analyzer-section-label">
+  System Data
+</p>
 {/* FAVORITES SAVED */}
   <div className="mini-data-card">
     <span>Favorites Saved</span>

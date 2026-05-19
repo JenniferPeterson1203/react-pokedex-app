@@ -7,6 +7,7 @@ import "./styles/theme.css";
 import "./styles/layout.css";
 import "./styles/components.css";
 import "./styles/pokedex.css";
+import "./styles/types.css";
 
 import App from "./App.jsx";
 
