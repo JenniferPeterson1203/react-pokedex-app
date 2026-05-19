@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 import PokemonCard from "../components/PokemonCard";
 import SearchBar from "../components/SearchBar";
@@ -55,52 +55,77 @@ function HomePage() {
         </>
       }
     >
-      <div className="pokedex-device">
-        <div className="header">
-          <h1>Jennifer's Pokédex</h1>
-        </div>
+<div className="pokedex-device open-pokedex-device">
+  <div className="header">
+    <h1>Jennifer's Pokédex</h1>
+  </div>
 
-        <div className="pokedex-shell">
-          <div className="pokedex-screen">
-            <div className="dashboard-layout">
-              <PokemonStatsPanel
-                selectedPokemon={selectedPokemon}
-                isScanning={isScanning}
-              />
+  <div className="open-pokedex-shell">
+    <section className="pokedex-left-panel">
+      <div className="pokedex-screen">
+        <div className="dashboard-layout">
+          <PokemonStatsPanel
+            selectedPokemon={selectedPokemon}
+            isScanning={isScanning}
+          />
 
-              <div className="pokedex-screen-frame">
-                <div className="pokedex-grid">
-                  {currentPokemon.map((pokemon) => (
-                    <PokemonCard
-                      key={pokemon.id}
-                      pokemon={pokemon}
-                      setSelectedPokemon={handleSelectPokemon}
-                      favoriteIds={favoriteIds}
-                      toggleFavorite={toggleFavorite}
-                      selectedPokemon={selectedPokemon}
-                      isLoadingFavorite={isLoadingFavorite}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="pokedex-controls">
-              <SearchBar
-                searchTerm={searchTerm}
-                setSearchTerm={setSearchTerm}
-              />
-
-              <Pagination
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                pokemons={filteredPokemon}
-                itemsPerPage={itemsPerPage}
-              />
+          <div className="pokedex-screen-frame">
+            <div className="pokedex-grid">
+              {currentPokemon.map((pokemon) => (
+                <PokemonCard
+                  key={pokemon.id}
+                  pokemon={pokemon}
+                  setSelectedPokemon={handleSelectPokemon}
+                  favoriteIds={favoriteIds}
+                  toggleFavorite={toggleFavorite}
+                  selectedPokemon={selectedPokemon}
+                  isLoadingFavorite={isLoadingFavorite}
+                />
+              ))}
             </div>
           </div>
         </div>
       </div>
+    </section>
+
+    <section className="pokedex-right-panel">
+      <div className="right-panel-screen">
+        <h2>Analyzer Panel</h2>
+
+        <div className="mini-data-card">
+          <span>Favorites</span>
+          <strong>{favoriteIds.length}</strong>
+        </div>
+
+        <div className="mini-data-card">
+          <span>Selected</span>
+          <strong>
+            {selectedPokemon ? selectedPokemon.name : "None"}
+          </strong>
+        </div>
+
+        <div className="mini-data-card">
+          <span>Total Results</span>
+          <strong>{filteredPokemon.length}</strong>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div className="pokedex-controls">
+    <SearchBar
+      searchTerm={searchTerm}
+      setSearchTerm={setSearchTerm}
+    />
+
+    <Pagination
+      currentPage={currentPage}
+      setCurrentPage={setCurrentPage}
+      pokemons={filteredPokemon}
+      itemsPerPage={itemsPerPage}
+    />
+  </div>
+</div>
     </AppLayout>
   );
 }

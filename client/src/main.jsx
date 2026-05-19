@@ -6,6 +6,7 @@ import { ThemeProvider } from "./context/ThemeContext";
 import "./styles/theme.css";
 import "./styles/layout.css";
 import "./styles/components.css";
+import "./styles/pokedex.css";
 
 import App from "./App.jsx";
 

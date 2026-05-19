@@ -84,117 +84,6 @@ h1 {
   letter-spacing: 2px;
 }
 
-.pokedex-device {
-  width: 100%;
-  max-width: 760px;
-  margin: 1rem auto;
-  padding: 1.5rem;
-  border-radius: 32px;
-  background: linear-gradient(145deg, #ffb3f5, #d8b4fe);
-  border: 2px solid var(--neon-pink);
-  box-shadow:
-    0 0 25px rgba(255, 43, 214, 0.25),
-    0 0 40px rgba(0, 229, 255, 0.08);
-  position: relative;
-  overflow: hidden;
-}
-
-.dark .pokedex-device {
-  background: #0b0b10;
-  box-shadow:
-    0 0 30px rgba(255, 43, 214, 0.25),
-    0 0 60px rgba(0, 229, 255, 0.08);
-}
-
-.pokedex-device::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    120deg,
-    transparent 40%,
-    rgba(255, 255, 255, 0.08) 50%,
-    transparent 60%
-  );
-  transform: rotate(10deg);
-  pointer-events: none;
-}
-
-.pokedex-shell {
-  width: 100%;
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 1.2rem;
-  border-radius: 26px;
-  background: linear-gradient(145deg, #d946ef, #7e22ce);
-  border: 3px solid rgba(255, 255, 255, 0.2);
-}
-
-.pokedex-screen {
-  background: rgba(255, 255, 255, 0.2);
-  border: 2px solid var(--neon-pink);
-  backdrop-filter: blur(12px);
-  border-radius: 16px;
-  padding: 1rem;
-   max-height: 720px;
-  overflow-y: auto;
-  box-shadow:
-    inset 0 0 15px rgba(255, 255, 255, 0.2),
-    0 0 20px rgba(255, 43, 214, 0.15);
-  
-}
-
-.dark .pokedex-screen {
-  background: #0a0a0f;
-  box-shadow:
-    inset 0 0 20px rgba(0, 0, 0, 0.8),
-    0 0 20px rgba(0, 229, 255, 0.15);
-}
-
-.dashboard-layout {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.pokedex-screen-frame {
-  position: relative;
-  border-radius: 20px;
-}
-
-.pokedex-screen-frame::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 20px;
-  background: radial-gradient(
-    circle at center,
-    rgba(255, 0, 255, 0.08),
-    transparent 70%
-  );
-  pointer-events: none;
-}
-
-.pokedex-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-  gap: 0.75rem;
-  padding: 1rem;
-}
-
-.pokedex-controls {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 2px solid rgba(255, 255, 255, 0.2);
-}
-
 .right-sidebar {
   background: var(--panel);
 
@@ -361,3 +250,7 @@ h1 {
 
   transition: 0.2s ease;
 }
+
+
+
+
