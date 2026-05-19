@@ -242,12 +242,21 @@ function HomePage() {
     </section>
   </div>
 
-  <div className="pokedex-controls">
+<div className="pokedex-controls hardware-controls">
+  <div className="control-lights">
+    <span className="control-light cyan"></span>
+    <span className="control-light pink"></span>
+    <span className="control-light violet"></span>
+  </div>
+
+  <div className="control-search-panel">
     <SearchBar
       searchTerm={searchTerm}
       setSearchTerm={setSearchTerm}
     />
+  </div>
 
+  <div className="control-pagination-panel">
     <Pagination
       currentPage={currentPage}
       setCurrentPage={setCurrentPage}
@@ -255,6 +264,7 @@ function HomePage() {
       itemsPerPage={itemsPerPage}
     />
   </div>
+</div>
 </div>
     </AppLayout>
   );

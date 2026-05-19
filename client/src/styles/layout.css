@@ -67,15 +67,24 @@ h1 {
 }
 
 .red {
-  background: #ff4d4d;
+  background: var(--neon-cyan);
+
+  box-shadow:
+    0 0 12px var(--neon-cyan);
 }
 
 .yellow {
-  background: #ffd93d;
+  background: var(--neon-pink);
+
+  box-shadow:
+    0 0 12px var(--neon-pink);
 }
 
 .green {
-  background: #4ade80;
+  background: #a855f7;
+
+  box-shadow:
+    0 0 12px #a855f7;
 }
 
 .device-title {
