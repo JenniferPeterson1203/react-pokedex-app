@@ -65,13 +65,41 @@ function useFavorites() {
       so this only updates frontend state temporarily.
       We will fix that next.
     */
-    if (favoriteIds.includes(pokemonId)) {
-      setFavoriteIds((prevFavorites) =>
-        prevFavorites.filter((id) => id !== pokemonId)
-      );
+/*
+  ❌ Remove favorite
+  from database
+*/
+if (favoriteIds.includes(pokemonId)) {
 
-      return;
-    }
+  try {
+
+    await fetch(
+      `http://localhost:3001/api/favorites/${pokemonId}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    /*
+      Update frontend state
+      after successful delete
+    */
+    setFavoriteIds((prevFavorites) =>
+      prevFavorites.filter(
+        (id) => id !== pokemonId
+      )
+    );
+
+  } catch (error) {
+
+    console.error(
+      "Failed to remove favorite",
+      error
+    );
+  }
+
+  return;
+}
 
     try {
       /*
