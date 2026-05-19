@@ -2,6 +2,8 @@ const db = require("./db/dbConfig");
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
+const favoritesRoutes =
+  require("./routes/favoritesRoutes");
 
 /*
   🚀 Express server setup
@@ -15,6 +17,10 @@ const app = express();
 */
 app.use(cors());
 app.use(express.json());
+app.use(
+  "/api/favorites",
+  favoritesRoutes
+);
 
 /*
   ✅ Health check route
