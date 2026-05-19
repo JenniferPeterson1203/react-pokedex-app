@@ -1270,69 +1270,6 @@ input:focus-visible {
   }
 }
 
-/* 🔥 Fire */
-.type-fire.compare-card {
-  border-color: #ff7b00;
-
-  box-shadow:
-    0 0 30px rgba(255,123,0,0.35);
-}
-
-/* 💧 Water */
-.type-water.compare-card {
-  border-color: #00b4ff;
-
-  box-shadow:
-    0 0 30px rgba(0,180,255,0.35);
-}
-
-/* ⚡ Electric */
-.type-electric.compare-card {
-  border-color: #ffd60a;
-
-  box-shadow:
-    0 0 30px rgba(255,214,10,0.35);
-}
-
-/* 🌿 Grass */
-.type-grass.compare-card {
-  border-color: #70e000;
-
-  box-shadow:
-    0 0 30px rgba(112,224,0,0.35);
-}
-
-/* 👻 Ghost */
-.type-ghost.compare-card {
-  border-color: #9d4edd;
-
-  box-shadow:
-    0 0 30px rgba(157,78,221,0.35);
-}
-
-/* 🧠 Psychic */
-.type-psychic.compare-card {
-  border-color: #ff4dcb;
-
-  box-shadow:
-    0 0 30px rgba(255,77,203,0.35);
-}
-
-/* 🪨 Rock */
-.type-rock.compare-card {
-  border-color: #bc8a5f;
-
-  box-shadow:
-    0 0 30px rgba(188,138,95,0.35);
-}
-
-/* 🐉 Dragon */
-.type-dragon.compare-card {
-  border-color: #5a00ff;
-
-  box-shadow:
-    0 0 30px rgba(90,0,255,0.35);
-}
 
 /* 🧠 Move insights rows */
 .move-insight-row {
@@ -1365,31 +1302,3 @@ input:focus-visible {
     0 0 8px rgba(0,229,255,0.45);
 }
 
-/* 🔌 Backend API status */
-.api-status {
-  margin-top: 1.5rem;
-  padding: 0.8rem;
-
-  border: 1px solid rgba(255, 43, 214, 0.35);
-  border-radius: 12px;
-
-  background: rgba(0, 0, 0, 0.25);
-
-  color: white;
-
-  font-size: 0.85rem;
-
-  box-shadow:
-    0 0 12px rgba(255, 43, 214, 0.18);
-}
-
-.api-status.connected {
-  border-color: var(--neon-cyan);
-
-  box-shadow:
-    0 0 12px rgba(0, 229, 255, 0.25);
-}
-
-.api-status p {
-  margin-top: 0.4rem;
-}
