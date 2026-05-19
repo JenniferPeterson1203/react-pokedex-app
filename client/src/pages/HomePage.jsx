@@ -10,6 +10,8 @@ import AppLayout from "../components/AppLayout";
 
 import useFavorites from "../hooks/useFavorites";
 import usePokemon from "../hooks/usePokemon";
+import getBattleStyle from "../utils/getBattleStyle";
+
 
 function HomePage() {
   const [selectedPokemon, setSelectedPokemon] = useState(null);
@@ -56,9 +58,7 @@ function HomePage() {
       }
     >
 <div className="pokedex-device open-pokedex-device">
-  <div className="header">
-    <h1>Jennifer's Pokédex</h1>
-  </div>
+
 
   <div className="open-pokedex-shell">
     <section className="pokedex-left-panel">
@@ -89,26 +89,55 @@ function HomePage() {
     </section>
 
     <section className="pokedex-right-panel">
-      <div className="right-panel-screen">
-        <h2>Analyzer Panel</h2>
+<div className="right-panel-screen">
+  <h2>Pokédex Analyzer</h2>
 
-        <div className="mini-data-card">
-          <span>Favorites</span>
-          <strong>{favoriteIds.length}</strong>
-        </div>
+{/* SELECTED POKEMON */}
+  <div className="mini-data-card">
+    <span>Selected</span>
+    <strong>
+      {selectedPokemon ? selectedPokemon.name : "None"}
+    </strong>
+  </div>
 
-        <div className="mini-data-card">
-          <span>Selected</span>
-          <strong>
-            {selectedPokemon ? selectedPokemon.name : "None"}
-          </strong>
-        </div>
+{/* BATTLE STYLE */}
+    <div className="mini-data-card">
+  <span>Battle Style</span>
+  <strong>
+    {getBattleStyle(selectedPokemon)}
+  </strong>
+</div>
 
-        <div className="mini-data-card">
-          <span>Total Results</span>
-          <strong>{filteredPokemon.length}</strong>
-        </div>
-      </div>
+{/* PRIMARY TYPE */}
+  <div className="mini-data-card">
+    <span>Primary Type</span>
+    <strong>
+      {selectedPokemon
+        ? selectedPokemon.types[0].type.name
+        : "Waiting"}
+    </strong>
+  </div>
+
+{/* BASE XP */}
+  <div className="mini-data-card">
+    <span>Base XP</span>
+    <strong>
+      {selectedPokemon
+        ? selectedPokemon.base_experience
+        : "0"}
+    </strong>
+  </div>
+
+{/* FAVORITES SAVED */}
+  <div className="mini-data-card">
+    <span>Favorites Saved</span>
+    <strong>{favoriteIds.length}</strong>
+  </div>
+
+
+</div>
+
+
     </section>
   </div>
 
