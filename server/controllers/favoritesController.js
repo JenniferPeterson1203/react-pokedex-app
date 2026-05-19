@@ -1,6 +1,7 @@
 const {
   getAllFavorites,
   createFavorite,
+  deleteFavorite
 } = require(
   "../queries/favoritesQueries"
 );
@@ -74,7 +75,42 @@ const addFavorite = async (
   }
 };
 
+/*
+  ❌ DELETE favorite
+
+  Removes a favorite
+  from the database.
+*/
+const removeFavorite =
+  async (req, res) => {
+
+  try {
+
+    const {
+      pokemon_id,
+    } = req.params;
+
+    const deletedFavorite =
+      await deleteFavorite(
+        pokemon_id
+      );
+
+    res.status(200).json(
+      deletedFavorite
+    );
+
+  } catch (error) {
+
+    res.status(500).json({
+      error:
+        "Failed to delete favorite",
+    });
+  }
+};
+
+
 module.exports = {
   getFavorites,
   addFavorite,
+  removeFavorite,
 };

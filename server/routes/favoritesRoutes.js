@@ -14,9 +14,8 @@ const favorites =
 const {
   getFavorites,
   addFavorite,
-} = require(
-  "../controllers/favoritesController"
-);
+  removeFavorite,
+} = require("../controllers/favoritesController");
 
 /*
   📥 GET favorites
@@ -32,6 +31,14 @@ favorites.get(
 favorites.post(
   "/",
   addFavorite
+);
+
+/*
+  ❌ DELETE favorite
+*/
+favorites.delete(
+  "/:pokemon_id",
+  removeFavorite
 );
 
 module.exports = favorites;

@@ -38,7 +38,28 @@ const createFavorite = async (
   return result.rows[0];
 };
 
+/*
+  ❌ Delete favorite by Pokémon ID
+*/
+const deleteFavorite = async (
+  pokemon_id
+) => {
+
+  const result =
+    await db.query(
+      `
+      DELETE FROM favorites
+      WHERE pokemon_id = $1
+      RETURNING *
+      `,
+      [pokemon_id]
+    );
+
+  return result.rows[0];
+};
+
 module.exports = {
   getAllFavorites,
   createFavorite,
+  deleteFavorite,
 };
