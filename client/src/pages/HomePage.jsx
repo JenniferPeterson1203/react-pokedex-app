@@ -28,7 +28,7 @@ function HomePage() {
     currentPokemon,
   } = usePokemon();
 
-  const { favoriteIds, toggleFavorite } = useFavorites();
+  const { favoriteIds, toggleFavorite, isLoadingFavorite, } = useFavorites();
 
   const handleSelectPokemon = (pokemon) => {
     setSelectedPokemon(pokemon);
@@ -78,6 +78,7 @@ function HomePage() {
                       favoriteIds={favoriteIds}
                       toggleFavorite={toggleFavorite}
                       selectedPokemon={selectedPokemon}
+                      isLoadingFavorite={isLoadingFavorite}
                     />
                   ))}
                 </div>

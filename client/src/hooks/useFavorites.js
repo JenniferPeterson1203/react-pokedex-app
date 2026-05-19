@@ -11,6 +11,13 @@ import API_URL from "../api/api";
 function useFavorites() {
   const [favoriteIds, setFavoriteIds] = useState([]);
 
+    /*
+    ⏳ Tracks when a favorite
+    request is in progress.
+  */
+  const [isLoadingFavorite, setIsLoadingFavorite] =
+    useState(false);
+
   /*
     📥 Fetch saved favorites from PostgreSQL
     when the app first loads.
@@ -54,69 +61,90 @@ function useFavorites() {
     - pokemon.id
     - pokemon.name
   */
-  const toggleFavorite = async (pokemon) => {
-    const pokemonId = pokemon.id;
+const toggleFavorite = async (pokemon) => {
+  const pokemonId = pokemon.id;
 
-    /*
-      ❌ If already favorited, remove from database.
-    */
-    if (favoriteIds.includes(pokemonId)) {
-      try {
-        await fetch(
-          `${API_URL}/api/favorites/${pokemonId}`,
-          {
-            method: "DELETE",
-          }
-        );
+  /*
+    ⏳ Start loading before either
+    add or delete request.
+  */
+  setIsLoadingFavorite(true);
 
-        setFavoriteIds((prevFavorites) =>
-          prevFavorites.filter(
-            (id) => id !== pokemonId
-          )
-        );
-      } catch (error) {
-        console.error(
-          "Failed to remove favorite",
-          error
-        );
-      }
-
-      return;
-    }
-
-    /*
-      ❤️ If not favorited, add to database.
-    */
+  /*
+    ❌ If already favorited,
+    remove from database.
+  */
+  if (favoriteIds.includes(pokemonId)) {
     try {
-      await fetch(`${API_URL}/api/favorites`, {
-        method: "POST",
+      await fetch(
+        `${API_URL}/api/favorites/${pokemonId}`,
+        {
+          method: "DELETE",
+        }
+      );
 
-        headers: {
-          "Content-Type": "application/json",
-        },
-
-        body: JSON.stringify({
-          pokemon_id: pokemon.id,
-          pokemon_name: pokemon.name,
-        }),
-      });
-
-      setFavoriteIds((prevFavorites) => [
-        ...prevFavorites,
-        pokemonId,
-      ]);
+      setFavoriteIds((prevFavorites) =>
+        prevFavorites.filter(
+          (id) => id !== pokemonId
+        )
+      );
     } catch (error) {
       console.error(
-        "Failed to add favorite",
+        "Failed to remove favorite",
         error
       );
+    } finally {
+      /*
+        ✅ Always stop loading,
+        whether request worked or failed.
+      */
+      setIsLoadingFavorite(false);
     }
-  };
 
-  return {
-    favoriteIds,
-    toggleFavorite,
-  };
+    return;
+  }
+
+  /*
+    ❤️ If not favorited,
+    add to database.
+  */
+  try {
+    await fetch(`${API_URL}/api/favorites`, {
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      body: JSON.stringify({
+        pokemon_id: pokemon.id,
+        pokemon_name: pokemon.name,
+      }),
+    });
+
+    setFavoriteIds((prevFavorites) => [
+      ...prevFavorites,
+      pokemonId,
+    ]);
+  } catch (error) {
+    console.error(
+      "Failed to add favorite",
+      error
+    );
+  } finally {
+    /*
+      ✅ Always stop loading,
+      whether request worked or failed.
+    */
+    setIsLoadingFavorite(false);
+  }
+};
+
+return {
+  favoriteIds,
+  toggleFavorite,
+  isLoadingFavorite,
+};
 }
 
 export default useFavorites;

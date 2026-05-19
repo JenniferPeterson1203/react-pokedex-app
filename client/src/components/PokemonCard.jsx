@@ -8,7 +8,8 @@ function PokemonCard({   pokemon,
   setSelectedPokemon,
   favoriteIds,
   toggleFavorite,
-  selectedPokemon,}) { //data (props) coming in from App.jsx
+  selectedPokemon,
+isLoadingFavorite,}) { //data (props) coming in from App.jsx
 
 // ❤️ Check if this Pokémon is already favorited
 const isFavorite = favoriteIds.includes(pokemon.id);
@@ -31,6 +32,7 @@ const isSelected = selectedPokemon?.id === pokemon.id;
 >
 <button
   className={isFavorite ? "favorite-btn active" : "favorite-btn"}
+  disabled={isLoadingFavorite}
   aria-label={
     isFavorite
       ? `Remove ${pokemon.name} from favorites`
@@ -41,7 +43,7 @@ const isSelected = selectedPokemon?.id === pokemon.id;
     toggleFavorite(pokemon);
   }}
 >
-  {isFavorite ? "❤️" : "♡"}
+  {isLoadingFavorite ? "..." : isFavorite ? "❤️" : "♡"}
 </button>
 
       {/* 🖼 Pokémon image */}

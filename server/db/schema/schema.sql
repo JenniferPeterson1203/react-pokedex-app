@@ -10,7 +10,7 @@ CREATE TABLE favorites (
 
   pokemon_name TEXT NOT NULL,
 
-  pokemon_id INTEGER NOT NULL,
+  pokemon_id INTEGER NOT NULL UNIQUE,
 
   created_at TIMESTAMP DEFAULT NOW()
 );

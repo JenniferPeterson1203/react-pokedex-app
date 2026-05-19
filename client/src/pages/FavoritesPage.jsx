@@ -19,7 +19,7 @@ function FavoritesPage() {
   const { darkMode, setDarkMode } =
   useTheme();
   const { pokemons } = usePokemon();
-  const { favoriteIds, toggleFavorite } = useFavorites();
+  const { favoriteIds, toggleFavorite, isLoadingFavorite,} = useFavorites();
 
   /*
     🧠 Only keep Pokémon whose IDs are inside favoriteIds.
@@ -88,6 +88,9 @@ return (
                 favoriteIds={favoriteIds}
                 toggleFavorite={toggleFavorite}
                 selectedPokemon={selectedPokemon}
+                isLoadingFavorite={isLoadingFavorite}
+                
+
               />
 
             ))}

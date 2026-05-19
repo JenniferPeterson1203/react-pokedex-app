@@ -53,6 +53,30 @@ const addFavorite = async (
   res
 ) => {
 
+     /*🛡️ Backend validation
+     
+    Prevent invalid or incomplete data
+    from reaching the database.
+  */
+  const {
+    pokemon_id,
+    pokemon_name,
+  } = req.body;
+
+  /*
+    Ensure required fields exist.
+  */
+  if (
+    !pokemon_id ||
+    !pokemon_name
+  ) {
+
+    return res.status(400).json({
+      error:
+        "pokemon_id and pokemon_name are required",
+    });
+  }
+
   try {
 
     // create favorite in database
