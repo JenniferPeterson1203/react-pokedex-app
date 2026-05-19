@@ -38,7 +38,7 @@ const isSelected = selectedPokemon?.id === pokemon.id;
   }
   onClick={(e) => {
     e.stopPropagation();
-    toggleFavorite(pokemon.id);
+    toggleFavorite(pokemon);
   }}
 >
   {isFavorite ? "❤️" : "♡"}

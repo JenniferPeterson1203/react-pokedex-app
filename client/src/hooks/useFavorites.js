@@ -1,38 +1,35 @@
 import { useEffect, useState } from "react";
+import API_URL from "../api/api";
 
 /*
   ❤️ useFavorites Hook
 
-  This hook now connects to the backend database,
-  but it still returns favoriteIds and toggleFavorite
-  so the rest of the app does not break.
+  This hook connects favorites to the backend database,
+  while still returning favoriteIds and toggleFavorite
+  so the rest of the app can keep working.
 */
 function useFavorites() {
-  /*
-    Stores only Pokémon IDs because the rest of the app
-    already checks favorites using pokemon.id.
-  */
   const [favoriteIds, setFavoriteIds] = useState([]);
 
   /*
-    Fetch saved favorites from the backend
+    📥 Fetch saved favorites from PostgreSQL
     when the app first loads.
   */
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3001/api/favorites"
+          `${API_URL}/api/favorites`
         );
 
         const data = await response.json();
 
         /*
-          Backend sends objects like:
-          { id, pokemon_name, pokemon_id }
+          Backend sends:
+          [{ pokemon_id: 25 }, { pokemon_id: 4 }]
 
           Frontend needs:
-          [25, 4, 7]
+          [25, 4]
         */
         const ids = data.map(
           (favorite) => favorite.pokemon_id
@@ -51,69 +48,47 @@ function useFavorites() {
   }, []);
 
   /*
-    Add or remove a favorite.
+    ❤️ Toggle favorite
 
-    For now, this adds favorites to the database.
-    We will add DELETE/remove support next.
+    Receives the full Pokémon object so we can save:
+    - pokemon.id
+    - pokemon.name
   */
-  const toggleFavorite = async (pokemonId) => {
+  const toggleFavorite = async (pokemon) => {
+    const pokemonId = pokemon.id;
+
     /*
-      If already favorited, remove it from the UI for now.
-
-      NOTE:
-      Database delete route is not built yet,
-      so this only updates frontend state temporarily.
-      We will fix that next.
+      ❌ If already favorited, remove from database.
     */
-/*
-  ❌ Remove favorite
-  from database
-*/
-if (favoriteIds.includes(pokemonId)) {
+    if (favoriteIds.includes(pokemonId)) {
+      try {
+        await fetch(
+          `${API_URL}/api/favorites/${pokemonId}`,
+          {
+            method: "DELETE",
+          }
+        );
 
-  try {
-
-    await fetch(
-      `http://localhost:3001/api/favorites/${pokemonId}`,
-      {
-        method: "DELETE",
+        setFavoriteIds((prevFavorites) =>
+          prevFavorites.filter(
+            (id) => id !== pokemonId
+          )
+        );
+      } catch (error) {
+        console.error(
+          "Failed to remove favorite",
+          error
+        );
       }
-    );
+
+      return;
+    }
 
     /*
-      Update frontend state
-      after successful delete
+      ❤️ If not favorited, add to database.
     */
-    setFavoriteIds((prevFavorites) =>
-      prevFavorites.filter(
-        (id) => id !== pokemonId
-      )
-    );
-
-  } catch (error) {
-
-    console.error(
-      "Failed to remove favorite",
-      error
-    );
-  }
-
-  return;
-}
-
     try {
-      /*
-        Find the Pokémon object from the page is harder here
-        because this hook only receives pokemonId.
-
-        So for now we save:
-        pokemon_id = pokemonId
-        pokemon_name = temporary text
-
-        Better fix next:
-        update toggleFavorite to receive the whole pokemon object.
-      */
-      await fetch("http://localhost:3001/api/favorites", {
+      await fetch(`${API_URL}/api/favorites`, {
         method: "POST",
 
         headers: {
@@ -121,8 +96,8 @@ if (favoriteIds.includes(pokemonId)) {
         },
 
         body: JSON.stringify({
-          pokemon_id: pokemonId,
-          pokemon_name: `pokemon-${pokemonId}`,
+          pokemon_id: pokemon.id,
+          pokemon_name: pokemon.name,
         }),
       });
 
