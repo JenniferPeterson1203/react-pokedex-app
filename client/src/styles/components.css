@@ -1364,3 +1364,32 @@ input:focus-visible {
   text-shadow:
     0 0 8px rgba(0,229,255,0.45);
 }
+
+/* 🔌 Backend API status */
+.api-status {
+  margin-top: 1.5rem;
+  padding: 0.8rem;
+
+  border: 1px solid rgba(255, 43, 214, 0.35);
+  border-radius: 12px;
+
+  background: rgba(0, 0, 0, 0.25);
+
+  color: white;
+
+  font-size: 0.85rem;
+
+  box-shadow:
+    0 0 12px rgba(255, 43, 214, 0.18);
+}
+
+.api-status.connected {
+  border-color: var(--neon-cyan);
+
+  box-shadow:
+    0 0 12px rgba(0, 229, 255, 0.25);
+}
+
+.api-status p {
+  margin-top: 0.4rem;
+}

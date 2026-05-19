@@ -1,3 +1,4 @@
+const db = require("./db/dbConfig");
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
@@ -22,9 +23,25 @@ app.use(express.json());
 */
 app.get("/api/health", (req, res) => {
   res.json({
-    message: "Jennifer's Pokédex API is running",
+    message: "server is connected",
     status: "success",
   });
+});
+
+app.get("/api/db-test", async (req, res) => {
+  try {
+    const result = await db.query("SELECT NOW()");
+
+    res.json({
+      message: "Database connected",
+      time: result.rows[0].now,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Database connection failed",
+      error: error.message,
+    });
+  }
 });
 
 /*

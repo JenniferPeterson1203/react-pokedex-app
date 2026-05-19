@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-
+import ApiStatus from "./ApiStatus";
 import TypingTitle from "./TypingTitle";
 import pokeball from "../assets/pokeball.png";
 
@@ -30,7 +30,7 @@ function AppLayout({
         </div>
 
     <div className="top-controls">
-
+   <ApiStatus />
   <Link to="/" aria-label="Go to home page">
     <img
       src={pokeball}
@@ -70,6 +70,7 @@ function AppLayout({
             Compare
             </NavLink>
           </nav>  
+       
         </aside>
 
         {/* MAIN PAGE CONTENT */}
