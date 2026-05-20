@@ -1,9 +1,11 @@
 const db = require("./db/dbConfig");
 const express = require("express");
 const cors = require("cors");
+const authController = require("./controllers/authController");
 require("dotenv").config();
 const favoritesRoutes =
   require("./routes/favoritesRoutes");
+
 
 /*
   🚀 Express server setup
@@ -21,6 +23,7 @@ app.use(
   "/api/favorites",
   favoritesRoutes
 );
+app.use("/api/auth", authController);
 
 /*
   ✅ Health check route
