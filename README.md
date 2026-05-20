@@ -3,7 +3,7 @@
 ![Express](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)
 ![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
 
-![Jennifer's Pokédex Banner](./client/src/assets/Pokedex-Banner.png)
+![Jennifer's Pokédex Banner](./client/public/Pokedex-Banner.png)
 # ⚡ Jennifer’s Pokédex
 
 A fullstack Pokémon analyzer platform inspired by cyberpunk aesthetics, NYC subway graffiti culture, and futuristic Pokédex interfaces.
@@ -18,19 +18,24 @@ Built with React, PostgreSQL, Express, PokéAPI, and immersive neon UI design, t
 
 ---
 
-# 📸 Screenshots
 
-## 🖥️ Cyberpunk Pokédex Interface
+# 📸 Interface Preview
 
-![Desktop View](./public/Screenshot%202026-05-17%20at%2010.55.57 PM.png)
+## 🛰️ Cyberpunk Pokédex Scanner
+
+![Cyberpunk Pokédex Scanner](./client/public/Home-Page.png)
+
+---
+
+## ⚔️ Pokémon Battle Compare System
+
+![Battle Compare System](./client/public/Compare-Page.png)
 
 ---
 
-## 📱 Mobile Responsive Layout
+## 📱 Responsive Mobile Pokédex
 
-![Mobile View](./public/Screenshot%202026-05-17%20at%2010.57.13 PM.png)
-
----
+![Responsive Mobile Pokédex](./client/public/Mobile-View.png)
 
 # ✨ Features
 

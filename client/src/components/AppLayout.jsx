@@ -30,7 +30,7 @@ function AppLayout({
         </div>
 
     <div className="top-controls">
-   <ApiStatus />
+   {/* <ApiStatus /> */}
   <Link to="/" aria-label="Go to home page">
     <img
       src={pokeball}
