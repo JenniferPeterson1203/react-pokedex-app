@@ -10,6 +10,7 @@
 */
 
 const DEMO_USER_KEY = "demo_user";
+const TOKEN_KEY = "auth_token";
 
 /*
   📥 Load demo user from localStorage
@@ -56,4 +57,26 @@ export const saveDemoUser = (userData) => {
 */
 export const clearDemoUser = () => {
   localStorage.removeItem(DEMO_USER_KEY);
+};
+
+/*
+  🔑 Save JWT token
+*/
+export const saveToken = (token) => {
+localStorage.setItem(TOKEN_KEY, token);
+};
+
+/*
+  📥 Load JWT token
+*/
+export const loadToken = () => {
+  return localStorage.getItem(TOKEN_KEY);
+};
+
+/*
+  🧹 Clear JWT token
+*/
+export const clearToken = () => {
+  localStorage.removeItem(TOKEN_KEY);
+
 };

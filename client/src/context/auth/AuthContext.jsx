@@ -3,6 +3,8 @@ import {
   loadDemoUser,
   saveDemoUser,
   clearDemoUser,
+  saveToken,
+  clearToken,
 } from "../../utils/authStorage";
 
 
@@ -57,11 +59,15 @@ function AuthProvider({ children }) {
     - store JWT tokens
     - sync user session
   */
-  const login = (userData) => {
-    saveDemoUser(userData);
+const login = (userData, token) => {
+  saveDemoUser(userData);
 
-    setUser(userData);
-  };
+  if (token) {
+    saveToken(token);
+  }
+
+  setUser(userData);
+};
 
   /*
     🚪 Logout handler
@@ -69,11 +75,13 @@ function AuthProvider({ children }) {
     Clears persisted auth state
     and returns app to guest mode.
   */
-  const logout = () => {
-    clearDemoUser();
+const logout = () => {
+  clearDemoUser();
 
-    setUser(null);
-  };
+  clearToken();
+
+  setUser(null);
+};
 
   return (
     <AuthContext.Provider

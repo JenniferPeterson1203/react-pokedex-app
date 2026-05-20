@@ -1,5 +1,6 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const {
   createUser,
@@ -143,20 +144,38 @@ if (!email || !password) {
       });
     }
 
-    /*
-      ✅ Successful login
+/*
+  🪪 Generate JWT token
 
-      For now:
-      return basic user data.
+  The token stores basic user identity
+  information that can later be verified
+  by protected backend routes.
+*/
+const token = jwt.sign(
+  {
+    id: user.id,
+    email: user.email,
+  },
 
-      Later:
-      generate JWT token here.
-    */
-    res.status(200).json({
-      id: user.id,
-      username: user.username,
-      email: user.email,
-    });
+  process.env.JWT_SECRET,
+
+  {
+    expiresIn: "1h",
+  }
+);
+
+/*
+  ✅ Successful authenticated login
+*/
+res.status(200).json({
+  token,
+
+  user: {
+    id: user.id,
+    username: user.username,
+    email: user.email,
+  },
+});
 
   } catch (error) {
 

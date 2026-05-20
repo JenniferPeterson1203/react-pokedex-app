@@ -1,5 +1,8 @@
 const express = require("express");
 
+const verifyToken =
+  require("../middleware/verifyToken");
+
 /*
   Router
 
@@ -22,6 +25,7 @@ const {
 */
 favorites.get(
   "/",
+  verifyToken,
   getFavorites
 );
 
@@ -30,6 +34,7 @@ favorites.get(
 */
 favorites.post(
   "/",
+  verifyToken,
   addFavorite
 );
 
@@ -38,6 +43,7 @@ favorites.post(
 */
 favorites.delete(
   "/:pokemon_id",
+  verifyToken,
   removeFavorite
 );
 

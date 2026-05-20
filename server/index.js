@@ -1,8 +1,66 @@
-const db = require("./db/dbConfig");
-const express = require("express");
-const cors = require("cors");
-const authController = require("./controllers/authController");
+/*
+  🌱 Load environment variables from .env
+
+  This makes sensitive values available through:
+  process.env
+
+  Examples:
+  - process.env.PORT
+  - process.env.DATABASE_URL
+  - process.env.JWT_SECRET
+*/
 require("dotenv").config();
+
+/*
+  🗄️ Database connection
+
+  Allows the backend to communicate
+  with PostgreSQL.
+*/
+const db = require("./db/dbConfig");
+
+/*
+  🚀 Express framework
+
+  Express helps us:
+  - create routes
+  - handle requests
+  - send responses
+  - build APIs
+*/
+const express = require("express");
+
+/*
+  🌐 CORS middleware
+
+  Allows the frontend and backend
+  to communicate across different ports.
+
+  Example:
+  React frontend:
+  localhost:5173
+
+  Express backend:
+  localhost:3001
+*/
+const cors = require("cors");
+
+/*
+  🔐 Authentication controller
+
+  Handles:
+  - signup
+  - login
+  - future JWT auth
+*/
+const authController =
+  require("./controllers/authController");
+
+/*
+  ❤️ Favorites routes
+
+  Handles Pokémon favorite operations.
+*/
 const favoritesRoutes =
   require("./routes/favoritesRoutes");
 

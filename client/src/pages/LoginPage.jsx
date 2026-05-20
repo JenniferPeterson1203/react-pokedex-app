@@ -1,7 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { useAuth } from "../context/auth/AuthContext";
 import AppLayout from "../components/AppLayout";
 import { useTheme } from "../context/ThemeContext";
+import API_URL from "../api/api";
 
 /*
   🔐 LoginPage
@@ -16,21 +18,57 @@ function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  /*
-    Demo login lets us test authenticated UI
-    before real backend auth exists.
-  */
-const handleDemoLogin = () => {
-  login({
-    username: "Demo Trainer",
-    mode: "demo",
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  /*
-    🚀 Return user to homepage
-    after demo login.
-  */
-  navigate("/");
+/*
+  🔐 Demo Login
+
+  Uses the real backend login route with a demo account.
+  This lets recruiters test authenticated features
+  without creating a new account.
+*/
+const handleDemoLogin = async () => {
+  try {
+    const response = await fetch(
+      `${API_URL}/api/auth/login`,
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+          email: "demo@example.com",
+          password: "password123",
+        }),
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      setErrorMessage(
+        data.error || "Demo login failed"
+      );
+
+      return;
+    }
+
+    /*
+      Save authenticated user and JWT token
+      in global auth context.
+    */
+    login(data.user, data.token);
+
+    navigate("/");
+  } catch (error) {
+    setErrorMessage(
+      "Unable to connect to the server"
+    );
+  }
 };
 
   return (
@@ -54,6 +92,12 @@ const handleDemoLogin = () => {
           >
             Demo Login
           </button>
+
+          {errorMessage && (
+  <p className="auth-error">
+    {errorMessage}
+  </p>
+)}
 
           <Link
             className="auth-link"
