@@ -1,150 +1,92 @@
-import { useEffect, useState } from "react";
-import API_URL from "../api/api";
+import { useState } from "react";
+
+import {
+  loadGuestFavorites,
+  saveGuestFavorites,
+} from "../utils/favoriteStorage";
 
 /*
   ❤️ useFavorites Hook
 
-  This hook connects favorites to the backend database,
-  while still returning favoriteIds and toggleFavorite
-  so the rest of the app can keep working.
+  Guest Mode Version:
+  - Favorites are saved locally with localStorage.
+  - This keeps the app usable without requiring login.
+  - Later, logged-in users will save favorites through the backend API.
 */
 function useFavorites() {
-  const [favoriteIds, setFavoriteIds] = useState([]);
+  /*
+    Starts by loading guest favorites
+    from localStorage.
+  */
+  const [favoriteIds, setFavoriteIds] =
+    useState(loadGuestFavorites);
 
-    /*
-    ⏳ Tracks when a favorite
-    request is in progress.
+  /*
+    Tracks when a favorite request/action
+    is happening.
+
+    Right now this is local, but we keep it
+    because later backend requests will need it.
   */
   const [isLoadingFavorite, setIsLoadingFavorite] =
     useState(false);
 
   /*
-    📥 Fetch saved favorites from PostgreSQL
-    when the app first loads.
-  */
-  useEffect(() => {
-    const fetchFavorites = async () => {
-      try {
-        const response = await fetch(
-          `${API_URL}/api/favorites`
-        );
-
-        const data = await response.json();
-
-        /*
-          Backend sends:
-          [{ pokemon_id: 25 }, { pokemon_id: 4 }]
-
-          Frontend needs:
-          [25, 4]
-        */
-        const ids = data.map(
-          (favorite) => favorite.pokemon_id
-        );
-
-        setFavoriteIds(ids);
-      } catch (error) {
-        console.error(
-          "Failed to fetch favorites",
-          error
-        );
-      }
-    };
-
-    fetchFavorites();
-  }, []);
-
-  /*
     ❤️ Toggle favorite
 
-    Receives the full Pokémon object so we can save:
-    - pokemon.id
-    - pokemon.name
+    Receives the full Pokémon object so this hook
+    can later save both pokemon.id and pokemon.name
+    when authenticated backend favorites are added.
   */
-const toggleFavorite = async (pokemon) => {
-  const pokemonId = pokemon.id;
+  const toggleFavorite = (pokemon) => {
+    const pokemonId = pokemon.id;
 
-  /*
-    ⏳ Start loading before either
-    add or delete request.
-  */
-  setIsLoadingFavorite(true);
+    setIsLoadingFavorite(true);
 
-  /*
-    ❌ If already favorited,
-    remove from database.
-  */
-  if (favoriteIds.includes(pokemonId)) {
-    try {
-      await fetch(
-        `${API_URL}/api/favorites/${pokemonId}`,
-        {
-          method: "DELETE",
-        }
-      );
+    /*
+      If already favorited,
+      remove it from guest favorites.
+    */
+    if (favoriteIds.includes(pokemonId)) {
+      setFavoriteIds((prevFavorites) => {
+        const updatedFavorites =
+          prevFavorites.filter(
+            (id) => id !== pokemonId
+          );
 
-      setFavoriteIds((prevFavorites) =>
-        prevFavorites.filter(
-          (id) => id !== pokemonId
-        )
-      );
-    } catch (error) {
-      console.error(
-        "Failed to remove favorite",
-        error
-      );
-    } finally {
-      /*
-        ✅ Always stop loading,
-        whether request worked or failed.
-      */
+        saveGuestFavorites(updatedFavorites);
+
+        return updatedFavorites;
+      });
+
       setIsLoadingFavorite(false);
+
+      return;
     }
 
-    return;
-  }
+    /*
+      If not favorited,
+      add it to guest favorites.
+    */
+    setFavoriteIds((prevFavorites) => {
+      const updatedFavorites = [
+        ...prevFavorites,
+        pokemonId,
+      ];
 
-  /*
-    ❤️ If not favorited,
-    add to database.
-  */
-  try {
-    await fetch(`${API_URL}/api/favorites`, {
-      method: "POST",
+      saveGuestFavorites(updatedFavorites);
 
-      headers: {
-        "Content-Type": "application/json",
-      },
-
-      body: JSON.stringify({
-        pokemon_id: pokemon.id,
-        pokemon_name: pokemon.name,
-      }),
+      return updatedFavorites;
     });
 
-    setFavoriteIds((prevFavorites) => [
-      ...prevFavorites,
-      pokemonId,
-    ]);
-  } catch (error) {
-    console.error(
-      "Failed to add favorite",
-      error
-    );
-  } finally {
-    /*
-      ✅ Always stop loading,
-      whether request worked or failed.
-    */
     setIsLoadingFavorite(false);
-  }
-};
+  };
 
-return {
-  favoriteIds,
-  toggleFavorite,
-  isLoadingFavorite,
-};
+  return {
+    favoriteIds,
+    toggleFavorite,
+    isLoadingFavorite,
+  };
 }
 
 export default useFavorites;
