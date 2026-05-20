@@ -27,6 +27,31 @@ auth.post("/signup", async (req, res) => {
     } = req.body;
 
     /*
+  🛡️ Validate signup data
+
+  This prevents empty or incomplete
+  account data from reaching the database.
+*/
+if (!username || !email || !password) {
+  return res.status(400).json({
+    error: "username, email, and password are required",
+  });
+}
+
+
+/*
+  🔎 Check if email already exists
+*/
+const existingUser =
+  await getUserByEmail(email);
+
+if (existingUser) {
+  return res.status(409).json({
+    error: "Email already in use",
+  });
+}
+
+/*
       🔒 Generate hashed password
 
       Salt rounds:
@@ -71,6 +96,18 @@ auth.post("/login", async (req, res) => {
       email,
       password,
     } = req.body;
+
+   /*
+  🛡️ Validate login data
+
+  Login needs both email and password
+  before checking the database.
+*/
+if (!email || !password) {
+  return res.status(400).json({
+    error: "email and password are required",
+  });
+} 
 
     /*
       🔎 Find user by email
