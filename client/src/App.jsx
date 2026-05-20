@@ -6,7 +6,8 @@ import {
 import HomePage from "./pages/HomePage";
 import FavoritesPage from "./pages/FavoritesPage";
 import PokemonPage from "./pages/PokemonPage";
-import ComparePage from "./pages/ComparePage"
+import ComparePage from "./pages/ComparePage";
+import LoginPage from "./pages/LoginPage";
 
 /*
   🌐 Main App Router
@@ -24,6 +25,12 @@ function App() {
       <Route
         path="/"
         element={<HomePage />}
+      />
+
+      {/* LOGIN PAGE */}
+      <Route
+      path="/login"
+      element={<LoginPage />}
       />
 
       {/* ❤️ Favorites page */}

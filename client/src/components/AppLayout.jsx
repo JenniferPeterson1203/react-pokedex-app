@@ -1,6 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
-import ApiStatus from "./ApiStatus";
 import TypingTitle from "./TypingTitle";
+import { useAuth } from "../context/auth/AuthContext";
 import pokeball from "../assets/pokeball.png";
 
 /*
@@ -18,6 +18,8 @@ function AppLayout({
   darkMode,
   setDarkMode,
 }) {
+
+  const { user, logout } = useAuth();
   return (
     <div className={darkMode ? "app dark" : "app"}>
 
@@ -28,9 +30,9 @@ function AppLayout({
           <span className="light yellow"></span>
           <span className="light green"></span>
         </div>
-
     <div className="top-controls">
-   {/* <ApiStatus /> */}
+
+      {/* POKEBALL TO HOMEPAGE NAVIGATION */}
   <Link to="/" aria-label="Go to home page">
     <img
       src={pokeball}
@@ -47,6 +49,33 @@ function AppLayout({
   >
     {darkMode ? "☀️" : "🌙"}
   </button>
+
+{/* 🔐 Authentication UI */}
+<div className="auth-status">
+
+{user ? (
+  <div className="auth-user-panel">
+    <span className="auth-username">
+      {user.username}
+    </span>
+
+    <button
+      className="auth-btn"
+      onClick={logout}
+    >
+      Logout
+    </button>
+  </div>
+) : (
+  <Link
+    to="/login"
+    className="auth-btn"
+  >
+    Login
+  </Link>
+)}
+
+</div>
 
 </div>
       </div>

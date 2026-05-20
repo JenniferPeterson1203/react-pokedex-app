@@ -1,0 +1,127 @@
+/* 🔐 Auth page layout */
+.auth-page {
+  min-height: 80vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 2rem;
+}
+
+/* 🌌 Cyberpunk auth card */
+.auth-card {
+  width: 100%;
+  max-width: 520px;
+
+  padding: 2rem;
+
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 43, 214, 0.12),
+      rgba(0, 229, 255, 0.08)
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.12);
+
+  backdrop-filter: blur(16px);
+
+  box-shadow:
+    0 0 30px rgba(255,43,214,0.18),
+    0 0 50px rgba(0,229,255,0.08);
+
+  text-align: center;
+
+  animation:
+    authGlow 6s ease-in-out infinite;
+}
+
+/* ✨ animated glow */
+@keyframes authGlow {
+  0% {
+    box-shadow:
+      0 0 30px rgba(255,43,214,0.18),
+      0 0 50px rgba(0,229,255,0.08);
+  }
+
+  50% {
+    box-shadow:
+      0 0 40px rgba(0,229,255,0.2),
+      0 0 65px rgba(255,43,214,0.12);
+  }
+
+  100% {
+    box-shadow:
+      0 0 30px rgba(255,43,214,0.18),
+      0 0 50px rgba(0,229,255,0.08);
+  }
+}
+
+/* 🧠 title */
+.auth-card h1 {
+  padding: 0;
+
+  margin-bottom: 1rem;
+
+  color: var(--neon-cyan);
+
+  text-shadow:
+    0 0 12px rgba(0,229,255,0.45);
+}
+
+/* 📝 auth description */
+.auth-card p {
+  line-height: 1.7;
+
+  color: rgba(255,255,255,0.82);
+
+  margin-bottom: 2rem;
+}
+
+/* 🚀 primary auth button */
+.auth-primary {
+  width: 100%;
+
+  margin-bottom: 1rem;
+
+  justify-content: center;
+}
+
+/* 🔗 guest mode link */
+.auth-link {
+  display: inline-block;
+
+  color: var(--neon-pink);
+
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease,
+    text-shadow 0.2s ease;
+}
+
+/* hover */
+.auth-link:hover {
+  color: var(--neon-cyan);
+
+  text-shadow:
+    0 0 8px rgba(0,229,255,0.45);
+}
+
+/* 📱 mobile auth card */
+@media (max-width: 700px) {
+
+  .auth-card {
+    padding: 1.5rem;
+
+    border-radius: 22px;
+  }
+
+  .auth-card h1 {
+    font-size: 2rem;
+  }
+}

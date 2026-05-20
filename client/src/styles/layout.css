@@ -261,5 +261,45 @@ h1 {
 }
 
 
+/* 🔐 auth controls */
+.auth-status {
+  display: flex;
+  align-items: center;
+}
 
+/* futuristic auth button */
+.auth-btn {
+  padding: 0.5rem 1rem;
 
+  border-radius: 999px;
+
+  border:
+    1px solid rgba(255,255,255,0.15);
+
+  background:
+    rgba(255,255,255,0.06);
+
+  color: white;
+
+  font-size: 0.8rem;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(10px);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+/* hover interaction */
+.auth-btn:hover {
+  transform: translateY(-2px);
+
+  border-color: var(--neon-cyan);
+
+  box-shadow:
+    0 0 14px rgba(0,229,255,0.35);
+}
