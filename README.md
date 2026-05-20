@@ -1,103 +1,231 @@
-# Jennifer's Pokédex
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![Express](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
 
-A futuristic neon-themed Pokédex built with React and PokéAPI featuring advanced Pokémon comparison tools, battle analysis, evolution tracking, responsive design, and immersive UI animations.
+![Jennifer's Pokédex Banner](./client/src/assets/Pokedex-Banner.png)
+# ⚡ Jennifer’s Pokédex
+
+A fullstack Pokémon analyzer platform inspired by cyberpunk aesthetics, NYC subway graffiti culture, and futuristic Pokédex interfaces.
+
+Built with React, PostgreSQL, Express, PokéAPI, and immersive neon UI design, this project evolved from a simple Pokédex into an interactive Pokémon exploration platform featuring battle analysis, comparison systems, favorites persistence, responsive dual-panel layouts, and animated scanning interfaces.
 
 ---
 
-## ✨ Features
+# 🌐 Live Demo
 
-### 🖥️ Core Pokédex Features
-- Pokémon search by name
-- Interactive Pokédex scanning screen
-- Detailed Pokémon profile pages
+🔗 https://react-pokedex-app-sooty.vercel.app/
+
+---
+
+# 📸 Screenshots
+
+## 🖥️ Cyberpunk Pokédex Interface
+
+![Desktop View](./public/Screenshot%202026-05-17%20at%2010.55.57 PM.png)
+
+---
+
+## 📱 Mobile Responsive Layout
+
+![Mobile View](./public/Screenshot%202026-05-17%20at%2010.57.13 PM.png)
+
+---
+
+# ✨ Features
+
+## 🧠 Pokémon Analyzer System
+- Interactive Pokédex scanning interface
+- Animated Pokémon scan display
+- Dynamic Pokémon detail analysis
+- Training profile analysis
+- Threat level analysis
+- Battle style classification
 - Evolution chain navigation
-- Pokédex lore and habitat data
-- Favorites system with localStorage persistence
+- Pokémon lore and habitat exploration
 
-### ⚔️ Battle & Compare System
+---
+
+## ⚔️ Compare & Battle System
 - Side-by-side Pokémon comparison
-- Searchable compare selectors
-- Animated VS battle interface
-- Battle prediction analysis
-- Type effectiveness analyzer
+- Animated VS interface
+- Battle prediction engine
+- Type effectiveness analysis
 - Stat comparison highlighting
+- Searchable compare selectors
 - Type-themed compare cards
 
-### 🎨 UI / UX Features
-- Futuristic neon cyberpunk design
-- Dark and light mode
-- Animated scan effects
-- Animated compare card transitions
-- Responsive mobile and tablet layouts
-- Accessibility improvements
-- Keyboard navigation support
-- Custom loading screen animations
+---
+
+## ❤️ Favorites System
+- Add/remove favorites
+- PostgreSQL-backed favorites persistence
+- Favorites page with live updates
+- Backend API integration
+- Fullstack favorites architecture
 
 ---
 
-## 🛠 Built With
+## 🎨 UI / UX Features
+- Cyberpunk neon Pokédex redesign
+- NYC graffiti-inspired color styling
+- Responsive open Pokédex layout
+- Animated scan effects
+- Floating holographic Pokémon displays
+- Hardware-inspired control deck
+- Interactive hover animations
+- Light/Dark mode support
+- Accessibility improvements
+- Keyboard navigation support
+- Responsive mobile and tablet experience
 
+---
+
+# 🛠️ Tech Stack
+
+## Frontend
 - React
 - React Router
 - JavaScript
 - CSS
-- PokéAPI
 - Vite
+
+## Backend
+- Node.js
+- Express
+- PostgreSQL
+
+## APIs & Deployment
+- PokéAPI
 - Vercel
+- Render
 
 ---
 
-## 🚀 Installation
+# 🧱 Architecture Overview
+
+The project uses a modular frontend architecture focused on reusable hooks, utility functions, and scalable component organization.
+
+## Key Architectural Patterns
+- Reusable custom hooks
+- Utility-driven analyzer logic
+- Component-based UI system
+- Dedicated style architecture
+- Responsive layout separation
+- Backend API integration
+- PostgreSQL persistence layer
+
+---
+
+# 🚀 Local Installation
+
+## Clone Repository
 
 ```bash
+git clone <your-repository-url>
+```
+
+---
+
+## Install Frontend Dependencies
+
+```bash
+cd client
 npm install
 npm run dev
 ```
 
 ---
 
-## 🌐 Live Demo
+## Install Backend Dependencies
 
-[View Jennifer's Pokédex](https://react-pokedex-app-sooty.vercel.app/)
-
----
-
-## 📸 Screenshots
-
-### 🖥️ Desktop View
-
-![Desktop View](./public/Screenshot%202026-05-17%20at%2010.55.57 PM.png)
-
-### 📱 Mobile View
-
-![Mobile View](./public/Screenshot%202026-05-17%20at%2010.57.13 PM.png)
+```bash
+cd server
+npm install
+npm run dev
+```
 
 ---
 
-## 🔮 Future Improvements
+# 🔐 Planned Future Features
 
-- Radar chart stat visualization
+## Authentication & Security
+- User accounts
+- Secure login system
+- Password hashing with bcrypt
+- JWT authentication
+- Protected API routes
+- User-owned favorites
+- Secure environment variable management
+
+---
+
+## Pokémon Platform Expansion
+- Pokémon team builder
+- Saved battle history
+- Personal trainer dashboard
+- Pokémon notes/journal system
+- Radar stat visualization
 - Sound effects and battle audio
-- Additional Pokémon generations
-- Global state management with Context API
-- Advanced battle simulation system
+- Expanded Pokémon generations
 
 ---
 
-## 📚 What I Learned
+# 🧠 What I Learned
 
-Through this project I strengthened my understanding of:
-- React hooks and reusable components
-- Client-side routing with React Router
-- API integration and async data fetching
-- State management patterns
-- Responsive UI design
+This project helped strengthen my understanding of:
+
+- Fullstack architecture
+- PostgreSQL integration
+- RESTful API development
+- React hooks and reusable logic
+- Component architecture
+- Responsive UI/UX design
 - Accessibility best practices
-- Component architecture and project structure
-- Building polished user experiences
+- State management patterns
+- Animation and interaction design
+- API data transformation
+- The importance of scalable CSS organization
+
+It also pushed me creatively. Styling and UI/UX design have traditionally been weaker areas for me, so this project became an opportunity to learn how to leverage AI-assisted workflows to improve frontend creativity, interaction design, and user experience thinking.
 
 ---
 
+# 🎨 Design Inspiration
+
+The cyberpunk redesign was inspired by:
+- futuristic Pokédex interfaces
+- neon cyberpunk aesthetics
+- NYC subway graffiti culture
+- holographic scanner systems
+
+One of my favorite parts of the project is the animated scanning interface and the interactive Pokémon cards that visually “lift” off the screen when selected.
+
 ---
 
-© 2026 Jennifer Peterson • Built with React, PokéAPI, and futuristic Pokédex vibes ⚡
+# ⚔️ Biggest Challenge
+
+The Pokémon compare system was the most challenging part of the build because it required balancing:
+- technical architecture
+- reusable logic
+- UI creativity
+- animation coordination
+- responsive design
+
+Building the compare experience pushed me to think more deeply about frontend engineering and interaction design.
+
+---
+
+# 👩🏽‍💻 Developer
+
+Built by Jennifer Peterson
+
+Focused on:
+- Fullstack Development
+- Cybersecurity
+- Backend Engineering
+- Interactive UI Systems
+
+---
+
+© 2026 Jennifer Peterson • Built with React, PostgreSQL, PokéAPI, and futuristic Pokédex vibes ⚡
