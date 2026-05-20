@@ -1,16 +1,28 @@
 import { createContext, useContext, useState } from "react";
+import {
+  loadDemoUser,
+  saveDemoUser,
+  clearDemoUser,
+} from "../../utils/authStorage";
+
 
 /*
   🔐 Authentication Context
 
-  Right now:
-  - supports guest mode only
+  Controls global authentication state
+  across the application.
 
-  Later:
-  - will support JWT login
-  - authenticated users
+  Current Features:
+  - guest/demo authentication
+  - persistent auth state
+  - shared auth context
+  - logout handling
+
+  Future Features:
+  - JWT authentication
   - protected routes
-  - persistent sessions
+  - trainer dashboards
+  - backend session validation
 */
 
 const AuthContext = createContext();
@@ -18,36 +30,48 @@ const AuthContext = createContext();
 /*
   🌐 Auth Provider
 
-  Wraps the app and provides:
-  - current user
-  - auth state
+  Wraps the application and shares:
+  - authenticated user
   - login/logout functions
+  - future auth utilities
 */
 function AuthProvider({ children }) {
 
   /*
     👤 Current authenticated user
 
-    null = guest mode
+    Starts by loading persisted
+    demo auth state from localStorage.
   */
-  const [user, setUser] = useState(null);
+  const [user, setUser] =
+    useState(loadDemoUser);
 
   /*
-    🔓 Login placeholder
+    🔓 Login handler
 
-    Later this will:
-    - validate JWT
-    - store token
-    - fetch user data
+    Right now:
+    - saves demo user locally
+
+    Later:
+    - will validate backend auth
+    - store JWT tokens
+    - sync user session
   */
   const login = (userData) => {
+    saveDemoUser(userData);
+
     setUser(userData);
   };
 
   /*
-    🚪 Logout placeholder
+    🚪 Logout handler
+
+    Clears persisted auth state
+    and returns app to guest mode.
   */
   const logout = () => {
+    clearDemoUser();
+
     setUser(null);
   };
 
@@ -67,9 +91,10 @@ function AuthProvider({ children }) {
 /*
   🪝 Custom auth hook
 
-  Makes auth state easier to access
-  throughout the app.
+  Makes authentication state
+  accessible throughout the app.
 */
+
 const useAuth = () => {
   return useContext(AuthContext);
 };
