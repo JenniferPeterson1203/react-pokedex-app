@@ -142,3 +142,34 @@
     font-size: 2rem;
   }
 }
+
+/* 🚨 Auth error message */
+.auth-error {
+  margin: 1rem 0;
+
+  padding: 0.8rem 1rem;
+
+  border-radius: 14px;
+
+  border: 1px solid rgba(255, 43, 214, 0.55);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 43, 214, 0.14),
+      rgba(0, 229, 255, 0.08)
+    );
+
+  color: #ff8de8;
+
+  font-weight: bold;
+
+  text-align: center;
+
+  box-shadow:
+    0 0 14px rgba(255, 43, 214, 0.25),
+    inset 0 0 10px rgba(0, 229, 255, 0.08);
+
+  text-shadow:
+    0 0 8px rgba(255, 43, 214, 0.45);
+}
