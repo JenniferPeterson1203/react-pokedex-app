@@ -8,6 +8,7 @@ import FavoritesPage from "./pages/FavoritesPage";
 import PokemonPage from "./pages/PokemonPage";
 import ComparePage from "./pages/ComparePage";
 import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
 
 /*
   🌐 Main App Router
@@ -32,6 +33,12 @@ function App() {
       path="/login"
       element={<LoginPage />}
       />
+      
+            {/* Singup Page */}
+            <Route
+            path="/signup"
+            element={<SignupPage />}
+            />
 
       {/* ❤️ Favorites page */}
       <Route

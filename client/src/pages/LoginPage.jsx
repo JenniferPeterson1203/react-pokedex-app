@@ -104,12 +104,23 @@ const handleDemoLogin = async () => {
   </p>
 )}
 
-          <Link
-            className="auth-link"
-            to="/"
-          >
-            Continue as Guest
-          </Link>
+<div className="auth-links">
+
+  <Link
+    className="auth-link"
+    to="/"
+  >
+    Continue as Guest
+  </Link>
+
+  <Link
+    className="auth-link"
+    to="/signup"
+  >
+    Create Account
+  </Link>
+
+</div>
         </div>
       </div>
     </AppLayout>
