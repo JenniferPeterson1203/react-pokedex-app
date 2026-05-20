@@ -120,6 +120,13 @@ function HomePage() {
             isScanning={isScanning}
           />
 
+           <div className="control-search-panel">
+    <SearchBar
+      searchTerm={searchTerm}
+      setSearchTerm={setSearchTerm}
+    />
+  </div> 
+
           <div className="pokedex-screen-frame">
             <div className="pokedex-grid">
               {currentPokemon.map((pokemon) => (
@@ -249,12 +256,6 @@ function HomePage() {
     <span className="control-light violet"></span>
   </div>
 
-  <div className="control-search-panel">
-    <SearchBar
-      searchTerm={searchTerm}
-      setSearchTerm={setSearchTerm}
-    />
-  </div>
 
   <div className="control-pagination-panel">
     <Pagination
