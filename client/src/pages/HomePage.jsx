@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTheme } from "../context/ThemeContext";
+import { useNavigate } from "react-router-dom";
 import PokemonCard from "../components/PokemonCard";
 import SearchBar from "../components/SearchBar";
 import Pagination from "../components/Pagination";
@@ -32,6 +33,7 @@ function HomePage() {
   } = usePokemon();
 
   const { favoriteIds, toggleFavorite, isLoadingFavorite, } = useFavorites();
+  const navigate = useNavigate();
 
   const handleSelectPokemon = (pokemon) => {
     setSelectedPokemon(pokemon);
@@ -68,50 +70,123 @@ function HomePage() {
   <div className="open-pokedex-shell">
     
     <section className="pokedex-left-panel">
-      <div className="featured-scan-display">
-  {selectedPokemon ? (
-    <>
-      <p className="scan-label">
-        Target Locked
-      </p>
+{/* 🎯 Featured scan target
 
-      <img
-        className="featured-scan-image"
-        src={selectedPokemon.sprites.front_default}
-        alt={selectedPokemon.name}
-      />
+    When a Pokémon is selected:
+    - display scan data
+    - allow navigation to detail page
 
-      <h2>
-        #{selectedPokemon.id} {selectedPokemon.name}
-      </h2>
+    Empty state remains non-clickable.
+*/}
+{selectedPokemon ? (
 
-      <div className="featured-type-row">
-        {selectedPokemon.types.map((type) => (
+  <div
+    className="
+      featured-scan-display
+      clickable-scan-display
+    "
+
+    role="button"
+
+    tabIndex="0"
+
+    aria-label={`
+      Open details for
+      ${selectedPokemon.name}
+    `}
+
+    /*
+      🖱️ Open Pokémon detail page
+    */
+    onClick={() =>
+      navigate(
+        `/pokemon/${selectedPokemon.name}`
+      )
+    }
+
+    /*
+      ⌨️ Keyboard accessibility
+
+      Allows:
+      - Enter
+      - Space
+
+      to activate navigation.
+    */
+    onKeyDown={(e) => {
+
+      if (
+        e.key === "Enter" ||
+        e.key === " "
+      ) {
+
+        navigate(
+          `/pokemon/${selectedPokemon.name}`
+        );
+      }
+    }}
+  >
+
+    <p className="scan-label">
+      Target Locked
+    </p>
+
+    <img
+      className="featured-scan-image"
+      src={
+        selectedPokemon.sprites.front_default
+      }
+      alt={selectedPokemon.name}
+    />
+
+    <h2>
+      #{selectedPokemon.id}
+      {" "}
+      {selectedPokemon.name}
+    </h2>
+
+    <div className="featured-type-row">
+
+      {selectedPokemon.types.map(
+        (type) => (
+
           <span
-  className={`type-badge type-${type.type.name}`}
-  key={type.type.name}
->
-  {type.type.name}
-</span>
-        ))}
-      </div>
-    </>
-  ) : (
-    <>
-      <p className="scan-label">
-        Awaiting Target
-      </p>
+            className={`
+              type-badge
+              type-${type.type.name}
+            `}
+            key={type.type.name}
+          >
+            {type.type.name}
+          </span>
+        )
+      )}
 
-      <div className="empty-scan-circle">
-        ?
-      </div>
+    </div>
 
-      <h2>
-        Select a Pokémon
-      </h2>
-    </>
-  )}
-</div>
+  </div>
+
+) : (
+
+  /*
+    📡 Empty scanner state
+  */
+  <div className="featured-scan-display">
+
+    <p className="scan-label">
+      Awaiting Target
+    </p>
+
+    <div className="empty-scan-circle">
+      ?
+    </div>
+
+    <h2>
+      Select a Pokémon
+    </h2>
+
+  </div>
+)}
       
       <div className="pokedex-screen">
         <div className="dashboard-layout">

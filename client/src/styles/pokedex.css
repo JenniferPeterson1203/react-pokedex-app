@@ -359,6 +359,46 @@
     0 0 20px rgba(255, 43, 214, 0.18);
 }
 
+/* 🖱️ interactive scan screen
+
+   Allows selected Pokémon scanner
+   to behave like a clickable
+   navigation display.
+*/
+.clickable-scan-display {
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+/* ✨ hover interaction */
+.clickable-scan-display:hover {
+
+  transform:
+    translateY(-3px);
+
+  border-color:
+    rgba(255, 43, 214, 0.45);
+
+  box-shadow:
+    inset 0 0 30px rgba(0, 229, 255, 0.16),
+    0 0 28px rgba(255, 43, 214, 0.28);
+}
+
+/* ⌨️ keyboard accessibility focus */
+.clickable-scan-display:focus-visible {
+
+  outline: none;
+
+  box-shadow:
+    0 0 0 2px rgba(0, 229, 255, 0.6),
+    inset 0 0 30px rgba(0, 229, 255, 0.16),
+    0 0 28px rgba(255, 43, 214, 0.28);
+}
+
 /* animated scan overlay */
 .featured-scan-display::before {
   content: "";

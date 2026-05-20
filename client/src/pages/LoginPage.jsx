@@ -21,6 +21,7 @@ function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
 /*
   🔐 Demo Login
@@ -30,6 +31,9 @@ function LoginPage() {
   without creating a new account.
 */
 const handleDemoLogin = async () => {
+  setIsLoggingIn(true);
+  setErrorMessage("");
+
   try {
     const response = await fetch(
       `${API_URL}/api/auth/login`,
@@ -54,13 +58,11 @@ const handleDemoLogin = async () => {
         data.error || "Demo login failed"
       );
 
+      setIsLoggingIn(false);
+
       return;
     }
 
-    /*
-      Save authenticated user and JWT token
-      in global auth context.
-    */
     login(data.user, data.token);
 
     navigate("/");
@@ -68,6 +70,8 @@ const handleDemoLogin = async () => {
     setErrorMessage(
       "Unable to connect to the server"
     );
+
+    setIsLoggingIn(false);
   }
 };
 
@@ -86,12 +90,13 @@ const handleDemoLogin = async () => {
             or use demo login to preview future account features.
           </p>
 
-          <button
-            className="auth-btn auth-primary"
-            onClick={handleDemoLogin}
-          >
-            Demo Login
-          </button>
+<button
+  className="auth-btn auth-primary"
+  onClick={handleDemoLogin}
+  disabled={isLoggingIn}
+>
+  {isLoggingIn ? "Logging in..." : "Demo Login"}
+</button>
 
           {errorMessage && (
   <p className="auth-error">
