@@ -66,12 +66,63 @@ const deleteTeam = async (
 /*
   🧬 Add Pokémon to team
 
-  Adds a Pokémon to a saved team.
+  Rules:
+  - max 6 Pokémon per team
+  - no duplicate Pokémon
 */
 const addPokemonToTeam = async (
   teamId,
   pokemon
 ) => {
+
+  /*
+    🔎 Check current team size
+  */
+  const existingPokemon =
+    await db.query(
+      `
+      SELECT *
+      FROM team_pokemon
+      WHERE team_id = $1
+      `,
+      [teamId]
+    );
+
+  /*
+    🛡️ Limit team size to 6
+  */
+  if (
+    existingPokemon.rows.length >= 6
+  ) {
+
+throw new Error(
+  `Your team already has 6 Pokémon. Remove one before adding ${pokemon.pokemon_name}.`
+);
+  }
+
+  /*
+    🔎 Check for duplicates
+  */
+  const duplicatePokemon =
+    existingPokemon.rows.find(
+      (teamPokemon) =>
+        teamPokemon.pokemon_id ===
+        pokemon.pokemon_id
+    );
+
+  /*
+    🛡️ Prevent duplicates
+  */
+  if (duplicatePokemon) {
+
+ throw new Error(
+  `${pokemon.pokemon_name} is already on this team.`
+);
+  }
+
+  /*
+    ✅ Add Pokémon to team
+  */
   const result = await db.query(
     `
     INSERT INTO team_pokemon
@@ -89,9 +140,47 @@ const addPokemonToTeam = async (
   return result.rows[0];
 };
 
+/*
+  📥 Get teams with Pokémon
+
+  Returns each team plus the Pokémon
+  saved inside that team.
+*/
+const getUserTeamsWithPokemon = async (userId) => {
+  const result = await db.query(
+    `
+    SELECT
+      teams.id,
+      teams.team_name,
+      teams.created_at,
+
+      COALESCE(
+        json_agg(
+          json_build_object(
+            'id', team_pokemon.id,
+            'pokemon_id', team_pokemon.pokemon_id,
+            'pokemon_name', team_pokemon.pokemon_name
+          )
+        ) FILTER (WHERE team_pokemon.id IS NOT NULL),
+        '[]'
+      ) AS pokemon
+    FROM teams
+    LEFT JOIN team_pokemon
+      ON teams.id = team_pokemon.team_id
+    WHERE teams.user_id = $1
+    GROUP BY teams.id
+    ORDER BY teams.created_at DESC
+    `,
+    [userId]
+  );
+
+  return result.rows;
+};
+
 module.exports = {
   createTeam,
   getUserTeams,
+  getUserTeamsWithPokemon,
   deleteTeam,
   addPokemonToTeam,
 };

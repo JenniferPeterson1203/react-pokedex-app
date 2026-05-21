@@ -1,8 +1,8 @@
 const {
   createTeam,
-  getUserTeams,
   deleteTeam,
   addPokemonToTeam,
+  getUserTeamsWithPokemon,
 } = require("../queries/teamsQueries");
 
 /*
@@ -25,7 +25,7 @@ const getTeams = async (
       req.user.id;
 
     const teams =
-      await getUserTeams(userId);
+      await getUserTeamsWithPokemon(userId);
 
     res.status(200).json(
       teams
@@ -190,18 +190,17 @@ const addPokemon = async (
       newPokemon
     );
 
-  } catch (error) {
+} catch (error) {
 
-    console.error(
-      "Add Pokémon error",
-      error
-    );
+  console.error(
+    "Add Pokémon error",
+    error
+  );
 
-    res.status(500).json({
-      error:
-        "Failed to add Pokémon",
-    });
-  }
+  res.status(400).json({
+    error: error.message,
+  });
+}
 };
 
 module.exports = {

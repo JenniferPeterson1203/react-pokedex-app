@@ -152,7 +152,9 @@
 /* 📝 team creation form */
 .team-form {
   display: flex;
-  gap: 0.7rem;
+  flex-direction: column;
+
+  gap: 0.8rem;
 
   margin-top: 1rem;
 }
@@ -174,6 +176,12 @@
   color: white;
 
   outline: none;
+  width: 100%;
+
+}
+
+.team-form .auth-btn {
+  width: 100%;
 }
 
 /* input focus */
@@ -188,4 +196,62 @@
   .team-form {
     flex-direction: column;
   }
+}
+
+/* team text/content area */
+.team-info {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.6rem;
+}
+
+/* Pokémon stored inside a team */
+.team-pokemon-list {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 0.45rem;
+}
+
+/* individual Pokémon pill */
+.team-pokemon-pill {
+  padding: 0.3rem 0.65rem;
+
+  border-radius: 999px;
+
+  background:
+    rgba(0, 229, 255, 0.1);
+
+  border:
+    1px solid rgba(0, 229, 255, 0.28);
+
+  color: var(--neon-cyan);
+
+  font-size: 0.75rem;
+  font-weight: bold;
+
+  text-transform: capitalize;
+}
+
+/* empty team message */
+.team-empty {
+  color: rgba(255,255,255,0.65);
+
+  font-size: 0.85rem;
+}
+
+.team-count {
+  color: rgba(255,255,255,0.65);
+  font-size: 0.8rem;
+}
+
+.team-more-pill {
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(255, 43, 214, 0.12);
+  border: 1px solid rgba(255, 43, 214, 0.28);
+  color: var(--neon-pink);
+  font-size: 0.75rem;
+  font-weight: bold;
 }

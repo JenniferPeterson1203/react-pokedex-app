@@ -1,5 +1,9 @@
 import TypeEffectiveness from "./TypeEffectiveness";
 import MoveInsights from "../components/MoveInsights";
+import { addPokemonToTeam }
+  from "../api/teamsApi";
+import useTeams
+  from "../hooks/useTeams";
 
 
 /*
@@ -12,6 +16,10 @@ import MoveInsights from "../components/MoveInsights";
   This page gives a fuller Pokédex report.
 */
 function PokemonDetailProfile({ pokemon }) {
+  const {
+  teams,
+} = useTeams();
+
   if (!pokemon) {
     return (
       <div className="pokemon-detail-profile">
@@ -22,6 +30,51 @@ function PokemonDetailProfile({ pokemon }) {
 
   const officialArtwork =
     pokemon.sprites.other["official-artwork"].front_default;
+
+
+    /*
+  🧬 Add Pokémon to selected team
+*/
+const handleAddToTeam =
+  async (teamId) => {
+
+  try {
+
+    const response =
+      await addPokemonToTeam(
+        teamId,
+        pokemon
+      );
+
+    /*
+      🛡️ Backend validation errors
+
+      Example:
+      - duplicate Pokémon
+      - more than 6 Pokémon
+    */
+    if (response.error) {
+
+      alert(response.error);
+
+      return;
+    }
+
+    /*
+      ✅ Successful add
+    */
+    alert(
+      `${pokemon.name} added to team`
+    );
+
+  } catch (error) {
+
+    console.error(
+      "Failed to add Pokémon to team",
+      error
+    );
+  }
+};
 
   return (
     <div className="pokemon-detail-profile">
@@ -68,6 +121,42 @@ function PokemonDetailProfile({ pokemon }) {
             ))}
           </div>
         </div>
+
+        <div className="detail-card sprite-detail-card">
+
+  <h3>
+    Team Builder
+  </h3>
+
+  {teams.length === 0 ? (
+
+    <p>
+      Create a team first in your dashboard.
+    </p>
+
+  ) : (
+
+    <div className="team-builder-list">
+
+      {teams.map((team) => (
+
+        <button
+          key={team.id}
+          className="auth-btn"
+          onClick={() =>
+            handleAddToTeam(team.id)
+          }
+        >
+          Add to {team.team_name}
+        </button>
+
+      ))}
+
+    </div>
+
+  )}
+
+</div>
 
         <div className="detail-card sprite-detail-card">
           <h3>Sprites</h3>
