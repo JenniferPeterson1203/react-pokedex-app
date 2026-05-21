@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../context/auth/AuthContext";
 import AppLayout from "../components/AppLayout";
+import PageState from "../components/PageState";
 import { useTheme } from "../context/ThemeContext";
 import API_URL from "../api/api";
 
@@ -81,6 +82,11 @@ const handleDemoLogin = async () => {
       setDarkMode={setDarkMode}
       rightSidebar={null}
     >
+      <PageState
+  isLoading={isLoggingIn}
+  errorMessage={errorMessage}
+  loadingMessage="Connecting to trainer network..."
+>
       <div className="auth-page">
         <div className="auth-card">
           <h1>Trainer Login</h1>
@@ -123,6 +129,7 @@ const handleDemoLogin = async () => {
 </div>
         </div>
       </div>
+      </PageState>
     </AppLayout>
   );
 }

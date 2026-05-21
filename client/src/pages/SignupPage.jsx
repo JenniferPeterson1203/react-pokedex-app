@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import AppLayout from "../components/AppLayout";
+import PageState from "../components/PageState";
 import { useTheme } from "../context/ThemeContext";
 import { useAuth } from "../context/auth/AuthContext";
 import API_URL from "../api/api";
@@ -105,6 +106,11 @@ navigate("/");
       setDarkMode={setDarkMode}
       rightSidebar={null}
     >
+        <PageState
+  isLoading={isSigningUp}
+  errorMessage=""
+  loadingMessage="Creating trainer account..."
+>
       <div className="auth-page">
         <div className="auth-card">
           <h1>Create Trainer Account</h1>
@@ -171,6 +177,7 @@ navigate("/");
           </Link>
         </div>
       </div>
+      </PageState>
     </AppLayout>
   );
 }
