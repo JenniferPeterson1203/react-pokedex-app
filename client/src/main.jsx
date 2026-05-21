@@ -10,6 +10,7 @@ import "./styles/components.css";
 import "./styles/pokedex.css";
 import "./styles/types.css";
 import "./styles/auth.css";
+import "./styles/dashboard.css";
 
 import App from "./App.jsx";
 

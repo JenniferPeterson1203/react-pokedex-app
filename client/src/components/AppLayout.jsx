@@ -55,9 +55,18 @@ function AppLayout({
 
 {user ? (
   <div className="auth-user-panel">
-    <span className="auth-username">
-      {user.username}
-    </span>
+    
+  {/* 👤 Trainer dashboard link
+
+  Logged-in users can open
+  their future dashboard page. */}
+
+<Link
+  to="/dashboard"
+  className="auth-username"
+>
+  {user.username}
+</Link>
 
     <button
       className="auth-btn"
