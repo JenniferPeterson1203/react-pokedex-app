@@ -2,9 +2,8 @@ import { useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { useParams } from "react-router-dom";
 import PokemonDetailProfile from "../components/PokemonDetailProfile";
-import LoadingScreen from "../components/LoadingScreen";
 import AppLayout from "../components/AppLayout";
-// import PokemonStatsPanel from "../components/PokemonStatsPanel";
+import PageState from "../components/PageState";
 import EvolutionChain from "../components/EvolutionChain";
 import PokemonLore from "../components/PokemonLore";
 
@@ -25,7 +24,7 @@ function PokemonPage() {
   const { name } = useParams();
 
   // 🧠 Reuse our Pokémon data hook
-  const { pokemons } = usePokemon();
+  const { pokemons, isLoading,errorMessage } = usePokemon();
 
   /*
     🔎 Find the Pokémon that matches the URL name.
@@ -77,15 +76,24 @@ function PokemonPage() {
         </>
       }
     >
+      <PageState
+  isLoading={isLoading}
+  errorMessage={errorMessage}
+  loadingMessage="
+    Scanning Pokémon details...
+  "
+>
+      
       <div className="pokemon-page">
         <h1>Pokémon Details</h1>
 
-        {selectedPokemon ? (
-      <PokemonDetailProfile pokemon={selectedPokemon} />
-        ) : (
-            <LoadingScreen message="Scanning Pokémon Details..." />
-        )}
+    {selectedPokemon && (
+    <PokemonDetailProfile
+      pokemon={selectedPokemon}
+    />
+  )}
       </div>
+      </PageState>
     </AppLayout>
   );
 }

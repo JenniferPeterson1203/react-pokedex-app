@@ -3,6 +3,7 @@ import { useTheme } from "../context/ThemeContext";
 import AppLayout from "../components/AppLayout";
 import PokemonCompareCard from "../components/PokemonCompareCard";
 import PokemonSearchSelect from "../components/PokemonSearchSelect";
+import PageState from "../components/PageState";
 import getBattlePrediction from "../utils/battlePrediction";
 import usePokemon from "../hooks/usePokemon";
 
@@ -23,7 +24,11 @@ function ComparePage() {
   const [pokemonTwo, setPokemonTwo] =
     useState("");
 
-  const { pokemons } = usePokemon();
+  const {
+  pokemons,
+  isLoading,
+  errorMessage,
+} = usePokemon();
 
   // selected Pokémon objects
   const selectedPokemonOne =
@@ -44,6 +49,15 @@ return (
     setDarkMode={setDarkMode}
     rightSidebar={null}
   >
+    <PageState
+  isLoading={isLoading}
+  errorMessage={errorMessage}
+  loadingMessage="Loading battle comparison system..."
+>
+
+  {/* existing compare page content */}
+
+
     <div className="compare-page">
       <h1>Compare Pokémon</h1>
 
@@ -91,6 +105,7 @@ return (
         />
       </div>
     </div>
+    </PageState>
   </AppLayout>
 );
 }

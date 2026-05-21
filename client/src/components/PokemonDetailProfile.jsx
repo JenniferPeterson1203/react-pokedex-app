@@ -1,6 +1,7 @@
 import TypeEffectiveness from "./TypeEffectiveness";
 import MoveInsights from "../components/MoveInsights";
 
+
 /*
   🔍 PokemonDetailProfile
 

@@ -71,7 +71,27 @@ if (existingUser) {
       password_digest,
     });
 
-    res.status(201).json(newUser);
+    /*
+  🪪 Generate JWT token after signup
+
+  This lets a new user become logged in
+  immediately after creating an account.
+*/
+const token = jwt.sign(
+  {
+    id: newUser.id,
+    email: newUser.email,
+  },
+  process.env.JWT_SECRET,
+  {
+    expiresIn: "1h",
+  }
+);
+
+res.status(201).json({
+  token,
+  user: newUser,
+});
 
   } catch (error) {
 

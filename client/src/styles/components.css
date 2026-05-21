@@ -1302,3 +1302,47 @@ input:focus-visible {
     0 0 8px rgba(0,229,255,0.45);
 }
 
+/* ⚡ Full page loading state */
+.page-loader {
+  min-height: 70vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 2rem;
+
+  border-radius: 28px;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(0, 229, 255, 0.14),
+      rgba(0, 0, 0, 0.45)
+    );
+
+  border: 2px solid rgba(255, 43, 214, 0.35);
+
+  box-shadow:
+    inset 0 0 30px rgba(0, 229, 255, 0.12),
+    0 0 35px rgba(255, 43, 214, 0.2);
+
+  color: white;
+
+  text-align: center;
+}
+
+/* glowing loader text */
+.page-loader p {
+  margin-top: 1rem;
+
+  color: var(--neon-cyan);
+
+  font-weight: bold;
+
+  letter-spacing: 1px;
+
+  text-shadow:
+    0 0 10px rgba(0, 229, 255, 0.6);
+}

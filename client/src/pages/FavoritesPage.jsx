@@ -5,6 +5,7 @@ import PokemonStatsPanel from "../components/PokemonStatsPanel";
 import EvolutionChain from "../components/EvolutionChain";
 import PokemonLore from "../components/PokemonLore";
 import AppLayout from "../components/AppLayout";
+import PageState from "../components/PageState";
 import usePokemon from "../hooks/usePokemon";
 import useFavorites from "../hooks/useFavorites";
 
@@ -18,7 +19,7 @@ function FavoritesPage() {
   const [isScanning, setIsScanning] = useState(false);
   const { darkMode, setDarkMode } =
   useTheme();
-  const { pokemons } = usePokemon();
+  const { pokemons,isLoading,errorMessage } = usePokemon();
   const { favoriteIds, toggleFavorite, isLoadingFavorite,} = useFavorites();
 
   /*
@@ -41,6 +42,7 @@ function FavoritesPage() {
   };
 
 return (
+  
   <AppLayout
     darkMode={darkMode}
     setDarkMode={setDarkMode}
@@ -52,12 +54,21 @@ return (
           pokemons={pokemons}
         />
 
+
+
         <PokemonLore
           selectedPokemon={selectedPokemon}
         />
       </>
     }
   >
+    <PageState
+  isLoading={isLoading}
+  errorMessage={errorMessage}
+  loadingMessage="Loading favorite Pokémon..."
+>
+
+
     <div className="favorites-page">
 
       <h1>Favorite Pokémon</h1>
@@ -101,6 +112,7 @@ return (
       )}
 
     </div>
+    </PageState>
   </AppLayout>
 );
 }

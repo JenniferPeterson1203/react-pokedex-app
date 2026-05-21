@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import AppLayout from "../components/AppLayout";
 import { useTheme } from "../context/ThemeContext";
+import { useAuth } from "../context/auth/AuthContext";
 import API_URL from "../api/api";
 
 /*
@@ -16,6 +17,7 @@ import API_URL from "../api/api";
 */
 function SignupPage() {
   const { darkMode, setDarkMode } = useTheme();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   /*
@@ -81,11 +83,13 @@ function SignupPage() {
         return;
       }
 
-      /*
-        After account creation,
-        send user to login page.
-      */
-      navigate("/login");
+  /*
+  Log user in immediately
+  after successful signup.
+*/
+login(data.user, data.token);
+
+navigate("/");
     } catch (error) {
       setErrorMessage(
         "Unable to connect to the server"
