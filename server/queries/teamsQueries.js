@@ -141,6 +141,27 @@ throw new Error(
 };
 
 /*
+  ❌ Remove Pokémon from team
+
+  Deletes one Pokémon entry
+  from the team_pokemon table.
+*/
+const removePokemonFromTeam = async (
+  pokemonEntryId
+) => {
+  const result = await db.query(
+    `
+    DELETE FROM team_pokemon
+    WHERE id = $1
+    RETURNING *
+    `,
+    [pokemonEntryId]
+  );
+
+  return result.rows[0];
+};
+
+/*
   📥 Get teams with Pokémon
 
   Returns each team plus the Pokémon
@@ -183,4 +204,5 @@ module.exports = {
   getUserTeamsWithPokemon,
   deleteTeam,
   addPokemonToTeam,
+  removePokemonFromTeam,
 };

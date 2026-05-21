@@ -24,13 +24,9 @@ import useTeams from "../hooks/useTeams";
   - achievement badges
 */
 function TrainerDashboard() {
-  const [teamName, setTeamName] =
-    useState("");
+  const [teamName, setTeamName] = useState("");
 
-  const {
-    darkMode,
-    setDarkMode,
-  } = useTheme();
+  const { darkMode, setDarkMode } = useTheme();
 
   const { user } = useAuth();
 
@@ -40,6 +36,7 @@ function TrainerDashboard() {
     teamError,
     handleCreateTeam,
     handleDeleteTeam,
+    handleRemovePokemon,
   } = useTeams();
 
   if (!user) {
@@ -74,58 +71,37 @@ function TrainerDashboard() {
         <div className="dashboard-hero">
           <h1>Trainer Dashboard</h1>
 
-          <p>
-            Welcome back, {user.username}
-          </p>
+          <p>Welcome back, {user.username}</p>
         </div>
 
         <div className="dashboard-grid">
           <div className="dashboard-card">
             <h2>Favorite Pokémon</h2>
 
-            <p>
-              Track and manage your saved favorites.
-            </p>
+            <p>Track and manage your saved favorites.</p>
           </div>
 
           <div className="dashboard-card">
             <h2>Teams</h2>
 
-            <p>
-              Build strategic Pokémon teams and
-              analyze type balance.
-            </p>
+            <p>Build strategic Pokémon teams and analyze type balance.</p>
 
-            <form
-              className="team-form"
-              onSubmit={handleTeamSubmit}
-            >
+            <form className="team-form" onSubmit={handleTeamSubmit}>
               <input
                 type="text"
                 placeholder="Enter team name"
                 value={teamName}
-                onChange={(e) =>
-                  setTeamName(e.target.value)
-                }
+                onChange={(e) => setTeamName(e.target.value)}
               />
 
-              <button
-                className="auth-btn"
-                type="submit"
-              >
+              <button className="auth-btn" type="submit">
                 Create Team
               </button>
             </form>
 
-            {isLoadingTeams && (
-              <p>Loading teams...</p>
-            )}
+            {isLoadingTeams && <p>Loading teams...</p>}
 
-            {teamError && (
-              <p className="auth-error">
-                {teamError}
-              </p>
-            )}
+            {teamError && <p className="auth-error">{teamError}</p>}
 
             <div className="team-list">
               {teams.map((team) => {
@@ -136,18 +112,12 @@ function TrainerDashboard() {
                   a pokemon array until teams reload
                   from the backend.
                 */
-                const teamPokemon =
-                  team.pokemon || [];
+                const teamPokemon = team.pokemon || [];
 
                 return (
-                  <div
-                    className="team-row"
-                    key={team.id}
-                  >
+                  <div className="team-row" key={team.id}>
                     <div className="team-info">
-                      <strong className="team-name">
-                        {team.team_name}
-                      </strong>
+                      <strong className="team-name">{team.team_name}</strong>
 
                       <p className="team-count">
                         {teamPokemon.length}/6 Pokémon
@@ -155,16 +125,24 @@ function TrainerDashboard() {
 
                       {teamPokemon.length > 0 ? (
                         <div className="team-pokemon-list">
-                          {teamPokemon
-                            .slice(0, 3)
-                            .map((pokemon) => (
-                              <span
-                                className="team-pokemon-pill"
-                                key={pokemon.id}
+                          {teamPokemon.slice(0, 3).map((pokemon) => (
+                            <span
+                              className="team-pokemon-pill"
+                              key={pokemon.id}
+                            >
+                              {pokemon.pokemon_name}
+
+                              <button
+                                className="team-pokemon-remove"
+                                onClick={() =>
+                                  handleRemovePokemon(team.id, pokemon.id)
+                                }
+                                aria-label={`Remove ${pokemon.pokemon_name} from ${team.team_name}`}
                               >
-                                {pokemon.pokemon_name}
-                              </span>
-                            ))}
+                                ×
+                              </button>
+                            </span>
+                          ))}
 
                           {teamPokemon.length > 3 && (
                             <span className="team-more-pill">
@@ -173,17 +151,13 @@ function TrainerDashboard() {
                           )}
                         </div>
                       ) : (
-                        <p className="team-empty">
-                          No Pokémon added yet.
-                        </p>
+                        <p className="team-empty">No Pokémon added yet.</p>
                       )}
                     </div>
 
                     <button
                       className="auth-btn team-delete-btn"
-                      onClick={() =>
-                        handleDeleteTeam(team.id)
-                      }
+                      onClick={() => handleDeleteTeam(team.id)}
                     >
                       Delete
                     </button>
@@ -196,19 +170,13 @@ function TrainerDashboard() {
           <div className="dashboard-card">
             <h2>Battle Analytics</h2>
 
-            <p>
-              Future battle insights and combat
-              tracking tools.
-            </p>
+            <p>Future battle insights and combat tracking tools.</p>
           </div>
 
           <div className="dashboard-card">
             <h2>Trainer Achievements</h2>
 
-            <p>
-              Earn badges and unlock advanced
-              trainer milestones.
-            </p>
+            <p>Earn badges and unlock advanced trainer milestones.</p>
           </div>
         </div>
       </div>

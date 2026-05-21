@@ -8,6 +8,7 @@ const {
   createNewTeam,
   removeTeam,
   addPokemon,
+  removePokemon,
 } = require(
   "../controllers/teamsController"
 );
@@ -54,6 +55,15 @@ teams.post(
   "/:teamId/pokemon",
   verifyToken,
   addPokemon
+);
+
+/*
+  ❌ REMOVE Pokémon from team
+*/
+teams.delete(
+  "/:teamId/pokemon/:pokemonEntryId",
+  verifyToken,
+  removePokemon
 );
 
 module.exports = teams;

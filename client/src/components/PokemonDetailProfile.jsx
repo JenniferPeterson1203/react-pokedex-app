@@ -19,6 +19,7 @@ import useTeams
 function PokemonDetailProfile({ pokemon }) {
   const {
   teams,
+  loadTeams,
 } = useTeams();
 
 const { showToast } =
@@ -70,10 +71,12 @@ const handleAddToTeam =
     /*
       ✅ Successful add
     */
-  showToast(
-  `${pokemon.name} added to team`,
-  "success"
-);
+   await loadTeams();
+   
+   showToast(
+    `${pokemon.name} added to team`,
+    "success"
+  );
 
   } catch (error) {
 

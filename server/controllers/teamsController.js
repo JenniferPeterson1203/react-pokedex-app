@@ -3,6 +3,7 @@ const {
   deleteTeam,
   addPokemonToTeam,
   getUserTeamsWithPokemon,
+  removePokemonFromTeam
 } = require("../queries/teamsQueries");
 
 /*
@@ -203,9 +204,50 @@ const addPokemon = async (
 }
 };
 
+/*
+  ❌ Remove Pokémon from team
+
+  Removes one Pokémon entry
+  from a saved team.
+*/
+const removePokemon = async (
+  req,
+  res
+) => {
+
+  try {
+
+    const {
+      pokemonEntryId,
+    } = req.params;
+
+    const deletedPokemon =
+      await removePokemonFromTeam(
+        pokemonEntryId
+      );
+
+    res.status(200).json(
+      deletedPokemon
+    );
+
+  } catch (error) {
+
+    console.error(
+      "Remove Pokémon error",
+      error
+    );
+
+    res.status(500).json({
+      error:
+        "Failed to remove Pokémon",
+    });
+  }
+};
+
 module.exports = {
   getTeams,
   createNewTeam,
   removeTeam,
   addPokemon,
+  removePokemon,
 };

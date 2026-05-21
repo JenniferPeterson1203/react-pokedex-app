@@ -88,3 +88,43 @@ export const addPokemonToTeam =
 
   return response.json();
 };
+
+ /*
+  ❌ Remove Pokémon from team
+*/
+export const removePokemonFromTeam =
+  async (
+    teamId,
+    pokemonEntryId
+  ) => {
+
+    try {
+
+      const response =
+        await fetch(
+          `
+          ${API_URL}/api/teams/${teamId}/pokemon/${pokemonEntryId}
+          `,
+          {
+            method: "DELETE",
+
+            headers:
+              getAuthHeaders(),
+          }
+        );
+
+      return await response.json();
+
+    } catch (error) {
+
+      console.error(
+        "Remove Pokémon API error",
+        error
+      );
+
+      return {
+        error:
+          "Failed to remove Pokémon",
+      };
+    }
+};

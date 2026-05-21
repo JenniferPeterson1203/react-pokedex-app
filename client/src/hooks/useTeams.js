@@ -4,6 +4,7 @@ import {
   fetchTeams,
   createTeam,
   deleteTeam,
+  removePokemonFromTeam,
 } from "../api/teamsApi";
 
 /*
@@ -127,6 +128,36 @@ function useTeams() {
     }
   };
 
+  /*
+  ❌ Remove Pokémon from a team.
+*/
+const handleRemovePokemon = async (
+  teamId,
+  pokemonEntryId
+) => {
+  try {
+    setTeamError("");
+
+    const deletedPokemon =
+      await removePokemonFromTeam(
+        teamId,
+        pokemonEntryId
+      );
+
+    if (deletedPokemon.error) {
+      setTeamError(deletedPokemon.error);
+      return;
+    }
+
+    await loadTeams();
+  } catch (error) {
+    setTeamError(
+      "Unable to remove Pokémon right now."
+    );
+  }
+};
+
+
   useEffect(() => {
     loadTeams();
   }, []);
@@ -137,6 +168,8 @@ function useTeams() {
     teamError,
     handleCreateTeam,
     handleDeleteTeam,
+    loadTeams,
+    handleRemovePokemon,
   };
 }
 
