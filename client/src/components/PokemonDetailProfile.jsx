@@ -4,6 +4,7 @@ import { addPokemonToTeam }
   from "../api/teamsApi";
 import useTeams
   from "../hooks/useTeams";
+  import { useToast } from "../context/ToastContext";
 
 
 /*
@@ -19,6 +20,9 @@ function PokemonDetailProfile({ pokemon }) {
   const {
   teams,
 } = useTeams();
+
+const { showToast } =
+  useToast();
 
   if (!pokemon) {
     return (
@@ -55,7 +59,10 @@ const handleAddToTeam =
     */
     if (response.error) {
 
-      alert(response.error);
+      showToast(
+  response.error,
+  "error"
+);
 
       return;
     }
@@ -63,9 +70,10 @@ const handleAddToTeam =
     /*
       ✅ Successful add
     */
-    alert(
-      `${pokemon.name} added to team`
-    );
+  showToast(
+  `${pokemon.name} added to team`,
+  "success"
+);
 
   } catch (error) {
 
