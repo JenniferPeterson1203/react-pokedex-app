@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useTheme } from "../context/ThemeContext";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import PokemonDetailProfile from "../components/PokemonDetailProfile";
 import AppLayout from "../components/AppLayout";
 import PageState from "../components/PageState";
@@ -22,6 +22,7 @@ function PokemonPage() {
 
   // 🧠 Gets the Pokémon name from the URL
   const { name } = useParams();
+  const navigate = useNavigate();
 
   // 🧠 Reuse our Pokémon data hook
   const { pokemons, isLoading,errorMessage } = usePokemon();
@@ -47,15 +48,7 @@ function PokemonPage() {
     setTimeout(() => {
       setIsScanning(false);
     }, 600);
-
-    /*
-      This changes the displayed Pokémon on the page,
-      but it does not change the URL yet.
-      We can improve that later.
-    */
-    window.history.pushState(
-      null,
-      "",
+    navigate(
       `/pokemon/${pokemon.name}`
     );
   };
