@@ -64,6 +64,10 @@ const authController =
 const favoritesRoutes =
   require("./routes/favoritesRoutes");
 
+  // Teams routes
+  const teamsRoutes =
+  require("./routes/teamsRoutes");
+
 
 /*
   🚀 Express server setup
@@ -80,6 +84,10 @@ app.use(express.json());
 app.use(
   "/api/favorites",
   favoritesRoutes
+);
+app.use(
+  "/api/teams",
+  teamsRoutes
 );
 app.use("/api/auth", authController);
 
