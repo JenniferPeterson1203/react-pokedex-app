@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import AppLayout from "../components/AppLayout";
 import { useTheme } from "../context/ThemeContext";
@@ -18,6 +19,9 @@ import useTeams from "../hooks/useTeams";
   - achievement badges
 */
 function TrainerDashboard() {
+
+// Team name state
+const [teamName, setTeamName] = useState("");
 
   /*
     🌙 Theme context
@@ -53,6 +57,25 @@ const {
       <Navigate to="/login" />
     );
   }
+
+
+  /*
+  🧑‍🤝‍🧑 Submit new team
+
+  Creates a team using the name
+  entered by the user.
+*/
+const handleTeamSubmit = (e) => {
+  e.preventDefault();
+
+  if (!teamName.trim()) {
+    return;
+  }
+
+  handleCreateTeam(teamName);
+
+  setTeamName("");
+};
 
   return (
     <AppLayout
@@ -104,14 +127,26 @@ const {
     and analyze type balance.
   </p>
 
+<form
+  className="team-form"
+  onSubmit={handleTeamSubmit}
+>
+  <input
+    type="text"
+    placeholder="Enter team name"
+    value={teamName}
+    onChange={(e) =>
+      setTeamName(e.target.value)
+    }
+  />
+
   <button
     className="auth-btn"
-    onClick={() =>
-      handleCreateTeam("Starter Squad")
-    }
+    type="submit"
   >
-    Create Test Team
+    Create Team
   </button>
+</form>
 
   {isLoadingTeams && (
     <p>Loading teams...</p>

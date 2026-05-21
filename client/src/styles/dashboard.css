@@ -148,3 +148,44 @@
 
   font-size: 0.75rem;
 }
+
+/* 📝 team creation form */
+.team-form {
+  display: flex;
+  gap: 0.7rem;
+
+  margin-top: 1rem;
+}
+
+/* team input */
+.team-form input {
+  flex: 1;
+
+  padding: 0.7rem 0.9rem;
+
+  border-radius: 999px;
+
+  border:
+    1px solid rgba(0, 229, 255, 0.24);
+
+  background:
+    rgba(255, 255, 255, 0.06);
+
+  color: white;
+
+  outline: none;
+}
+
+/* input focus */
+.team-form input:focus {
+  border-color: var(--neon-cyan);
+
+  box-shadow:
+    0 0 12px rgba(0, 229, 255, 0.28);
+}
+
+@media (max-width: 700px) {
+  .team-form {
+    flex-direction: column;
+  }
+}
