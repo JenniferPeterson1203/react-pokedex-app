@@ -1,8 +1,9 @@
 import { Navigate } from "react-router-dom";
-
 import AppLayout from "../components/AppLayout";
 import { useTheme } from "../context/ThemeContext";
 import { useAuth } from "../context/auth/AuthContext";
+import useTeams from "../hooks/useTeams";
+
 
 /*
   🧑‍💻 TrainerDashboard
@@ -30,6 +31,15 @@ function TrainerDashboard() {
     🔐 Auth context
   */
   const { user } = useAuth();
+
+//   The teams hook
+const {
+  teams,
+  isLoadingTeams,
+  teamError,
+  handleCreateTeam,
+  handleDeleteTeam,
+} = useTeams();
 
   /*
     🚫 Protect dashboard route
@@ -86,18 +96,66 @@ function TrainerDashboard() {
     </div>
 
     {/* 🛡️ Teams */}
-    <div className="dashboard-card">
+<div className="dashboard-card">
+  <h2>Teams</h2>
 
-      <h2>
-        Teams
-      </h2>
+  <p>
+    Build strategic Pokémon teams
+    and analyze type balance.
+  </p>
 
-      <p>
-        Build strategic Pokémon teams
-        and analyze type balance.
-      </p>
+  <button
+    className="auth-btn"
+    onClick={() =>
+      handleCreateTeam("Starter Squad")
+    }
+  >
+    Create Test Team
+  </button>
+
+  {isLoadingTeams && (
+    <p>Loading teams...</p>
+  )}
+
+  {teamError && (
+    <p className="auth-error">
+      {teamError}
+    </p>
+  )}
+
+<div className="team-list">
+
+  {teams.map((team) => (
+
+    <div
+      className="team-row"
+      key={team.id}
+    >
+
+      <strong className="team-name">
+        {team.team_name}
+      </strong>
+
+      <button
+        className="
+          auth-btn
+          team-delete-btn
+        "
+        onClick={() =>
+          handleDeleteTeam(team.id)
+        }
+      >
+        Delete
+      </button>
 
     </div>
+  ))}
+
+</div>
+</div>
+
+
+
 
     {/* ⚔️ Battle Analytics */}
     <div className="dashboard-card">

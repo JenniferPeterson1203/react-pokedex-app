@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import getAuthHeaders from "../api/authHeaders";
 
 import API_URL from "../api/api";
 
@@ -71,10 +72,7 @@ function useFavorites() {
         const response = await fetch(
           `${API_URL}/api/favorites`,
           {
-            headers: {
-              Authorization:
-                `Bearer ${token}`,
-            },
+            headers: getAuthHeaders(),
           }
         );
 
@@ -139,11 +137,7 @@ function useFavorites() {
             `${API_URL}/api/favorites/${pokemonId}`,
             {
               method: "DELETE",
-
-              headers: {
-                Authorization:
-                  `Bearer ${token}`,
-              },
+              headers: getAuthHeaders(),
             }
           );
 
@@ -177,14 +171,7 @@ function useFavorites() {
           `${API_URL}/api/favorites`,
           {
             method: "POST",
-
-            headers: {
-              "Content-Type":
-                "application/json",
-
-              Authorization:
-                `Bearer ${token}`,
-            },
+            headers: getAuthHeaders(),
 
             body: JSON.stringify({
               pokemon_id: pokemon.id,

@@ -105,3 +105,46 @@
   }
 
 }
+
+/* 🧑‍🤝‍🧑 saved team list */
+.team-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.8rem;
+
+  margin-top: 1rem;
+}
+
+/* individual saved team row */
+.team-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 1rem;
+
+  padding: 0.8rem;
+
+  border-radius: 14px;
+
+  background:
+    rgba(255, 255, 255, 0.06);
+
+  border:
+    1px solid rgba(0, 229, 255, 0.18);
+}
+
+/* team name */
+.team-name {
+  color: var(--neon-cyan);
+
+  font-weight: bold;
+}
+
+/* smaller delete button */
+.team-delete-btn {
+  padding: 0.4rem 0.8rem;
+
+  font-size: 0.75rem;
+}
