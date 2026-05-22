@@ -39,8 +39,19 @@ function ComparePage() {
 
   useEffect(() => {
     setBattleStarted(false);
-    setDisplayedLog([]);
-  }, [pokemonOne, pokemonTwo]);
+
+    const arenaLog = [];
+
+    if (selectedPokemonOne) {
+      arenaLog.push(`⚔️ ${selectedPokemonOne.name} enters the arena.`);
+    }
+
+    if (selectedPokemonTwo) {
+      arenaLog.push(`⚔️ ${selectedPokemonTwo.name} enters the arena.`);
+    }
+
+    setDisplayedLog(arenaLog);
+  }, [selectedPokemonOne, selectedPokemonTwo]);
 
   const startBattle = () => {
     if (!battleResult) {
@@ -49,9 +60,9 @@ function ComparePage() {
 
     setBattleStarted(true);
 
-    setDisplayedLog([]);
+    const battleEvents = battleResult.battleLog.slice(2);
 
-    battleResult.battleLog.forEach((logItem, index) => {
+    battleEvents.forEach((logItem, index) => {
       setTimeout(() => {
         setDisplayedLog((prev) => [...prev, logItem]);
       }, index * 1000);
@@ -174,20 +185,31 @@ function ComparePage() {
                 >
                   Start Battle
                 </button>
-
-                <div className="battle-log">
-                  <h3>Battle Log</h3>
-
-                  {displayedLog.length === 0 ? (
-                    <p>Press Start Battle to begin the simulation.</p>
-                  ) : (
-                    displayedLog.map((logItem, index) => (
-                      <p key={index}>{logItem}</p>
-                    ))
-                  )}
-                </div>
               </>
             )}
+
+            <div className="battle-log">
+              <h3>Battle Log</h3>
+
+              {displayedLog.length === 0 ? (
+                <p>Select a Pokémon to enter the arena.</p>
+              ) : (
+                displayedLog.map((logItem, index) => (
+                  <p
+                    key={index}
+                    className={
+                      index === 0
+                        ? "battle-log-left"
+                        : index === 1
+                          ? "battle-log-right"
+                          : "battle-log-center"
+                    }
+                  >
+                    {logItem}
+                  </p>
+                ))
+              )}
+            </div>
           </div>
           {/* comparison cards */}
           <div className="compare-grid">

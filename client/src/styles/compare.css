@@ -155,3 +155,62 @@
 .start-battle-btn {
   margin-top: 1rem;
 }
+
+.battle-log-left {
+  animation:
+    slide-slam-left 0.45s ease;
+}
+
+.battle-log-right {
+  animation:
+    slide-slam-right 0.45s ease;
+}
+
+.battle-log-center {
+  animation:
+    battle-log-pop 0.35s ease;
+}
+
+@keyframes slide-slam-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-80px);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translateX(8px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-slam-right {
+  0% {
+    opacity: 0;
+    transform: translateX(80px);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translateX(-8px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes battle-log-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
