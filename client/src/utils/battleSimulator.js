@@ -97,15 +97,43 @@ const simulateBattle = (pokemonOne, pokemonTwo) => {
 
   const scoreTwo = baseScoreTwo + typeBonusTwo;
 
+  /*
+  📜 Battle log
+
+  Creates a mini story describing
+  the battle outcome.
+*/
+  const battleLog = [];
+
+  battleLog.push(`⚔️ ${pokemonOne.name} enters the arena.`);
+
+  battleLog.push(`⚔️ ${pokemonTwo.name} enters the arena.`);
+
+  /*
+  🔥 Type advantage messages
+*/
+  if (typeBonusOne > 0) {
+    battleLog.push(`🔥 ${pokemonOne.name} gains a type advantage bonus.`);
+  }
+
+  if (typeBonusTwo > 0) {
+    battleLog.push(`🔥 ${pokemonTwo.name} gains a type advantage bonus.`);
+  }
+
   if (scoreOne > scoreTwo) {
     return {
       winner: pokemonOne,
       loser: pokemonTwo,
+
       scoreOne,
       scoreTwo,
-      message: `${pokemonOne.name} wins based on stronger overall battle stats.`,
+
       typeBonusOne,
       typeBonusTwo,
+
+      battleLog,
+
+      message: `${pokemonOne.name} wins based on stronger overall battle stats.`,
     };
   }
 
@@ -118,6 +146,7 @@ const simulateBattle = (pokemonOne, pokemonTwo) => {
       message: `${pokemonTwo.name} wins based on stronger overall battle stats.`,
       typeBonusOne,
       typeBonusTwo,
+      battleLog,
     };
   }
 
@@ -129,6 +158,7 @@ const simulateBattle = (pokemonOne, pokemonTwo) => {
     message: "This battle is too close to call.",
     typeBonusOne,
     typeBonusTwo,
+    battleLog,
   };
 };
 

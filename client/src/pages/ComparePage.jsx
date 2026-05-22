@@ -94,6 +94,13 @@ function ComparePage() {
 
                   <span>Type Bonus: +{battleResult.typeBonusTwo}</span>
                 </div>
+                <div className="battle-log">
+                  <h3>Battle Log</h3>
+
+                  {battleResult.battleLog.map((logItem, index) => (
+                    <p key={index}>{logItem}</p>
+                  ))}
+                </div>
               </>
             )}
           </div>
