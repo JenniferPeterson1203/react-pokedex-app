@@ -1,0 +1,88 @@
+/* 🧑‍🤝‍🧑 team detail page */
+.team-detail-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* full team roster grid */
+.team-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(220px, 1fr)
+  );
+  gap: 1.2rem;
+}
+
+/* individual Pokémon roster card */
+.team-detail-card h2 {
+  text-transform: capitalize;
+  color: var(--neon-cyan);
+}
+
+/* detail page action buttons */
+.team-detail-actions {
+  display: flex;
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 700px) {
+  .team-detail-actions {
+    flex-direction: column;
+  }
+}
+
+.team-detail-card {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  text-align: center;
+
+  gap: 1rem;
+}
+
+.team-detail-actions {
+  display: flex;
+  justify-content: center;
+
+  flex-wrap: wrap;
+
+  gap: 0.8rem;
+}
+
+.team-detail-actions .auth-btn,
+.team-detail-actions .team-delete-btn {
+  width: auto;
+  min-width: 140px;
+}
+
+.team-detail-sprite {
+  width: 120px;
+  height: 120px;
+
+  object-fit: contain;
+
+  filter:
+    drop-shadow(
+      0 0 14px rgba(0, 229, 255, 0.65)
+    );
+}
+
+/* 📊 team analytics card */
+.team-analytics-card {
+  display: flex;
+  flex-direction: column;
+
+  gap: 1rem;
+}
+
+/* 🧬 type analytics list */
+.team-type-list {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 0.6rem;
+}

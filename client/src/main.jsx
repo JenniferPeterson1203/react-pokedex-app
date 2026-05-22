@@ -13,6 +13,7 @@ import "./styles/types.css";
 import "./styles/auth.css";
 import "./styles/dashboard.css";
 import "./styles/toast.css"
+import "./styles/team-detail.css";
 
 import App from "./App.jsx";
 
