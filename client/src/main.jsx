@@ -14,6 +14,7 @@ import "./styles/auth.css";
 import "./styles/dashboard.css";
 import "./styles/toast.css"
 import "./styles/team-detail.css";
+import "./styles/compare.css";
 
 import App from "./App.jsx";
 

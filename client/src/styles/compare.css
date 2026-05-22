@@ -1,0 +1,45 @@
+.battle-score-row {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  margin-top: 1rem;
+}
+
+.battle-score-row span {
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+
+  background: rgba(0, 229, 255, 0.1);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+
+  color: var(--neon-cyan);
+  font-weight: bold;
+}
+
+.battle-winner-banner {
+  margin-top: 1rem;
+
+  padding: 1rem;
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 215, 0, 0.15),
+      rgba(0, 229, 255, 0.08)
+    );
+
+  border:
+    1px solid rgba(255, 215, 0, 0.45);
+
+  color: gold;
+
+  font-weight: bold;
+  text-align: center;
+
+  box-shadow:
+    0 0 18px rgba(255, 215, 0, 0.25);
+}

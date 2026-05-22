@@ -4,7 +4,7 @@ import AppLayout from "../components/AppLayout";
 import PokemonCompareCard from "../components/PokemonCompareCard";
 import PokemonSearchSelect from "../components/PokemonSearchSelect";
 import PageState from "../components/PageState";
-import getBattlePrediction from "../utils/battlePrediction";
+import simulateBattle from "../utils/battleSimulator";
 import usePokemon from "../hooks/usePokemon";
 
 /*
@@ -43,6 +43,12 @@ function ComparePage() {
         pokemon.name === pokemonTwo
     );
 
+  const battleResult =
+  simulateBattle(
+    selectedPokemonOne,
+    selectedPokemonTwo
+  );
+
 return (
   <AppLayout
     darkMode={darkMode}
@@ -54,8 +60,6 @@ return (
   errorMessage={errorMessage}
   loadingMessage="Loading battle comparison system..."
 >
-
-  {/* existing compare page content */}
 
 
     <div className="compare-page">
@@ -80,15 +84,36 @@ return (
 
       {/* battle prediction */}
       <div className="battle-readout">
-        <h2>Battle Readout</h2>
+  <h2>Battle Simulator</h2>
 
-        <p>
-          {getBattlePrediction(
-            selectedPokemonOne,
-            selectedPokemonTwo
-          )}
-        </p>
+  {!battleResult ? (
+    <p>
+      Choose two Pokémon to simulate a battle.
+    </p>
+  ) : (
+    <>
+      <p>{battleResult.message}</p>
+
+      {battleResult.winner && (
+  <div className="battle-winner-banner">
+    🏆 Winner:
+    {" "}
+    {battleResult.winner.name}
+  </div>
+)}
+
+      <div className="battle-score-row">
+        <span>
+          {selectedPokemonOne.name}: {battleResult.scoreOne}
+        </span>
+
+        <span>
+          {selectedPokemonTwo.name}: {battleResult.scoreTwo}
+        </span>
       </div>
+    </>
+  )}
+</div>
 
       {/* comparison cards */}
       <div className="compare-grid">
