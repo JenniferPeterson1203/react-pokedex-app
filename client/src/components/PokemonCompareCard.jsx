@@ -4,7 +4,12 @@
   Displays one Pokémon inside the compare view.
 */
 
-function PokemonCompareCard({ pokemon, opponent }) {
+function PokemonCompareCard({
+  pokemon,
+  opponent,
+  isWinner,
+  isLoser,
+}) {
 
   if (!pokemon) {
     return (
@@ -23,11 +28,13 @@ const primaryType =
 
   return (
   <div
-  className={
-    pokemon
-    ? `compare-card compare-card-active type-${primaryType}`
-    : `compare-card`
-    }
+ className={`
+  compare-card
+  compare-card-active
+  type-${primaryType}
+  ${isWinner ? "battle-card-winner" : ""}
+  ${isLoser ? "battle-card-loser" : ""}
+`}
     >
 
       {/* Pokémon image */}

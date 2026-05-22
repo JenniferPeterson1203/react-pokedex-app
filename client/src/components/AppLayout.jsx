@@ -105,7 +105,7 @@ function AppLayout({
             </NavLink>
 
             <NavLink to="/compare" className="sidebar-nav-link">
-            Compare
+            Battle Arena
             </NavLink>
           </nav>  
        

@@ -60,6 +60,8 @@ function ComparePage() {
 
     setBattleStarted(true);
 
+    setDisplayedLog([]);
+
     const battleEvents = battleResult.battleLog.slice(2);
 
     battleEvents.forEach((logItem, index) => {
@@ -81,7 +83,7 @@ function ComparePage() {
         loadingMessage="Loading battle comparison system..."
       >
         <div className="compare-page">
-          <h1>Compare Pokémon</h1>
+          <h1>Pokémon Battle Arena</h1>
 
           {/* selectors */}
           <div className="compare-selectors">
@@ -188,34 +190,44 @@ function ComparePage() {
               </>
             )}
 
-            <div className="battle-log">
-              <h3>Battle Log</h3>
+            {!battleStarted && (
+              <div className="battle-log">
+                <h3>Battle Log</h3>
 
-              {displayedLog.length === 0 ? (
-                <p>Select a Pokémon to enter the arena.</p>
-              ) : (
-                displayedLog.map((logItem, index) => (
-                  <p
-                    key={index}
-                    className={
-                      index === 0
-                        ? "battle-log-left"
-                        : index === 1
-                          ? "battle-log-right"
-                          : "battle-log-center"
-                    }
-                  >
-                    {logItem}
-                  </p>
-                ))
-              )}
-            </div>
+                {displayedLog.length === 0 ? (
+                  <p>Select a Pokémon to enter the arena.</p>
+                ) : (
+                  displayedLog.map((logItem, index) => (
+                    <p
+                      key={index}
+                      className={
+                        index === 0
+                          ? "battle-log-left"
+                          : index === 1
+                            ? "battle-log-right"
+                            : "battle-log-center"
+                      }
+                    >
+                      {logItem}
+                    </p>
+                  ))
+                )}
+              </div>
+            )}
           </div>
           {/* comparison cards */}
           <div className="compare-grid">
             <PokemonCompareCard
               pokemon={selectedPokemonOne}
               opponent={selectedPokemonTwo}
+              isWinner={
+                battleStarted &&
+                battleResult?.winner?.name === selectedPokemonOne?.name
+              }
+              isLoser={
+                battleStarted &&
+                battleResult?.loser?.name === selectedPokemonOne?.name
+              }
             />
 
             <div className="vs-badge">VS</div>
@@ -223,6 +235,14 @@ function ComparePage() {
             <PokemonCompareCard
               pokemon={selectedPokemonTwo}
               opponent={selectedPokemonOne}
+              isWinner={
+                battleStarted &&
+                battleResult?.winner?.name === selectedPokemonTwo?.name
+              }
+              isLoser={
+                battleStarted &&
+                battleResult?.loser?.name === selectedPokemonTwo?.name
+              }
             />
           </div>
         </div>
