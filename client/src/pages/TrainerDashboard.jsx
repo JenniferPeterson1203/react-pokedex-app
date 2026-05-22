@@ -76,12 +76,6 @@ function TrainerDashboard() {
 
         <div className="dashboard-grid">
           <div className="dashboard-card">
-            <h2>Favorite Pokémon</h2>
-
-            <p>Track and manage your saved favorites.</p>
-          </div>
-
-          <div className="dashboard-card">
             <h2>Teams</h2>
 
             <p>Build strategic Pokémon teams and analyze type balance.</p>
@@ -165,9 +159,7 @@ function TrainerDashboard() {
 
                       <button
                         className="auth-btn team-delete-btn"
-                        onClick={() => handleDeleteTeam(team.id)
-                          
-                        }
+                        onClick={() => handleDeleteTeam(team.id)}
                       >
                         Delete
                       </button>
