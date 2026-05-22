@@ -267,3 +267,26 @@
   font-weight: bold;
   cursor: pointer;
 }
+
+.team-row {
+  display: flex;
+  flex-direction: column;
+
+  align-items: stretch;
+
+  gap: 1rem;
+}
+
+.team-actions {
+  display: flex;
+  gap: 0.7rem;
+
+  justify-content: center;
+}
+
+.team-view-btn,
+.team-delete-btn {
+  width: 100%;
+
+  text-align: center;
+}

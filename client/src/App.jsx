@@ -10,6 +10,7 @@ import ComparePage from "./pages/ComparePage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import TrainerDashboard from "./pages/TrainerDashboard";
+import TeamDetailPage from "./pages/TeamDetailPage";
 
 /*
   🌐 Main App Router
@@ -63,6 +64,12 @@ function App() {
       path="/compare"
       element={<ComparePage />}
       />
+
+      {/* Team Detail Page */}
+      <Route
+  path="/teams/:teamId"
+  element={<TeamDetailPage />}
+/>
 
     </Routes>
   );

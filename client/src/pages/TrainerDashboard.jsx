@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 import AppLayout from "../components/AppLayout";
 import { useTheme } from "../context/ThemeContext";
@@ -155,12 +155,23 @@ function TrainerDashboard() {
                       )}
                     </div>
 
-                    <button
-                      className="auth-btn team-delete-btn"
-                      onClick={() => handleDeleteTeam(team.id)}
-                    >
-                      Delete
-                    </button>
+                    <div className="team-actions">
+                      <Link
+                        className="auth-btn team-view-btn"
+                        to={`/teams/${team.id}`}
+                      >
+                        View Team
+                      </Link>
+
+                      <button
+                        className="auth-btn team-delete-btn"
+                        onClick={() => handleDeleteTeam(team.id)
+                          
+                        }
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 );
               })}
