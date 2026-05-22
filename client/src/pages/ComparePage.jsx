@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
 import AppLayout from "../components/AppLayout";
 import PokemonCompareCard from "../components/PokemonCompareCard";
@@ -20,6 +20,10 @@ function ComparePage() {
 
   const [pokemonTwo, setPokemonTwo] = useState("");
 
+  const [battleStarted, setBattleStarted] = useState(false);
+
+  const [displayedLog, setDisplayedLog] = useState([]);
+
   const { pokemons, isLoading, errorMessage } = usePokemon();
 
   // selected Pokémon objects
@@ -32,6 +36,27 @@ function ComparePage() {
   );
 
   const battleResult = simulateBattle(selectedPokemonOne, selectedPokemonTwo);
+
+  useEffect(() => {
+    setBattleStarted(false);
+    setDisplayedLog([]);
+  }, [pokemonOne, pokemonTwo]);
+
+  const startBattle = () => {
+    if (!battleResult) {
+      return;
+    }
+
+    setBattleStarted(true);
+
+    setDisplayedLog([]);
+
+    battleResult.battleLog.forEach((logItem, index) => {
+      setTimeout(() => {
+        setDisplayedLog((prev) => [...prev, logItem]);
+      }, index * 1000);
+    });
+  };
 
   return (
     <AppLayout
@@ -72,12 +97,18 @@ function ComparePage() {
               <p>Choose two Pokémon to simulate a battle.</p>
             ) : (
               <>
-                <p>{battleResult.message}</p>
+                {battleStarted ? (
+                  <>
+                    <p>{battleResult.message}</p>
 
-                {battleResult.winner && (
-                  <div className="battle-winner-banner">
-                    🏆 Winner: {battleResult.winner.name}
-                  </div>
+                    {battleResult.winner && (
+                      <div className="battle-winner-banner">
+                        🏆 Winner: {battleResult.winner.name}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <p>Press Start Battle to reveal the result.</p>
                 )}
 
                 <div className="battle-score-row">
@@ -89,11 +120,13 @@ function ComparePage() {
                     {selectedPokemonTwo.name}: {battleResult.scoreTwo}
                   </span>
                 </div>
+
                 <div className="battle-bonus-row">
                   <span>Type Bonus: +{battleResult.typeBonusOne}</span>
 
                   <span>Type Bonus: +{battleResult.typeBonusTwo}</span>
                 </div>
+
                 <div className="battle-health-bars">
                   <div className="battle-health-card">
                     <span>{selectedPokemonOne.name} HP</span>
@@ -102,12 +135,16 @@ function ComparePage() {
                       <div
                         className="health-fill"
                         style={{
-                          width: `${battleResult.hpRemainingOne}%`,
+                          width: `${
+                            battleStarted ? battleResult.hpRemainingOne : 100
+                          }%`,
                         }}
                       ></div>
                     </div>
 
-                    <strong>{battleResult.hpRemainingOne}%</strong>
+                    <strong>
+                      {battleStarted ? battleResult.hpRemainingOne : 100}%
+                    </strong>
                   </div>
 
                   <div className="battle-health-card">
@@ -117,25 +154,41 @@ function ComparePage() {
                       <div
                         className="health-fill"
                         style={{
-                          width: `${battleResult.hpRemainingTwo}%`,
+                          width: `${
+                            battleStarted ? battleResult.hpRemainingTwo : 100
+                          }%`,
                         }}
                       ></div>
                     </div>
 
-                    <strong>{battleResult.hpRemainingTwo}%</strong>
+                    <strong>
+                      {battleStarted ? battleResult.hpRemainingTwo : 100}%
+                    </strong>
                   </div>
                 </div>
+
+                <button
+                  className="auth-btn start-battle-btn"
+                  onClick={startBattle}
+                  disabled={!battleResult}
+                >
+                  Start Battle
+                </button>
+
                 <div className="battle-log">
                   <h3>Battle Log</h3>
 
-                  {battleResult.battleLog.map((logItem, index) => (
-                    <p key={index}>{logItem}</p>
-                  ))}
+                  {displayedLog.length === 0 ? (
+                    <p>Press Start Battle to begin the simulation.</p>
+                  ) : (
+                    displayedLog.map((logItem, index) => (
+                      <p key={index}>{logItem}</p>
+                    ))
+                  )}
                 </div>
               </>
             )}
           </div>
-
           {/* comparison cards */}
           <div className="compare-grid">
             <PokemonCompareCard
