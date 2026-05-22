@@ -10,10 +10,27 @@
   - Defense
   - Speed
 */
+
+/*
+  🧬 Simple type advantage chart
+
+  This is Version 1, not the full Pokémon chart yet.
+*/
+const typeAdvantages = {
+  fire: ["grass", "bug", "ice"],
+  water: ["fire", "rock", "ground"],
+  grass: ["water", "rock", "ground"],
+  electric: ["water", "flying"],
+  ground: ["fire", "electric", "rock"],
+  rock: ["fire", "flying", "bug", "ice"],
+  psychic: ["fighting", "poison"],
+  fighting: ["normal", "rock", "ice"],
+  ice: ["grass", "ground", "flying"],
+  flying: ["grass", "fighting", "bug"],
+};
+
 const getStatValue = (pokemon, statName) => {
-  const stat = pokemon.stats.find(
-    (item) => item.stat.name === statName
-  );
+  const stat = pokemon.stats.find((item) => item.stat.name === statName);
 
   return stat ? stat.base_stat : 0;
 };
@@ -27,13 +44,58 @@ const calculateBattleScore = (pokemon) => {
   return hp + attack + defense + speed;
 };
 
+/*
+  🧬 Get Pokémon type names
+
+  Example:
+  charizard → ["fire", "flying"]
+*/
+const getPokemonTypes = (pokemon) => {
+  return pokemon.types.map((typeObj) => typeObj.type.name);
+};
+
+/*
+  ⚡ Calculate type advantage bonus
+
+  If attacker has a type advantage
+  over defender, attacker gets bonus points.
+*/
+const calculateTypeBonus = (attacker, defender) => {
+  const attackerTypes = getPokemonTypes(attacker);
+
+  const defenderTypes = getPokemonTypes(defender);
+
+  let bonus = 0;
+
+  attackerTypes.forEach((attackerType) => {
+    const strongAgainst = typeAdvantages[attackerType] || [];
+
+    defenderTypes.forEach((defenderType) => {
+      if (strongAgainst.includes(defenderType)) {
+        bonus += 25;
+      }
+    });
+  });
+
+  return bonus;
+};
+
 const simulateBattle = (pokemonOne, pokemonTwo) => {
   if (!pokemonOne || !pokemonTwo) {
     return null;
   }
 
-  const scoreOne = calculateBattleScore(pokemonOne);
-  const scoreTwo = calculateBattleScore(pokemonTwo);
+  const baseScoreOne = calculateBattleScore(pokemonOne);
+
+  const baseScoreTwo = calculateBattleScore(pokemonTwo);
+
+  const typeBonusOne = calculateTypeBonus(pokemonOne, pokemonTwo);
+
+  const typeBonusTwo = calculateTypeBonus(pokemonTwo, pokemonOne);
+
+  const scoreOne = baseScoreOne + typeBonusOne;
+
+  const scoreTwo = baseScoreTwo + typeBonusTwo;
 
   if (scoreOne > scoreTwo) {
     return {
@@ -42,6 +104,8 @@ const simulateBattle = (pokemonOne, pokemonTwo) => {
       scoreOne,
       scoreTwo,
       message: `${pokemonOne.name} wins based on stronger overall battle stats.`,
+      typeBonusOne,
+      typeBonusTwo,
     };
   }
 
@@ -52,6 +116,8 @@ const simulateBattle = (pokemonOne, pokemonTwo) => {
       scoreOne,
       scoreTwo,
       message: `${pokemonTwo.name} wins based on stronger overall battle stats.`,
+      typeBonusOne,
+      typeBonusTwo,
     };
   }
 
@@ -61,6 +127,8 @@ const simulateBattle = (pokemonOne, pokemonTwo) => {
     scoreOne,
     scoreTwo,
     message: "This battle is too close to call.",
+    typeBonusOne,
+    typeBonusTwo,
   };
 };
 

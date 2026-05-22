@@ -14,125 +14,108 @@ import usePokemon from "../hooks/usePokemon";
 */
 
 function ComparePage() {
+  const { darkMode, setDarkMode } = useTheme();
 
-  const { darkMode, setDarkMode } =
-  useTheme();
+  const [pokemonOne, setPokemonOne] = useState("");
 
-  const [pokemonOne, setPokemonOne] =
-    useState("");
+  const [pokemonTwo, setPokemonTwo] = useState("");
 
-  const [pokemonTwo, setPokemonTwo] =
-    useState("");
-
-  const {
-  pokemons,
-  isLoading,
-  errorMessage,
-} = usePokemon();
+  const { pokemons, isLoading, errorMessage } = usePokemon();
 
   // selected Pokémon objects
-  const selectedPokemonOne =
-    pokemons.find(
-      (pokemon) =>
-        pokemon.name === pokemonOne
-    );
-
-  const selectedPokemonTwo =
-    pokemons.find(
-      (pokemon) =>
-        pokemon.name === pokemonTwo
-    );
-
-  const battleResult =
-  simulateBattle(
-    selectedPokemonOne,
-    selectedPokemonTwo
+  const selectedPokemonOne = pokemons.find(
+    (pokemon) => pokemon.name === pokemonOne,
   );
 
-return (
-  <AppLayout
-    darkMode={darkMode}
-    setDarkMode={setDarkMode}
-    rightSidebar={null}
-  >
-    <PageState
-  isLoading={isLoading}
-  errorMessage={errorMessage}
-  loadingMessage="Loading battle comparison system..."
->
+  const selectedPokemonTwo = pokemons.find(
+    (pokemon) => pokemon.name === pokemonTwo,
+  );
 
+  const battleResult = simulateBattle(selectedPokemonOne, selectedPokemonTwo);
 
-    <div className="compare-page">
-      <h1>Compare Pokémon</h1>
+  return (
+    <AppLayout
+      darkMode={darkMode}
+      setDarkMode={setDarkMode}
+      rightSidebar={null}
+    >
+      <PageState
+        isLoading={isLoading}
+        errorMessage={errorMessage}
+        loadingMessage="Loading battle comparison system..."
+      >
+        <div className="compare-page">
+          <h1>Compare Pokémon</h1>
 
-      {/* selectors */}
-      <div className="compare-selectors">
-        <PokemonSearchSelect
-          label="Choose Pokémon 1"
-          pokemons={pokemons}
-          selectedName={pokemonOne}
-          setSelectedName={setPokemonOne}
-        />
+          {/* selectors */}
+          <div className="compare-selectors">
+            <PokemonSearchSelect
+              label="Choose Pokémon 1"
+              pokemons={pokemons}
+              selectedName={pokemonOne}
+              setSelectedName={setPokemonOne}
+            />
 
-        <PokemonSearchSelect
-          label="Choose Pokémon 2"
-          pokemons={pokemons}
-          selectedName={pokemonTwo}
-          setSelectedName={setPokemonTwo}
-        />
-      </div>
+            <PokemonSearchSelect
+              label="Choose Pokémon 2"
+              pokemons={pokemons}
+              selectedName={pokemonTwo}
+              setSelectedName={setPokemonTwo}
+            />
+          </div>
 
-      {/* battle prediction */}
-      <div className="battle-readout">
-  <h2>Battle Simulator</h2>
+          {/* battle prediction */}
+          <div className="battle-readout">
+            <h2>Battle Simulator</h2>
 
-  {!battleResult ? (
-    <p>
-      Choose two Pokémon to simulate a battle.
-    </p>
-  ) : (
-    <>
-      <p>{battleResult.message}</p>
+            {!battleResult ? (
+              <p>Choose two Pokémon to simulate a battle.</p>
+            ) : (
+              <>
+                <p>{battleResult.message}</p>
 
-      {battleResult.winner && (
-  <div className="battle-winner-banner">
-    🏆 Winner:
-    {" "}
-    {battleResult.winner.name}
-  </div>
-)}
+                {battleResult.winner && (
+                  <div className="battle-winner-banner">
+                    🏆 Winner: {battleResult.winner.name}
+                  </div>
+                )}
 
-      <div className="battle-score-row">
-        <span>
-          {selectedPokemonOne.name}: {battleResult.scoreOne}
-        </span>
+                <div className="battle-score-row">
+                  <span>
+                    {selectedPokemonOne.name}: {battleResult.scoreOne}
+                  </span>
 
-        <span>
-          {selectedPokemonTwo.name}: {battleResult.scoreTwo}
-        </span>
-      </div>
-    </>
-  )}
-</div>
+                  <span>
+                    {selectedPokemonTwo.name}: {battleResult.scoreTwo}
+                  </span>
+                </div>
+                <div className="battle-bonus-row">
+                  <span>Type Bonus: +{battleResult.typeBonusOne}</span>
 
-      {/* comparison cards */}
-      <div className="compare-grid">
-        <PokemonCompareCard
-          pokemon={selectedPokemonOne}
-          opponent={selectedPokemonTwo}
-        />
+                  <span>Type Bonus: +{battleResult.typeBonusTwo}</span>
+                </div>
+              </>
+            )}
+          </div>
 
-        <div className="vs-badge">VS</div>
+          {/* comparison cards */}
+          <div className="compare-grid">
+            <PokemonCompareCard
+              pokemon={selectedPokemonOne}
+              opponent={selectedPokemonTwo}
+            />
 
-        <PokemonCompareCard
-          pokemon={selectedPokemonTwo}
-          opponent={selectedPokemonOne}
-        />
-      </div>
-    </div>
-    </PageState>
-  </AppLayout>
-);
+            <div className="vs-badge">VS</div>
+
+            <PokemonCompareCard
+              pokemon={selectedPokemonTwo}
+              opponent={selectedPokemonOne}
+            />
+          </div>
+        </div>
+      </PageState>
+    </AppLayout>
+  );
 }
 
 export default ComparePage;
