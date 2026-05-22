@@ -94,6 +94,37 @@ function ComparePage() {
 
                   <span>Type Bonus: +{battleResult.typeBonusTwo}</span>
                 </div>
+                <div className="battle-health-bars">
+                  <div className="battle-health-card">
+                    <span>{selectedPokemonOne.name} HP</span>
+
+                    <div className="health-bar">
+                      <div
+                        className="health-fill"
+                        style={{
+                          width: `${battleResult.hpRemainingOne}%`,
+                        }}
+                      ></div>
+                    </div>
+
+                    <strong>{battleResult.hpRemainingOne}%</strong>
+                  </div>
+
+                  <div className="battle-health-card">
+                    <span>{selectedPokemonTwo.name} HP</span>
+
+                    <div className="health-bar">
+                      <div
+                        className="health-fill"
+                        style={{
+                          width: `${battleResult.hpRemainingTwo}%`,
+                        }}
+                      ></div>
+                    </div>
+
+                    <strong>{battleResult.hpRemainingTwo}%</strong>
+                  </div>
+                </div>
                 <div className="battle-log">
                   <h3>Battle Log</h3>
 

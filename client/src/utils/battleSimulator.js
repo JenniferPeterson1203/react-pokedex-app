@@ -98,6 +98,45 @@ const simulateBattle = (pokemonOne, pokemonTwo) => {
   const scoreTwo = baseScoreTwo + typeBonusTwo;
 
   /*
+  ❤️ Simulated battle HP
+
+  Higher score means the Pokémon
+  keeps more remaining HP.
+*/
+let hpRemainingOne = 100;
+let hpRemainingTwo = 100;
+
+const scoreDifference =
+  Math.abs(scoreOne - scoreTwo);
+
+/*
+  💥 Damage scaling
+
+  Prevents instant 0 HP battles.
+*/
+const damageAmount =
+  Math.min(
+    80,
+    Math.floor(scoreDifference / 2)
+  );
+
+if (scoreOne > scoreTwo) {
+  hpRemainingTwo =
+    Math.max(
+      0,
+      100 - damageAmount
+    );
+}
+
+if (scoreTwo > scoreOne) {
+  hpRemainingOne =
+    Math.max(
+      0,
+      100 - damageAmount
+    );
+}
+
+  /*
   📜 Battle log
 
   Creates a mini story describing
@@ -134,6 +173,9 @@ const simulateBattle = (pokemonOne, pokemonTwo) => {
       battleLog,
 
       message: `${pokemonOne.name} wins based on stronger overall battle stats.`,
+
+      hpRemainingOne,
+hpRemainingTwo,
     };
   }
 
@@ -147,6 +189,8 @@ const simulateBattle = (pokemonOne, pokemonTwo) => {
       typeBonusOne,
       typeBonusTwo,
       battleLog,
+      hpRemainingOne,
+hpRemainingTwo,
     };
   }
 
@@ -159,6 +203,8 @@ const simulateBattle = (pokemonOne, pokemonTwo) => {
     typeBonusOne,
     typeBonusTwo,
     battleLog,
+    hpRemainingOne,
+hpRemainingTwo,
   };
 };
 
