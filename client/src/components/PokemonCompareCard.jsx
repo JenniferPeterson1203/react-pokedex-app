@@ -9,6 +9,7 @@ function PokemonCompareCard({
   opponent,
   isWinner,
   isLoser,
+  isHit,
 }) {
 
   if (!pokemon) {
@@ -34,6 +35,7 @@ const primaryType =
   type-${primaryType}
   ${isWinner ? "battle-card-winner" : ""}
   ${isLoser ? "battle-card-loser" : ""}
+${isHit ? "battle-card-hit" : ""}
 `}
     >
 

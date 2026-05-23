@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
 import AppLayout from "../components/AppLayout";
+import BattleEventMessage from "../components/BattleEventMessage";
 import PokemonCompareCard from "../components/PokemonCompareCard";
 import PokemonSearchSelect from "../components/PokemonSearchSelect";
 import PageState from "../components/PageState";
@@ -10,23 +11,36 @@ import usePokemon from "../hooks/usePokemon";
 /*
   ComparePage
 
-  Compare two Pokémon side-by-side.
-*/
+  Powers the Pokémon Battle Arena.
 
+  Current features:
+  - choose two Pokémon
+  - start a turn-based battle
+  - update HP live
+  - shake damaged Pokémon card
+  - show one live battle message
+  - reveal winner after battle ends
+*/
 function ComparePage() {
   const { darkMode, setDarkMode } = useTheme();
 
   const [pokemonOne, setPokemonOne] = useState("");
-
   const [pokemonTwo, setPokemonTwo] = useState("");
 
   const [battleStarted, setBattleStarted] = useState(false);
+  const [battleFinished, setBattleFinished] = useState(false);
 
   const [displayedLog, setDisplayedLog] = useState([]);
+  const [battleEvent, setBattleEvent] = useState(null);
+
+  const [pokemonOneHP, setPokemonOneHP] = useState(100);
+  const [pokemonTwoHP, setPokemonTwoHP] = useState(100);
+
+  const [currentTurn, setCurrentTurn] = useState(null);
+  const [damagedPokemon, setDamagedPokemon] = useState(null);
 
   const { pokemons, isLoading, errorMessage } = usePokemon();
 
-  // selected Pokémon objects
   const selectedPokemonOne = pokemons.find(
     (pokemon) => pokemon.name === pokemonOne,
   );
@@ -37,8 +51,19 @@ function ComparePage() {
 
   const battleResult = simulateBattle(selectedPokemonOne, selectedPokemonTwo);
 
+  /*
+    🔁 Reset battle state whenever
+    selected Pokémon change.
+  */
   useEffect(() => {
     setBattleStarted(false);
+    setBattleFinished(false);
+
+    setPokemonOneHP(100);
+    setPokemonTwoHP(100);
+
+    setDamagedPokemon(null);
+    setBattleEvent(null);
 
     const arenaLog = [];
 
@@ -51,25 +76,116 @@ function ComparePage() {
     }
 
     setDisplayedLog(arenaLog);
+
+    if (selectedPokemonOne) {
+      setCurrentTurn("pokemonOne");
+    }
   }, [selectedPokemonOne, selectedPokemonTwo]);
 
+  /*
+    ⚔️ Start turn-based battle
+
+    Version 1:
+    - Pokémon 1 attacks first
+    - Pokémon 2 attacks second
+    - battle continues until one reaches 0 HP
+  */
   const startBattle = () => {
-    if (!battleResult) {
+    if (!battleResult || battleStarted) {
       return;
     }
 
     setBattleStarted(true);
+    setBattleFinished(false);
 
     setDisplayedLog([]);
+    setBattleEvent(null);
 
-    const battleEvents = battleResult.battleLog.slice(2);
+    let localPokemonOneHP = 100;
+    let localPokemonTwoHP = 100;
+    let turn = "pokemonOne";
 
-    battleEvents.forEach((logItem, index) => {
+    const battleInterval = setInterval(() => {
+      /*
+        🛑 Stop battle if someone fainted.
+      */
+      if (localPokemonOneHP <= 0 || localPokemonTwoHP <= 0) {
+        clearInterval(battleInterval);
+
+        const winnerName =
+          localPokemonOneHP > 0
+            ? selectedPokemonOne.name
+            : selectedPokemonTwo.name;
+
+        setBattleFinished(true);
+        setDamagedPokemon(null);
+
+        setBattleEvent({
+          winner:
+            localPokemonOneHP > 0 ? selectedPokemonOne : selectedPokemonTwo,
+        });
+
+        return;
+      }
+
+      /*
+        🎲 Simple random damage
+
+        Later we can improve this with:
+        - real moves
+        - critical hits
+        - type multipliers
+        - speed
+      */
+      const damage = Math.floor(Math.random() * 16) + 10;
+
+      if (turn === "pokemonOne") {
+        localPokemonTwoHP = Math.max(0, localPokemonTwoHP - damage);
+
+        setPokemonTwoHP(localPokemonTwoHP);
+        setDamagedPokemon("pokemonTwo");
+
+        setBattleEvent({
+          attacker: selectedPokemonOne,
+          defender: selectedPokemonTwo,
+          damage,
+        });
+
+        setTimeout(() => {
+          setDamagedPokemon(null);
+        }, 450);
+
+        turn = "pokemonTwo";
+        setCurrentTurn("pokemonTwo");
+
+        return;
+      }
+
+      localPokemonOneHP = Math.max(0, localPokemonOneHP - damage);
+
+      setPokemonOneHP(localPokemonOneHP);
+      setDamagedPokemon("pokemonOne");
+
+      setBattleEvent({
+        attacker: selectedPokemonTwo,
+        defender: selectedPokemonOne,
+        damage,
+      });
+
       setTimeout(() => {
-        setDisplayedLog((prev) => [...prev, logItem]);
-      }, index * 1000);
-    });
+        setDamagedPokemon(null);
+      }, 450);
+
+      turn = "pokemonOne";
+      setCurrentTurn("pokemonOne");
+    }, 1000);
   };
+
+  const liveWinnerName = battleFinished
+    ? pokemonOneHP > 0
+      ? selectedPokemonOne?.name
+      : selectedPokemonTwo?.name
+    : null;
 
   return (
     <AppLayout
@@ -80,12 +196,11 @@ function ComparePage() {
       <PageState
         isLoading={isLoading}
         errorMessage={errorMessage}
-        loadingMessage="Loading battle comparison system..."
+        loadingMessage="Loading battle arena..."
       >
         <div className="compare-page">
           <h1>Pokémon Battle Arena</h1>
 
-          {/* selectors */}
           <div className="compare-selectors">
             <PokemonSearchSelect
               label="Choose Pokémon 1"
@@ -102,26 +217,20 @@ function ComparePage() {
             />
           </div>
 
-          {/* battle prediction */}
           <div className="battle-readout">
-            <h2>Battle Simulator</h2>
-
             {!battleResult ? (
               <p>Choose two Pokémon to simulate a battle.</p>
             ) : (
               <>
-                {battleStarted ? (
-                  <>
-                    <p>{battleResult.message}</p>
+                {!battleStarted && <p>Press Start Battle to begin.</p>}
 
-                    {battleResult.winner && (
-                      <div className="battle-winner-banner">
-                        🏆 Winner: {battleResult.winner.name}
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  <p>Press Start Battle to reveal the result.</p>
+                {battleStarted && battleEvent && (
+                  <BattleEventMessage
+                    attacker={battleEvent.attacker}
+                    defender={battleEvent.defender}
+                    damage={battleEvent.damage}
+                    winner={battleEvent.winner}
+                  />
                 )}
 
                 <div className="battle-score-row">
@@ -148,16 +257,12 @@ function ComparePage() {
                       <div
                         className="health-fill"
                         style={{
-                          width: `${
-                            battleStarted ? battleResult.hpRemainingOne : 100
-                          }%`,
+                          width: `${pokemonOneHP}%`,
                         }}
                       ></div>
                     </div>
 
-                    <strong>
-                      {battleStarted ? battleResult.hpRemainingOne : 100}%
-                    </strong>
+                    <strong>{pokemonOneHP}%</strong>
                   </div>
 
                   <div className="battle-health-card">
@@ -167,25 +272,25 @@ function ComparePage() {
                       <div
                         className="health-fill"
                         style={{
-                          width: `${
-                            battleStarted ? battleResult.hpRemainingTwo : 100
-                          }%`,
+                          width: `${pokemonTwoHP}%`,
                         }}
                       ></div>
                     </div>
 
-                    <strong>
-                      {battleStarted ? battleResult.hpRemainingTwo : 100}%
-                    </strong>
+                    <strong>{pokemonTwoHP}%</strong>
                   </div>
                 </div>
 
                 <button
                   className="auth-btn start-battle-btn"
                   onClick={startBattle}
-                  disabled={!battleResult}
+                  disabled={!battleResult || battleStarted}
                 >
-                  Start Battle
+                  {battleFinished
+                    ? "Battle Finished"
+                    : battleStarted
+                      ? "Battle Running..."
+                      : "Start Battle"}
                 </button>
               </>
             )}
@@ -215,19 +320,14 @@ function ComparePage() {
               </div>
             )}
           </div>
-          {/* comparison cards */}
+
           <div className="compare-grid">
             <PokemonCompareCard
               pokemon={selectedPokemonOne}
               opponent={selectedPokemonTwo}
-              isWinner={
-                battleStarted &&
-                battleResult?.winner?.name === selectedPokemonOne?.name
-              }
-              isLoser={
-                battleStarted &&
-                battleResult?.loser?.name === selectedPokemonOne?.name
-              }
+              isWinner={battleFinished && pokemonOneHP > 0}
+              isLoser={battleFinished && pokemonOneHP <= 0}
+              isHit={damagedPokemon === "pokemonOne"}
             />
 
             <div className="vs-badge">VS</div>
@@ -235,14 +335,9 @@ function ComparePage() {
             <PokemonCompareCard
               pokemon={selectedPokemonTwo}
               opponent={selectedPokemonOne}
-              isWinner={
-                battleStarted &&
-                battleResult?.winner?.name === selectedPokemonTwo?.name
-              }
-              isLoser={
-                battleStarted &&
-                battleResult?.loser?.name === selectedPokemonTwo?.name
-              }
+              isWinner={battleFinished && pokemonTwoHP > 0}
+              isLoser={battleFinished && pokemonTwoHP <= 0}
+              isHit={damagedPokemon === "pokemonTwo"}
             />
           </div>
         </div>

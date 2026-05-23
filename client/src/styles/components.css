@@ -1346,3 +1346,30 @@ input:focus-visible {
   text-shadow:
     0 0 10px rgba(0, 229, 255, 0.6);
 }
+
+.battle-current-message {
+  margin: 1rem auto;
+
+  padding: 1rem 1.2rem;
+
+  max-width: 520px;
+
+  border-radius: 18px;
+
+  background:
+    rgba(255, 43, 214, 0.1);
+
+  border:
+    1px solid rgba(255, 43, 214, 0.28);
+
+  color: var(--neon-pink);
+
+  font-weight: bold;
+  text-align: center;
+
+  animation:
+    battle-log-pop 0.35s ease;
+
+  box-shadow:
+    0 0 18px rgba(255, 43, 214, 0.18);
+}
