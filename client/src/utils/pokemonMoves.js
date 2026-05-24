@@ -81,3 +81,28 @@ export const getRandomMove = (pokemon) => {
 
   return movePool[randomIndex];
 };
+
+export const getMoveType = (move) => {
+  const moveTypes = {
+    ThunderShock: "electric",
+    Spark: "electric",
+    Thunderbolt: "electric",
+
+    Ember: "fire",
+    FlameBurst: "fire",
+    Flamethrower: "fire",
+
+    WaterGun: "water",
+    Bubble: "water",
+    AquaJet: "water",
+
+    VineWhip: "grass",
+    RazorLeaf: "grass",
+    SeedBomb: "grass",
+  };
+
+  const cleanedMove =
+    move.replace(/\s/g, "");
+
+  return moveTypes[cleanedMove] || "normal";
+};

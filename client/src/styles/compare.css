@@ -354,3 +354,91 @@
   text-shadow:
     0 0 12px rgba(255, 255, 255, 0.5);
 }
+
+.battle-effect-electric {
+  animation:
+    electricFlash 0.3s ease;
+}
+
+.battle-effect-fire {
+  animation:
+    fireFlash 0.3s ease;
+}
+
+.battle-effect-water {
+  animation:
+    waterFlash 0.3s ease;
+}
+
+.battle-effect-grass {
+  animation:
+    grassFlash 0.3s ease;
+}
+
+@keyframes electricFlash {
+  0% {
+    box-shadow:
+      0 0 0px cyan;
+  }
+
+  50% {
+    box-shadow:
+      0 0 80px cyan;
+  }
+
+  100% {
+    box-shadow:
+      0 0 0px cyan;
+  }
+}
+
+@keyframes fireFlash {
+  0% {
+    box-shadow:
+      0 0 0px orange;
+  }
+
+  50% {
+    box-shadow:
+      0 0 80px red;
+  }
+
+  100% {
+    box-shadow:
+      0 0 0px orange;
+  }
+}
+
+@keyframes waterFlash {
+  0% {
+    box-shadow:
+      0 0 0px deepskyblue;
+  }
+
+  50% {
+    box-shadow:
+      0 0 80px blue;
+  }
+
+  100% {
+    box-shadow:
+      0 0 0px deepskyblue;
+  }
+}
+
+@keyframes grassFlash {
+  0% {
+    box-shadow:
+      0 0 0px limegreen;
+  }
+
+  50% {
+    box-shadow:
+      0 0 80px green;
+  }
+
+  100% {
+    box-shadow:
+      0 0 0px limegreen;
+  }
+}

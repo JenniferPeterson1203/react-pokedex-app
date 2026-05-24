@@ -6,7 +6,7 @@ import PokemonCompareCard from "../components/PokemonCompareCard";
 import PokemonSearchSelect from "../components/PokemonSearchSelect";
 import PageState from "../components/PageState";
 import simulateBattle from "../utils/battleSimulator";
-import { getRandomMove } from "../utils/pokemonMoves";
+import { getRandomMove, getMoveType } from "../utils/pokemonMoves";
 import usePokemon from "../hooks/usePokemon";
 
 /*
@@ -39,6 +39,7 @@ function ComparePage() {
 
   const [currentTurn, setCurrentTurn] = useState(null);
   const [damagedPokemon, setDamagedPokemon] = useState(null);
+  const [battleEffect, setBattleEffect] = useState("");
 
   const { pokemons, isLoading, errorMessage } = usePokemon();
 
@@ -100,6 +101,7 @@ function ComparePage() {
     setBattleFinished(false);
 
     setDisplayedLog([]);
+    
     setBattleEvent(null);
 
     let localPokemonOneHP = 100;
@@ -118,6 +120,7 @@ function ComparePage() {
         : "pokemonTwo";
 
     setCurrentTurn(turn);
+    
 
     setBattleEvent({
       winner: null,
@@ -181,6 +184,8 @@ function ComparePage() {
           ? getRandomMove(selectedPokemonOne)
           : getRandomMove(selectedPokemonTwo);
 
+      const moveType = getMoveType(selectedMove);
+
       if (turn === "pokemonOne") {
         localPokemonTwoHP = Math.max(0, localPokemonTwoHP - damage);
 
@@ -198,7 +203,13 @@ function ComparePage() {
           Math.random() < 0.5
             ? `😵 ${selectedPokemonOne.name}'s attack missed!`
             : `💨 ${selectedPokemonTwo.name} avoided the attack!`;
+if (!didMoveMiss) {
+  setBattleEffect(moveType);
 
+  setTimeout(() => {
+    setBattleEffect("");
+  }, 300);
+}
         setBattleEvent({
           attacker: selectedPokemonOne,
           defender: selectedPokemonTwo,
@@ -209,8 +220,6 @@ function ComparePage() {
           didMoveMiss,
           missMessage,
         });
-
-
 
         turn = "pokemonTwo";
         setCurrentTurn("pokemonTwo");
@@ -234,6 +243,13 @@ function ComparePage() {
         Math.random() < 0.5
           ? `😵 ${selectedPokemonTwo.name}'s attack missed!`
           : `💨 ${selectedPokemonOne.name} avoided the attack!`;
+if (!didMoveMiss) {
+  setBattleEffect(moveType);
+
+  setTimeout(() => {
+    setBattleEffect("");
+  }, 300);
+}
 
       setBattleEvent({
         attacker: selectedPokemonTwo,
@@ -245,8 +261,6 @@ function ComparePage() {
         didMoveMiss,
         missMessage,
       });
-
-
 
       turn = "pokemonOne";
       setCurrentTurn("pokemonOne");
@@ -270,7 +284,12 @@ function ComparePage() {
         errorMessage={errorMessage}
         loadingMessage="Loading battle arena..."
       >
-        <div className="compare-page">
+        <div
+  className={`
+    compare-page
+    battle-effect-${battleEffect}
+  `}
+>
           <h1>Pokémon Battle Arena</h1>
 
           <div className="compare-selectors">
