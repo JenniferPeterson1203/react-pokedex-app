@@ -330,5 +330,27 @@
     0 0 12px rgba(255, 215, 0, 0.8);
 }
 
+.move-name {
+  color: var(--neon-cyan);
 
+  text-shadow:
+    0 0 12px rgba(0, 229, 255, 0.6);
+}
 
+.effectiveness-text {
+  font-size: 1.4rem;
+
+  color: var(--neon-cyan);
+
+  text-shadow:
+    0 0 10px rgba(0, 229, 255, 0.5);
+}
+
+.miss-text {
+  font-size: 2rem;
+
+  color: silver;
+
+  text-shadow:
+    0 0 12px rgba(255, 255, 255, 0.5);
+}

@@ -6,6 +6,7 @@ import PokemonCompareCard from "../components/PokemonCompareCard";
 import PokemonSearchSelect from "../components/PokemonSearchSelect";
 import PageState from "../components/PageState";
 import simulateBattle from "../utils/battleSimulator";
+import { getRandomMove } from "../utils/pokemonMoves";
 import usePokemon from "../hooks/usePokemon";
 
 /*
@@ -153,37 +154,63 @@ function ComparePage() {
       }
 
       /*
-        🎲 Simple random damage
-
-        Later we can improve this with:
-        - real moves
-        - critical hits
-        - type multipliers
-        - speed
+    ATTACK
       */
-      // const damage = Math.floor(Math.random() * 16) + 10;
+
       const isCriticalHit = Math.random() < 0.2;
+
+      const didMoveMiss = Math.random() < 0.12;
 
       const baseDamage = Math.floor(Math.random() * 16) + 10;
 
-      const damage = isCriticalHit ? baseDamage * 2 : baseDamage;
+      const damage = didMoveMiss
+        ? 0
+        : isCriticalHit
+          ? baseDamage * 2
+          : baseDamage;
+
+      const effectivenessMessage =
+        damage >= 30
+          ? "⚡ It's super effective!"
+          : damage <= 12
+            ? "😬 It's not very effective..."
+            : "";
+
+      const selectedMove =
+        turn === "pokemonOne"
+          ? getRandomMove(selectedPokemonOne)
+          : getRandomMove(selectedPokemonTwo);
 
       if (turn === "pokemonOne") {
         localPokemonTwoHP = Math.max(0, localPokemonTwoHP - damage);
 
         setPokemonTwoHP(localPokemonTwoHP);
-        setDamagedPokemon("pokemonTwo");
+
+        if (!didMoveMiss) {
+          setDamagedPokemon("pokemonTwo");
+
+          setTimeout(() => {
+            setDamagedPokemon(null);
+          }, 450);
+        }
+
+        const missMessage =
+          Math.random() < 0.5
+            ? `😵 ${selectedPokemonOne.name}'s attack missed!`
+            : `💨 ${selectedPokemonTwo.name} avoided the attack!`;
 
         setBattleEvent({
           attacker: selectedPokemonOne,
           defender: selectedPokemonTwo,
           damage,
           isCriticalHit,
+          move: selectedMove,
+          effectivenessMessage,
+          didMoveMiss,
+          missMessage,
         });
 
-        setTimeout(() => {
-          setDamagedPokemon(null);
-        }, 450);
+
 
         turn = "pokemonTwo";
         setCurrentTurn("pokemonTwo");
@@ -194,18 +221,32 @@ function ComparePage() {
       localPokemonOneHP = Math.max(0, localPokemonOneHP - damage);
 
       setPokemonOneHP(localPokemonOneHP);
-      setDamagedPokemon("pokemonOne");
+
+      if (!didMoveMiss) {
+        setDamagedPokemon("pokemonOne");
+
+        setTimeout(() => {
+          setDamagedPokemon(null);
+        }, 450);
+      }
+
+      const missMessage =
+        Math.random() < 0.5
+          ? `😵 ${selectedPokemonTwo.name}'s attack missed!`
+          : `💨 ${selectedPokemonOne.name} avoided the attack!`;
 
       setBattleEvent({
         attacker: selectedPokemonTwo,
         defender: selectedPokemonOne,
         damage,
         isCriticalHit,
+        move: selectedMove,
+        effectivenessMessage,
+        didMoveMiss,
+        missMessage,
       });
 
-      setTimeout(() => {
-        setDamagedPokemon(null);
-      }, 450);
+
 
       turn = "pokemonOne";
       setCurrentTurn("pokemonOne");
@@ -261,6 +302,10 @@ function ComparePage() {
                     winner={battleEvent.winner}
                     message={battleEvent.message}
                     isCriticalHit={battleEvent.isCriticalHit}
+                    move={battleEvent.move}
+                    effectivenessMessage={battleEvent.effectivenessMessage}
+                    didMoveMiss={battleEvent.didMoveMiss}
+                    missMessage={battleEvent.missMessage}
                   />
                 )}
 

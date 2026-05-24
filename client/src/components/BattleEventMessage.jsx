@@ -5,6 +5,10 @@ function BattleEventMessage({
   winner,
   message,
   isCriticalHit,
+  move,
+  effectivenessMessage,
+  didMoveMiss,
+  missMessage,
 }) {
   /*
     🏆 Winner state
@@ -43,7 +47,7 @@ function BattleEventMessage({
   /*
     💥 Normal attack message
   */
-  if (!attacker || !defender || !damage) {
+  if (!attacker || !defender) {
     return null;
   }
 
@@ -55,22 +59,28 @@ function BattleEventMessage({
         className="battle-event-sprite"
       />
 
-<div className="battle-event-text">
-  <p className="attack-text">
-    <strong>{attacker.name}</strong>
-    {" "}attacks!
-  </p>
+      <div className="battle-event-text">
+        <p className="attack-text">
+          <strong>{attacker.name}</strong> used{" "}
+          <span className="move-name">{move}</span>!
+        </p>
 
-  <p className="damage-text">
-    💥 {damage} DAMAGE
-  </p>
+        {didMoveMiss ? (
+          <p className="miss-text">{missMessage}</p>
+        ) : (
+          <>
+            <p className="damage-text">💥 {damage} DAMAGE</p>
 
-  {isCriticalHit && (
-    <p className="critical-hit-text">
-      🔥 CRITICAL HIT!
-    </p>
-  )}
-</div>
+            {effectivenessMessage && (
+              <p className="effectiveness-text">{effectivenessMessage}</p>
+            )}
+
+            {isCriticalHit && (
+              <p className="critical-hit-text">🔥 CRITICAL HIT!</p>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }
