@@ -103,7 +103,31 @@ function ComparePage() {
 
     let localPokemonOneHP = 100;
     let localPokemonTwoHP = 100;
-    let turn = "pokemonOne";
+    const getSpeed = (pokemon) => {
+      const speedStat = pokemon.stats.find(
+        (stat) => stat.stat.name === "speed",
+      );
+
+      return speedStat ? speedStat.base_stat : 0;
+    };
+
+    let turn =
+      getSpeed(selectedPokemonOne) >= getSpeed(selectedPokemonTwo)
+        ? "pokemonOne"
+        : "pokemonTwo";
+
+    setCurrentTurn(turn);
+
+    setBattleEvent({
+      winner: null,
+      attacker: turn === "pokemonOne" ? selectedPokemonOne : selectedPokemonTwo,
+      defender: null,
+      damage: null,
+      message:
+        turn === "pokemonOne"
+          ? `${selectedPokemonOne.name} attacks first!`
+          : `${selectedPokemonTwo.name} attacks first!`,
+    });
 
     const battleInterval = setInterval(() => {
       /*
@@ -137,7 +161,12 @@ function ComparePage() {
         - type multipliers
         - speed
       */
-      const damage = Math.floor(Math.random() * 16) + 10;
+      // const damage = Math.floor(Math.random() * 16) + 10;
+      const isCriticalHit = Math.random() < 0.2;
+
+      const baseDamage = Math.floor(Math.random() * 16) + 10;
+
+      const damage = isCriticalHit ? baseDamage * 2 : baseDamage;
 
       if (turn === "pokemonOne") {
         localPokemonTwoHP = Math.max(0, localPokemonTwoHP - damage);
@@ -149,6 +178,7 @@ function ComparePage() {
           attacker: selectedPokemonOne,
           defender: selectedPokemonTwo,
           damage,
+          isCriticalHit,
         });
 
         setTimeout(() => {
@@ -170,6 +200,7 @@ function ComparePage() {
         attacker: selectedPokemonTwo,
         defender: selectedPokemonOne,
         damage,
+        isCriticalHit,
       });
 
       setTimeout(() => {
@@ -222,14 +253,14 @@ function ComparePage() {
               <p>Choose two Pokémon to simulate a battle.</p>
             ) : (
               <>
-                {!battleStarted && <p>Press Start Battle to begin.</p>}
-
                 {battleStarted && battleEvent && (
                   <BattleEventMessage
                     attacker={battleEvent.attacker}
                     defender={battleEvent.defender}
                     damage={battleEvent.damage}
                     winner={battleEvent.winner}
+                    message={battleEvent.message}
+                    isCriticalHit={battleEvent.isCriticalHit}
                   />
                 )}
 
