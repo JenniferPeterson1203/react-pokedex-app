@@ -1,7 +1,4 @@
-import {
-  Routes,
-  Route,
-} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import HomePage from "./pages/HomePage";
 import FavoritesPage from "./pages/FavoritesPage";
@@ -11,6 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import TrainerDashboard from "./pages/TrainerDashboard";
 import TeamDetailPage from "./pages/TeamDetailPage";
+import TrainingGroundsPage from "./pages/TrainingGroundsPage";
 
 /*
   🌐 Main App Router
@@ -19,58 +17,33 @@ import TeamDetailPage from "./pages/TeamDetailPage";
 */
 
 function App() {
-
   return (
-
     <Routes>
-
       {/* 🏠 Main dashboard */}
-      <Route
-        path="/"
-        element={<HomePage />}
-      />
+      <Route path="/" element={<HomePage />} />
 
       {/* LOGIN PAGE */}
-      <Route
-      path="/login"
-      element={<LoginPage />}
-      />
-      
-            {/* Singup Page */}
-            <Route
-            path="/signup"
-            element={<SignupPage />}
-            />
+      <Route path="/login" element={<LoginPage />} />
 
-{/* Trainer */}
-<Route
-  path="/dashboard"
-  element={<TrainerDashboard />}
-/>
+      {/* Singup Page */}
+      <Route path="/signup" element={<SignupPage />} />
+
+      {/* Trainer */}
+      <Route path="/dashboard" element={<TrainerDashboard />} />
       {/* ❤️ Favorites page */}
-      <Route
-        path="/favorites"
-        element={<FavoritesPage />}
-      />
+      <Route path="/favorites" element={<FavoritesPage />} />
 
       {/* 🔍 Individual Pokémon page */}
-      <Route
-        path="/pokemon/:name"
-        element={<PokemonPage />}
-      />
+      <Route path="/pokemon/:name" element={<PokemonPage />} />
 
       {/* Compare Pokemon Page */}
-      <Route
-      path="/compare"
-      element={<ComparePage />}
-      />
+      <Route path="/compare" element={<ComparePage />} />
 
       {/* Team Detail Page */}
-      <Route
-  path="/teams/:teamId"
-  element={<TeamDetailPage />}
-/>
+      <Route path="/teams/:teamId" element={<TeamDetailPage />} />
 
+      {/* Training Grounds Page */}
+      <Route path="/training" element={<TrainingGroundsPage />} />
     </Routes>
   );
 }

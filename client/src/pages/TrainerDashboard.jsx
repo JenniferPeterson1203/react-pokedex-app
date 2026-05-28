@@ -117,36 +117,27 @@ function TrainerDashboard() {
                         {teamPokemon.length}/6 Pokémon
                       </p>
 
-                      {teamPokemon.length > 0 ? (
-                        <div className="team-pokemon-list">
-                          {teamPokemon.slice(0, 3).map((pokemon) => (
+                      <div className="team-party-slots">
+                        {Array.from({ length: 6 }).map((_, index) => {
+                          const pokemon = teamPokemon[index];
+
+                          return (
                             <span
-                              className="team-pokemon-pill"
-                              key={pokemon.id}
+                              key={index}
+                              className={
+                                pokemon
+                                  ? "team-party-ball filled"
+                                  : "team-party-ball empty"
+                              }
+                              title={
+                                pokemon ? pokemon.pokemon_name : "Empty slot"
+                              }
                             >
-                              {pokemon.pokemon_name}
-
-                              <button
-                                className="team-pokemon-remove"
-                                onClick={() =>
-                                  handleRemovePokemon(team.id, pokemon.id)
-                                }
-                                aria-label={`Remove ${pokemon.pokemon_name} from ${team.team_name}`}
-                              >
-                                ×
-                              </button>
+                              <span className="pokeball-center"></span>
                             </span>
-                          ))}
-
-                          {teamPokemon.length > 3 && (
-                            <span className="team-more-pill">
-                              +{teamPokemon.length - 3} more
-                            </span>
-                          )}
-                        </div>
-                      ) : (
-                        <p className="team-empty">No Pokémon added yet.</p>
-                      )}
+                          );
+                        })}
+                      </div>
                     </div>
 
                     <div className="team-actions">
@@ -169,17 +160,61 @@ function TrainerDashboard() {
               })}
             </div>
           </div>
+          <div className="dashboard-card construction-card">
+            <div className="construction-header">
+              <span className="construction-badge">IN DEVELOPMENT</span>
 
-          <div className="dashboard-card">
-            <h2>Battle Analytics</h2>
+              <h2>Battle Analytics</h2>
+            </div>
 
-            <p>Future battle insights and combat tracking tools.</p>
+            <p className="construction-description">
+              Advanced combat intelligence systems are currently under
+              construction.
+            </p>
+
+            <ul className="construction-list">
+              <li>⚔️ Damage tracking</li>
+              <li>📊 Win/loss statistics</li>
+              <li>🔥 Critical hit analysis</li>
+              <li>🧬 Type matchup reports</li>
+            </ul>
+
+            <div className="construction-progress">
+              <div
+                className="construction-progress-fill"
+                style={{ width: "45%" }}
+              />
+            </div>
+
+            <p className="construction-status">System Progress: 45%</p>
           </div>
 
-          <div className="dashboard-card">
-            <h2>Trainer Achievements</h2>
+          <div className="dashboard-card construction-card">
+            <div className="construction-header">
+              <span className="construction-badge">COMING SOON</span>
 
-            <p>Earn badges and unlock advanced trainer milestones.</p>
+              <h2>Trainer Achievements</h2>
+            </div>
+
+            <p className="construction-description">
+              Unlock advanced trainer milestones and progression rewards.
+            </p>
+
+            <ul className="construction-list">
+              <li>🏆 Gym badge system</li>
+              <li>🌟 Rare trainer titles</li>
+              <li>⚡ Ranked battle rewards</li>
+              <li>🎖️ Seasonal progression</li>
+            </ul>
+
+            <div className="construction-progress">
+              <div
+                className="construction-progress-fill"
+                style={{ width: "20%" }}
+              />
+            </div>
+
+            <p className="construction-status">System Progress: 20%</p>
           </div>
         </div>
       </div>
