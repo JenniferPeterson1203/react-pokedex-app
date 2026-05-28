@@ -10,10 +10,10 @@ import API_URL from "../api/api";
 /*
   🔐 LoginPage
 
-  Placeholder auth page for Phase 5.
-
-  Right now this does NOT connect to the backend yet.
-  It prepares the UI flow for future authentication.
+  Allows users to:
+  - login with their own account
+  - use demo login
+  - continue as guest
 */
 function LoginPage() {
   const { darkMode, setDarkMode } = useTheme();
@@ -22,17 +22,11 @@ function LoginPage() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-  /*
-  🔐 Demo Login
-
-  Uses the real backend login route with a demo account.
-  This lets recruiters test authenticated features
-  without creating a new account.
-*/
-  const handleDemoLogin = async () => {
+  const submitLogin = async (credentials) => {
     setIsLoggingIn(true);
     setErrorMessage("");
 
@@ -44,17 +38,14 @@ function LoginPage() {
           "Content-Type": "application/json",
         },
 
-        body: JSON.stringify(DEMO_USER),
-        
+        body: JSON.stringify(credentials),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        setErrorMessage(data.error || "Demo login failed");
-
+        setErrorMessage(data.error || "Login failed");
         setIsLoggingIn(false);
-
         return;
       }
 
@@ -63,9 +54,21 @@ function LoginPage() {
       navigate("/");
     } catch (error) {
       setErrorMessage("Unable to connect to the server");
-
       setIsLoggingIn(false);
     }
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    submitLogin({
+      email,
+      password,
+    });
+  };
+
+  const handleDemoLogin = () => {
+    submitLogin(DEMO_USER);
   };
 
   return (
@@ -76,7 +79,7 @@ function LoginPage() {
     >
       <PageState
         isLoading={isLoggingIn}
-        errorMessage={errorMessage}
+        errorMessage=""
         loadingMessage="Connecting to trainer network..."
       >
         <div className="auth-page">
@@ -84,19 +87,54 @@ function LoginPage() {
             <h1>Trainer Login</h1>
 
             <p>
-              Continue as a guest to explore the full Pokédex, or use demo login
-              to preview future account features.
+              Log in to access trainer features, saved teams,
+              protected favorites, and future dashboard tools.
             </p>
 
+            <form
+              className="auth-form"
+              onSubmit={handleLogin}
+            >
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) =>
+                  setEmail(e.target.value)
+                }
+              />
+
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) =>
+                  setPassword(e.target.value)
+                }
+              />
+
+              {errorMessage && (
+                <p className="auth-error">
+                  {errorMessage}
+                </p>
+              )}
+
+              <button
+                className="auth-btn auth-primary"
+                type="submit"
+                disabled={isLoggingIn}
+              >
+                {isLoggingIn ? "Logging in..." : "Login"}
+              </button>
+            </form>
+
             <button
-              className="auth-btn auth-primary"
+              className="auth-btn"
               onClick={handleDemoLogin}
               disabled={isLoggingIn}
             >
-              {isLoggingIn ? "Logging in..." : "Demo Login"}
+              Demo Login
             </button>
-
-            {errorMessage && <p className="auth-error">{errorMessage}</p>}
 
             <div className="auth-links">
               <Link className="auth-link" to="/">
