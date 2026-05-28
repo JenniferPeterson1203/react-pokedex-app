@@ -12,7 +12,7 @@ function ApiStatus() {
   useEffect(() => {
     const checkApiStatus = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/health");
+        const response = await fetch("https://jennifers-pokedex-app.onrender.com/api/health");
         const data = await response.json();
 
         setStatus(data.message);
