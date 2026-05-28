@@ -620,3 +620,53 @@
       inset 0 0 10px rgba(255, 255, 255, 0.16);
   }
 }
+
+.training-meta {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  margin-top: 1rem;
+
+  color: var(--neon-pink);
+  font-weight: bold;
+  font-size: 0.85rem;
+}
+
+.training-progress {
+  width: 100%;
+  max-width: 420px;
+  height: 12px;
+
+  margin: 1.5rem auto 0;
+
+  border-radius: 999px;
+  overflow: hidden;
+
+  background: rgba(255,255,255,0.08);
+}
+
+.training-progress-fill {
+  width: 35%;
+  height: 100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--neon-cyan),
+      var(--neon-pink)
+    );
+
+  box-shadow:
+    0 0 14px rgba(0,229,255,0.5);
+
+  animation: pulse-progress 2.5s infinite ease-in-out;
+}
+
+.training-progress-text {
+  margin-top: 0.8rem;
+
+  color: var(--neon-cyan);
+  font-weight: bold;
+}
