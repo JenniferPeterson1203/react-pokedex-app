@@ -4,10 +4,10 @@
   Central place for backend URL.
 
   This prevents repeating:
-  http://localhost:3001
+  https://jennifers-pokedex-app.onrender.com
   throughout the app.
 */
 const API_URL =
-  "http://localhost:3001";
+  "https://jennifers-pokedex-app.onrender.com";
 
 export default API_URL;
