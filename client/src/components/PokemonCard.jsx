@@ -21,8 +21,8 @@ const isSelected = selectedPokemon?.id === pokemon.id;
 <div
   className={isSelected ? "pokemon-card selected-card" : "pokemon-card"}
   tabIndex="0"
-  role="button"
-  aria-label={`Select ${pokemon.name}`}
+  role="option"
+  aria-label={pokemon.name}
   onClick={() => setSelectedPokemon(pokemon)}
   onKeyDown={(e) => {
     if (e.key === "Enter" || e.key === " ") {
