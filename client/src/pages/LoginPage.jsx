@@ -4,6 +4,7 @@ import { useAuth } from "../context/auth/AuthContext";
 import AppLayout from "../components/AppLayout";
 import PageState from "../components/PageState";
 import { useTheme } from "../context/ThemeContext";
+import { DEMO_USER } from "../constants/demoUser";
 import API_URL from "../api/api";
 
 /*
@@ -24,57 +25,48 @@ function LoginPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-/*
+  /*
   🔐 Demo Login
 
   Uses the real backend login route with a demo account.
   This lets recruiters test authenticated features
   without creating a new account.
 */
-const handleDemoLogin = async () => {
-  setIsLoggingIn(true);
-  setErrorMessage("");
+  const handleDemoLogin = async () => {
+    setIsLoggingIn(true);
+    setErrorMessage("");
 
-  try {
-    const response = await fetch(
-      `${API_URL}/api/auth/login`,
-      {
+    try {
+      const response = await fetch(`${API_URL}/api/auth/login`, {
         method: "POST",
 
         headers: {
           "Content-Type": "application/json",
         },
 
-        body: JSON.stringify({
-          email: "demo@example.com",
-          password: "password123",
-        }),
+        body: JSON.stringify(DEMO_USER),
+        
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setErrorMessage(data.error || "Demo login failed");
+
+        setIsLoggingIn(false);
+
+        return;
       }
-    );
 
-    const data = await response.json();
+      login(data.user, data.token);
 
-    if (!response.ok) {
-      setErrorMessage(
-        data.error || "Demo login failed"
-      );
+      navigate("/");
+    } catch (error) {
+      setErrorMessage("Unable to connect to the server");
 
       setIsLoggingIn(false);
-
-      return;
     }
-
-    login(data.user, data.token);
-
-    navigate("/");
-  } catch (error) {
-    setErrorMessage(
-      "Unable to connect to the server"
-    );
-
-    setIsLoggingIn(false);
-  }
-};
+  };
 
   return (
     <AppLayout
@@ -83,52 +75,40 @@ const handleDemoLogin = async () => {
       rightSidebar={null}
     >
       <PageState
-  isLoading={isLoggingIn}
-  errorMessage={errorMessage}
-  loadingMessage="Connecting to trainer network..."
->
-      <div className="auth-page">
-        <div className="auth-card">
-          <h1>Trainer Login</h1>
+        isLoading={isLoggingIn}
+        errorMessage={errorMessage}
+        loadingMessage="Connecting to trainer network..."
+      >
+        <div className="auth-page">
+          <div className="auth-card">
+            <h1>Trainer Login</h1>
 
-          <p>
-            Continue as a guest to explore the full Pokédex,
-            or use demo login to preview future account features.
-          </p>
+            <p>
+              Continue as a guest to explore the full Pokédex, or use demo login
+              to preview future account features.
+            </p>
 
-<button
-  className="auth-btn auth-primary"
-  onClick={handleDemoLogin}
-  disabled={isLoggingIn}
->
-  {isLoggingIn ? "Logging in..." : "Demo Login"}
-</button>
+            <button
+              className="auth-btn auth-primary"
+              onClick={handleDemoLogin}
+              disabled={isLoggingIn}
+            >
+              {isLoggingIn ? "Logging in..." : "Demo Login"}
+            </button>
 
-          {errorMessage && (
-  <p className="auth-error">
-    {errorMessage}
-  </p>
-)}
+            {errorMessage && <p className="auth-error">{errorMessage}</p>}
 
-<div className="auth-links">
+            <div className="auth-links">
+              <Link className="auth-link" to="/">
+                Continue as Guest
+              </Link>
 
-  <Link
-    className="auth-link"
-    to="/"
-  >
-    Continue as Guest
-  </Link>
-
-  <Link
-    className="auth-link"
-    to="/signup"
-  >
-    Create Account
-  </Link>
-
-</div>
+              <Link className="auth-link" to="/signup">
+                Create Account
+              </Link>
+            </div>
+          </div>
         </div>
-      </div>
       </PageState>
     </AppLayout>
   );
